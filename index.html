@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OctoKids - Cổng Game Toán Học & Nền Tảng Luyện Thi Trắc Nghiệm</title>
+  <meta name="description" content="Hệ thống Cổng Web Game Giáo Dục Toán Học Tiền Tiểu Học & Nền tảng Luyện thi Trắc nghiệm Toán TIMO dành cho trẻ mầm non & tiểu học.">
+  
+  <!-- Google Fonts: Be Vietnam Pro & Inter for ultra-sharp typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;600;700;800;900&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            bounceSlow: 'bounce 2.5s infinite',
+            float: 'float 3s ease-in-out infinite',
+            pulseSlow: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Alpine.js v3 CDN -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Core Scripts -->
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/data-modules.js"></script>
+
+  <style>
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    body {
+      user-select: none;
+      -webkit-user-select: none;
+      background-color: #f1f5f9;
+      font-family: 'Be Vietnam Pro', 'Inter', system-ui, sans-serif;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-900 antialiased flex flex-col justify-between" x-data="portalHubApp()">
+
+  <!-- 1. OCTOKIDS BRAND NAVBAR HEADER (FULL WIDTH) -->
+  <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-40 px-4 sm:px-8 py-3">
+    <div class="w-full flex justify-between items-center gap-4">
+      
+      <!-- Brand & Navigation Links -->
+      <div class="flex items-center gap-4 sm:gap-8">
+        <a href="index.html" class="flex items-center gap-2.5 font-black text-2xl text-purple-700 tracking-tight hover:opacity-90 transition-opacity">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center text-2xl shadow-md">
+            🐙
+          </div>
+          <span class="hidden sm:inline font-black">OctoKids</span>
+        </a>
+
+        <!-- Nav Category Links -->
+        <div class="hidden md:flex items-center gap-1.5 text-sm font-bold text-slate-700">
+          <a href="index.html" class="px-3.5 py-2 rounded-xl bg-purple-50 text-purple-800 font-extrabold flex items-center gap-1.5">
+            <span>🏠</span><span x-text="t('nav.home')"></span>
+          </a>
+          <a href="modules/luyen-thi-trac-nghiem.html" class="px-3.5 py-2 rounded-xl hover:bg-slate-100 flex items-center gap-1.5 transition-colors">
+            <span>🏆</span><span x-text="t('nav.olympic')"></span>
+          </a>
+          <a href="#" class="px-3.5 py-2 rounded-xl hover:bg-slate-100 flex items-center gap-1.5 transition-colors">
+            <span>🌐</span><span x-text="t('nav.engMath')"></span>
+          </a>
+          <a href="#" class="px-3.5 py-2 rounded-xl hover:bg-slate-100 flex items-center gap-1.5 transition-colors">
+            <span>💡</span><span x-text="t('nav.iqMath')"></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- User Controls & Global Stats -->
+      <div class="flex items-center gap-3">
+        
+        <!-- Language Switcher Dropdown -->
+        <div class="relative" x-data="{ open: false }">
+          <button @click="open = !open" 
+                  class="bg-purple-50 hover:bg-purple-100 border border-purple-300 text-purple-800 px-3.5 py-1.5 rounded-2xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-sm active:scale-95 transition-all">
+            <span class="text-base" x-text="getCurrentLangFlag()"></span>
+            <span x-text="getCurrentLangLabel()"></span>
+            <span class="text-[10px] ml-0.5">▼</span>
+          </button>
+          
+          <div x-show="open" 
+               @click.outside="open = false" 
+               x-transition
+               class="absolute right-0 mt-2 w-44 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 py-1.5 overflow-hidden">
+            <template x-for="langItem in languages" :key="langItem.code">
+              <button @click="setLang(langItem.code); open = false;" 
+                      class="w-full text-left px-4 py-2 hover:bg-purple-50 flex items-center gap-2.5 font-extrabold text-xs sm:text-sm transition-colors"
+                      :class="currentLang === langItem.code ? 'text-purple-700 bg-purple-50 font-black' : 'text-slate-700'">
+                <span class="text-lg" x-text="langItem.flag"></span>
+                <span x-text="langItem.label"></span>
+                <span x-show="currentLang === langItem.code" class="ml-auto text-purple-600 font-black">✓</span>
+              </button>
+            </template>
+          </div>
+        </div>
+
+        <!-- Player Badge Button -->
+        <button 
+          @click="openAvatarModal()"
+          class="bg-slate-50 border border-slate-300 hover:border-purple-400 px-3.5 py-1.5 rounded-2xl font-black flex items-center gap-2 shadow-sm transition-all text-xs sm:text-sm text-slate-900">
+          <span class="text-xl" x-text="state.avatar"></span>
+          <span class="font-black hidden sm:inline text-slate-900" x-text="state.playerName"></span>
+        </button>
+
+        <!-- Global Star Counter -->
+        <div class="bg-amber-300 border-2 border-amber-500 px-4 py-1.5 rounded-2xl font-black text-amber-950 flex items-center gap-2 shadow-sm text-xs sm:text-sm">
+          <span>⭐</span>
+          <span x-text="state.stars"></span>
+        </div>
+
+        <!-- Album Sticker Button -->
+        <button 
+          @click="showAlbum = true"
+          class="bg-purple-600 hover:bg-purple-700 text-white font-black px-4 py-2 rounded-2xl text-xs sm:text-sm flex items-center gap-2 shadow-md active:scale-95 transition-all">
+          <span>🎨</span>
+          <span class="hidden sm:inline" x-text="t('nav.stickers')"></span>
+        </button>
+
+        <!-- Sound Mute Toggle -->
+        <button 
+          @click="toggleSound()"
+          class="w-10 h-10 rounded-2xl bg-slate-100 border border-slate-300 flex items-center justify-center text-lg hover:bg-slate-200 active:scale-95 transition-all">
+          <span x-text="state.isMuted ? '🔇' : '🔊'"></span>
+        </button>
+
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- 2. OCTOKIDS CURRICULUM SECTIONS (FULL WIDTH) -->
+  <main class="w-full px-4 sm:px-8 py-8 flex-1 space-y-8">
+    
+
+    <!-- PHÂN KHU 1: TƯ DUY NỀN TẢNG (Foundational Path) -->
+    <section class="ok-curriculum-section">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-md">
+        
+        <!-- Section Header -->
+        <div class="flex items-center gap-3.5 mb-5 pb-4 border-b border-slate-100">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-2xl shadow-sm">
+            🌱
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-950" x-text="t('curriculum.foundationalTitle')"></h3>
+          </div>
+        </div>
+
+        <!-- Collapsible Content Box -->
+        <div>
+          <!-- Summary Bar -->
+          <button type="button" 
+                  @click="isFoundationalCollapsed = !isFoundationalCollapsed"
+                  class="w-full bg-slate-50 hover:bg-purple-50 border-2 border-slate-200 hover:border-purple-300 rounded-2xl px-5 py-3.5 flex items-center justify-between font-black text-xs sm:text-sm text-slate-800 transition-colors mb-4 shadow-sm">
+            <span class="flex items-center gap-2">
+              <span class="text-emerald-600">✓</span>
+              <span x-text="t('curriculum.foundationalProgress').replace('{done}', 0).replace('{total}', 4)"></span>
+            </span>
+            <span class="text-purple-700 font-extrabold" x-text="isFoundationalCollapsed ? t('curriculum.reviewBtn') : t('curriculum.collapseBtn')"></span>
+          </button>
+
+          <!-- Stepper Roadmap with Scroll Arrows -->
+          <div x-show="!isFoundationalCollapsed" x-transition class="relative">
+            
+            <button type="button" 
+                    @click="$refs.pathScroll.scrollBy({ left: -280, behavior: 'smooth' })"
+                    class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 sm:-translate-x-4 z-20 w-11 h-11 rounded-full bg-white border-2 border-purple-400 shadow-lg text-purple-800 font-black text-2xl flex items-center justify-center hover:bg-purple-100 hover:scale-110 active:scale-95 transition-all">
+              ‹
+            </button>
+
+            <!-- Horizontal Scroll Track -->
+            <div x-ref="pathScroll" class="flex items-stretch gap-5 overflow-x-auto py-3 px-2 scroll-smooth no-scrollbar">
+              
+              <!-- Step 1 (Current Active Step) -->
+              <div class="min-w-[250px] sm:min-w-[270px] bg-gradient-to-b from-purple-50 via-white to-purple-50/40 border-4 border-purple-500 rounded-3xl p-5 flex flex-col justify-between items-center text-center shadow-lg relative group hover:scale-[1.02] transition-transform">
+                <div class="w-9 h-9 rounded-full bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md mb-2">1</div>
+                <div class="text-5xl my-2 group-hover:scale-110 transition-transform">🔢</div>
+                <h4 class="font-black text-slate-950 text-base sm:text-lg my-1 leading-snug" x-text="t('curriculum.step1Title')"></h4>
+                <span class="text-xs font-black text-purple-800 bg-purple-100 border border-purple-300 px-3.5 py-1 rounded-full my-2" x-text="t('curriculum.questionsCount').replace('{count}', 40)"></span>
+                <div class="grid grid-cols-2 gap-2 w-full mt-4">
+                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-50 text-purple-800 border-2 border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="min-w-[250px] sm:min-w-[270px] bg-white border-2 border-slate-200 rounded-3xl p-5 flex flex-col justify-between items-center text-center shadow-sm relative group hover:border-purple-300 hover:scale-[1.01] transition-all">
+                <div class="w-9 h-9 rounded-full bg-slate-200 text-slate-700 font-black text-sm flex items-center justify-center shadow-sm mb-2">2</div>
+                <div class="text-5xl my-2 group-hover:scale-110 transition-transform">➕</div>
+                <h4 class="font-black text-slate-950 text-base sm:text-lg my-1 leading-snug" x-text="t('curriculum.step2Title')"></h4>
+                <span class="text-xs font-extrabold text-slate-600 bg-slate-100 border border-slate-200 px-3.5 py-1 rounded-full my-2" x-text="t('curriculum.questionsCount').replace('{count}', 44)"></span>
+                <div class="grid grid-cols-2 gap-2 w-full mt-4">
+                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-50 text-purple-800 border border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="min-w-[250px] sm:min-w-[270px] bg-white border-2 border-slate-200 rounded-3xl p-5 flex flex-col justify-between items-center text-center shadow-sm relative group hover:border-purple-300 hover:scale-[1.01] transition-all">
+                <div class="w-9 h-9 rounded-full bg-slate-200 text-slate-700 font-black text-sm flex items-center justify-center shadow-sm mb-2">3</div>
+                <div class="text-5xl my-2 group-hover:scale-110 transition-transform">⚖️</div>
+                <h4 class="font-black text-slate-950 text-base sm:text-lg my-1 leading-snug" x-text="t('curriculum.step3Title')"></h4>
+                <span class="text-xs font-extrabold text-slate-600 bg-slate-100 border border-slate-200 px-3.5 py-1 rounded-full my-2" x-text="t('curriculum.questionsCount').replace('{count}', 50)"></span>
+                <div class="grid grid-cols-2 gap-2 w-full mt-4">
+                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-50 text-purple-800 border border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="min-w-[250px] sm:min-w-[270px] bg-white border-2 border-slate-200 rounded-3xl p-5 flex flex-col justify-between items-center text-center shadow-sm relative group hover:border-purple-300 hover:scale-[1.01] transition-all">
+                <div class="w-9 h-9 rounded-full bg-slate-200 text-slate-700 font-black text-sm flex items-center justify-center shadow-sm mb-2">4</div>
+                <div class="text-5xl my-2 group-hover:scale-110 transition-transform">⏰</div>
+                <h4 class="font-black text-slate-950 text-base sm:text-lg my-1 leading-snug" x-text="t('curriculum.step4Title')"></h4>
+                <span class="text-xs font-extrabold text-slate-600 bg-slate-100 border border-slate-200 px-3.5 py-1 rounded-full my-2" x-text="t('curriculum.questionsCount').replace('{count}', 50)"></span>
+                <div class="grid grid-cols-2 gap-2 w-full mt-4">
+                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-50 text-purple-800 border border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+                </div>
+              </div>
+
+            </div>
+
+            <button type="button" 
+                    @click="$refs.pathScroll.scrollBy({ left: 280, behavior: 'smooth' })"
+                    class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 sm:translate-x-4 z-20 w-11 h-11 rounded-full bg-white border-2 border-purple-400 shadow-lg text-purple-800 font-black text-2xl flex items-center justify-center hover:bg-purple-100 hover:scale-110 active:scale-95 transition-all">
+              ›
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PHÂN KHU 2: TƯ DUY NÂNG CAO (Enrichment 6-Color Card Grid) -->
+    <section class="ok-curriculum-section">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-md">
+        
+        <!-- Section Header -->
+        <div class="flex items-center gap-3.5 mb-6 pb-4 border-b border-slate-100">
+          <div class="w-12 h-12 rounded-2xl bg-purple-100 border-2 border-purple-300 flex items-center justify-center text-2xl shadow-sm">
+            🚀
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-950" x-text="t('curriculum.enrichmentTitle')"></h3>
+          </div>
+        </div>
+
+        <!-- Lesson Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <!-- Card 1: Green -->
+          <div class="bg-emerald-50/70 border-2 border-emerald-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardRules')"></h4>
+            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">🧩</div>
+            <span class="text-xs font-black text-emerald-800 bg-emerald-100 border border-emerald-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 50)"></span>
+            <div class="grid grid-cols-2 gap-2.5 w-full">
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-emerald-100 text-emerald-800 border-2 border-emerald-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+            </div>
+          </div>
+
+          <!-- Card 2: Orange -->
+          <div class="bg-amber-50/70 border-2 border-amber-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardChart')"></h4>
+            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">📊</div>
+            <span class="text-xs font-black text-amber-900 bg-amber-100 border border-amber-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 30)"></span>
+            <div class="grid grid-cols-2 gap-2.5 w-full">
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-amber-100 text-amber-900 border-2 border-amber-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-amber-500 hover:bg-amber-600 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+            </div>
+          </div>
+
+          <!-- Card 3: Blue -->
+          <div class="bg-sky-50/70 border-2 border-sky-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardGeometry')"></h4>
+            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">📐</div>
+            <span class="text-xs font-black text-sky-800 bg-sky-100 border border-sky-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 58)"></span>
+            <div class="grid grid-cols-2 gap-2.5 w-full">
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-sky-100 text-sky-800 border-2 border-sky-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-sky-600 hover:bg-sky-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+            </div>
+          </div>
+
+          <!-- Card 4: Purple -->
+          <div class="bg-purple-50/70 border-2 border-purple-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardBalance')"></h4>
+            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">⚖️</div>
+            <span class="text-xs font-black text-purple-800 bg-purple-100 border border-purple-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 50)"></span>
+            <div class="grid grid-cols-2 gap-2.5 w-full">
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-100 text-purple-800 border-2 border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+            </div>
+          </div>
+
+          <!-- Card 5: Pink -->
+          <div class="bg-rose-50/70 border-2 border-rose-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardLogic')"></h4>
+            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">💡</div>
+            <span class="text-xs font-black text-rose-800 bg-rose-100 border border-rose-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 30)"></span>
+            <div class="grid grid-cols-2 gap-2.5 w-full">
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-rose-100 text-rose-800 border-2 border-rose-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-rose-500 hover:bg-rose-600 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+            </div>
+          </div>
+
+          <!-- Card 6: Teal -->
+          <div class="bg-teal-50/70 border-2 border-teal-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardSubst')"></h4>
+            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">🔄</div>
+            <span class="text-xs font-black text-teal-800 bg-teal-100 border border-teal-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 40)"></span>
+            <div class="grid grid-cols-2 gap-2.5 w-full">
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-teal-100 text-teal-800 border-2 border-teal-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-teal-600 hover:bg-teal-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PHÂN KHU 3: LUYỆN TẬP NHANH (Spiral Practice Mini Grid) -->
+    <section class="ok-curriculum-section">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-200 shadow-md">
+        
+        <!-- Section Header -->
+        <div class="flex items-center gap-3.5 mb-6 pb-4 border-b border-slate-100">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-2xl shadow-sm">
+            ⚡
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-950" x-text="t('curriculum.quickPracticeTitle')"></h3>
+            <p class="text-xs font-extrabold text-slate-600 mt-0.5" x-text="t('curriculum.quickPracticeSub')"></p>
+          </div>
+        </div>
+
+        <!-- 4 Quick Mini Grid Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <!-- Daily Quiz -->
+          <a href="modules/luyen-thi-trac-nghiem.html" 
+             @click="PortalCore.playPop()" 
+             class="bg-purple-50/80 border-2 border-purple-300 hover:border-purple-500 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
+            <div class="flex items-center gap-3">
+              <span class="w-11 h-11 rounded-2xl bg-purple-600 text-white text-xl flex items-center justify-center shadow-sm flex-shrink-0">🏆</span>
+              <div class="flex flex-col">
+                <b class="font-black text-slate-950 text-base group-hover:text-purple-700 transition-colors" x-text="t('curriculum.quickDaily')"></b>
+                <span class="text-xs font-bold text-slate-600" x-text="t('curriculum.quickDailySub')"></span>
+              </div>
+            </div>
+            <span class="text-2xl font-black text-purple-600 group-hover:translate-x-1 transition-transform">›</span>
+          </a>
+
+          <!-- Try Hard -->
+          <a href="modules/luyen-thi-trac-nghiem.html" 
+             @click="PortalCore.playPop()" 
+             class="bg-sky-50/80 border-2 border-sky-300 hover:border-sky-500 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
+            <div class="flex items-center gap-3">
+              <span class="w-11 h-11 rounded-2xl bg-sky-600 text-white text-xl flex items-center justify-center shadow-sm flex-shrink-0">🎯</span>
+              <div class="flex flex-col">
+                <b class="font-black text-slate-950 text-base group-hover:text-sky-700 transition-colors" x-text="t('curriculum.quickTryhard')"></b>
+                <span class="text-xs font-bold text-slate-600" x-text="t('curriculum.quickTryhardSub')"></span>
+              </div>
+            </div>
+            <span class="text-2xl font-black text-sky-600 group-hover:translate-x-1 transition-transform">›</span>
+          </a>
+
+          <!-- 10 Questions -->
+          <a href="modules/luyen-thi-trac-nghiem.html" 
+             @click="PortalCore.playPop()" 
+             class="bg-emerald-50/80 border-2 border-emerald-300 hover:border-emerald-500 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
+            <div class="flex items-center gap-3">
+              <span class="w-11 h-11 rounded-2xl bg-emerald-600 text-white text-xl flex items-center justify-center shadow-sm flex-shrink-0">🎲</span>
+              <div class="flex flex-col">
+                <b class="font-black text-slate-950 text-base group-hover:text-emerald-700 transition-colors" x-text="t('curriculum.quick10')"></b>
+                <span class="text-xs font-bold text-slate-600" x-text="t('curriculum.quick10Sub')"></span>
+              </div>
+            </div>
+            <span class="text-2xl font-black text-emerald-600 group-hover:translate-x-1 transition-transform">›</span>
+          </a>
+
+          <!-- 20 Questions -->
+          <a href="modules/luyen-thi-trac-nghiem.html" 
+             @click="PortalCore.playPop()" 
+             class="bg-amber-50/80 border-2 border-amber-300 hover:border-amber-500 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
+            <div class="flex items-center gap-3">
+              <span class="w-11 h-11 rounded-2xl bg-amber-500 text-white text-xl flex items-center justify-center shadow-sm flex-shrink-0">⚡</span>
+              <div class="flex flex-col">
+                <b class="font-black text-slate-950 text-base group-hover:text-amber-700 transition-colors" x-text="t('curriculum.quick20')"></b>
+                <span class="text-xs font-bold text-slate-600" x-text="t('curriculum.quick20Sub')"></span>
+              </div>
+            </div>
+            <span class="text-2xl font-black text-amber-600 group-hover:translate-x-1 transition-transform">›</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- STICKER ALBUM MODAL -->
+  <div x-show="showAlbum" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50" x-transition.opacity>
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full border-8 border-purple-400 shadow-2xl relative max-h-[90vh] flex flex-col justify-between">
+      
+      <div>
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-2xl font-black text-purple-800 flex items-center gap-2">
+            <span>🎨</span><span x-text="t('home.stickersTitle')"></span>
+          </h3>
+          <button @click="showAlbum = false" class="w-10 h-10 rounded-full bg-slate-100 text-slate-700 font-black text-xl hover:bg-slate-200">✕</button>
+        </div>
+
+        <!-- Sticker Grid -->
+        <div class="grid grid-cols-3 sm:grid-cols-5 gap-3 max-h-[350px] overflow-y-auto p-2 bg-slate-50 rounded-2xl border-2 border-slate-200">
+          <template x-for="stk in stickers" :key="stk.id">
+            <div class="rounded-2xl p-3 flex flex-col items-center justify-center text-center transition-all border-2"
+                 :class="state.stars >= stk.reqStars ? 'bg-white border-amber-400 shadow-md' : 'bg-slate-200 border-slate-300 opacity-50 grayscale'">
+              <span class="text-4xl" x-text="state.stars >= stk.reqStars ? stk.emoji : '🔒'"></span>
+              <span class="text-xs font-black text-slate-900 mt-1" x-text="getLangText(stk.name)"></span>
+              <span class="text-[10px] font-extrabold text-amber-800 mt-0.5" x-text="`${stk.reqStars} ⭐`"></span>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-slate-200 text-center">
+        <button @click="showAlbum = false" class="bg-purple-600 text-white font-black px-6 py-2.5 rounded-2xl shadow-md" x-text="t('home.closeAlbum')"></button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AVATAR / PROFILE MODAL -->
+  <div x-show="showAvatarModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50" x-transition.opacity>
+    <div class="bg-white rounded-3xl p-6 max-w-md w-full border-8 border-purple-400 shadow-2xl text-center">
+      <h3 class="text-2xl font-black text-purple-800 mb-2" x-text="t('home.editProfileTitle')"></h3>
+      
+      <div class="my-4">
+        <label class="block text-xs font-black text-slate-600 mb-1" x-text="t('home.playerNameLabel')"></label>
+        <input type="text" x-model="tempName" class="w-full border-4 border-purple-300 rounded-2xl px-4 py-2 font-black text-center text-lg text-slate-900 focus:outline-none focus:border-purple-500">
+      </div>
+
+      <div class="my-4">
+        <label class="block text-xs font-black text-slate-600 mb-2" x-text="t('home.chooseAvatarLabel')"></label>
+        <div class="flex justify-center gap-3">
+          <template x-for="av in ['👦', '👧', '🐰', '🐻', '🐱', '🐶']">
+            <button @click="tempAvatar = av" 
+                    class="w-12 h-12 rounded-2xl text-2xl flex items-center justify-center border-4 transition-transform"
+                    :class="tempAvatar === av ? 'border-purple-600 bg-purple-100 scale-110' : 'border-slate-200 bg-white'">
+              <span x-text="av"></span>
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <div class="flex gap-2 justify-center mt-6">
+        <button @click="saveProfile()" class="bg-purple-600 text-white font-black px-6 py-2.5 rounded-2xl shadow-md" x-text="t('home.saveProfileBtn')"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="w-full bg-white border-t border-slate-200 py-4 text-center text-xs font-bold text-slate-600" x-text="t('home.footer')">
+  </footer>
+
+  <!-- Alpine App Logic -->
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('portalHubApp', () => ({
+        state: PortalCore.getState(),
+        modules: window.LEARNING_MODULES,
+        stickers: window.GLOBAL_STICKERS,
+        currentLang: OctoI18n.currentLang,
+        languages: OctoI18n.languages,
+        isFoundationalCollapsed: false,
+        showAlbum: false,
+        showAvatarModal: false,
+        tempName: '',
+        tempAvatar: '',
+
+        t(key, defaultVal) {
+          return OctoI18n.t(key, defaultVal);
+        },
+
+        setLang(code) {
+          OctoI18n.setLanguage(code);
+          this.currentLang = code;
+          PortalCore.playPop();
+        },
+
+        getCurrentLangFlag() {
+          const l = this.languages.find(item => item.code === this.currentLang);
+          return l ? l.flag : '🌐';
+        },
+
+        getCurrentLangLabel() {
+          const l = this.languages.find(item => item.code === this.currentLang);
+          return l ? l.label : 'Tiếng Việt';
+        },
+
+        init() {
+          this.tempName = this.state.playerName;
+          this.tempAvatar = this.state.avatar;
+          window.addEventListener('octo-lang-changed', (e) => {
+            this.currentLang = e.detail;
+          });
+        },
+
+        toggleSound() {
+          this.state.isMuted = !this.state.isMuted;
+          PortalCore.saveState(this.state);
+        },
+
+        openAvatarModal() {
+          this.tempName = this.state.playerName;
+          this.tempAvatar = this.state.avatar;
+          this.showAvatarModal = true;
+        },
+
+        saveProfile() {
+          this.state.playerName = this.tempName || 'Bé Giỏi Giang';
+          this.state.avatar = this.tempAvatar || '👦';
+          PortalCore.saveState(this.state);
+          this.showAvatarModal = false;
+        }
+      }));
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Tổ hợp · Luyện Thi Toán TIMO - Octokids Standard</title>
+  <meta name="description" content="Nền tảng luyện thi trắc nghiệm Toán TIMO chuẩn Octokids với full màn hình, font chữ Be Vietnam Pro sắc nét, đọc giọng nói, đếm giờ và lời giải chi tiết.">
+
+  <!-- Google Fonts: Be Vietnam Pro & Inter for ultra-sharp typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;600;700;800;900&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            octo: {
+              brand: '#4f46e5',
+              purple: '#7c3aed',
+              gold: '#f59e0b',
+              blue: '#3b82f6',
+              green: '#10b981',
+              orange: '#f97316',
+              rose: '#f43f5e',
+              bg: '#f8fafc'
+            }
+          },
+          animation: {
+            bounceSlow: 'bounce 2.5s infinite',
+            float: 'float 3s ease-in-out infinite',
+            pop: 'pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-8px)' },
+            },
+            pop: {
+              '0%': { transform: 'scale(0.92)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Alpine.js v3 CDN -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Core i18n Engine & Sound Engine -->
+  <script src="../assets/js/i18n.js"></script>
+  <script src="../assets/js/core.js"></script>
+
+  <style>
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    body {
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      background-color: #f1f5f9;
+      font-family: 'Be Vietnam Pro', 'Inter', system-ui, sans-serif;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #e2e8f0;
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 8px;
+    }
+    #confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 99;
+    }
+    .emoji-grid-box {
+      background: #ffffff;
+      border: 2px border-dashed #94a3b8;
+      border-radius: 1rem;
+      padding: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      font-size: 2.25rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-900 antialiased flex flex-col justify-between selection:bg-purple-200 overflow-x-hidden"
+      x-data="octoQuizApp()"
+      x-init="initApp()">
+
+  <!-- Confetti Canvas Overlay -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- 1. OCTOKIDS MAIN NAVBAR HEADER (WITH LANGUAGE SWITCHER) -->
+  <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-40 px-4 sm:px-8 py-3">
+    <div class="w-full flex justify-between items-center gap-4">
+      
+      <!-- Brand & Navigation Links -->
+      <div class="flex items-center gap-4 sm:gap-8">
+        <a href="../index.html" class="flex items-center gap-2.5 font-black text-2xl text-purple-700 tracking-tight hover:opacity-90 transition-opacity">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center text-2xl shadow-md">
+            🐙
+          </div>
+          <span class="hidden sm:inline font-black">OctoKids</span>
+        </a>
+
+        <!-- Nav Category Links -->
+        <div class="hidden md:flex items-center gap-1.5 text-sm font-bold text-slate-700">
+          <a href="../index.html" class="px-3.5 py-2 rounded-xl hover:bg-slate-100 flex items-center gap-1.5 transition-colors">
+            <span>🏠</span><span x-text="t('nav.home')"></span>
+          </a>
+          <a href="#" class="px-3.5 py-2 rounded-xl bg-purple-50 text-purple-800 font-extrabold flex items-center gap-1.5">
+            <span>🏆</span><span x-text="t('nav.olympic')"></span>
+          </a>
+          <a href="#" class="px-3.5 py-2 rounded-xl hover:bg-slate-100 flex items-center gap-1.5 transition-colors">
+            <span>🌐</span><span x-text="t('nav.engMath')"></span>
+          </a>
+          <a href="#" class="px-3.5 py-2 rounded-xl hover:bg-slate-100 flex items-center gap-1.5 transition-colors">
+            <span>💡</span><span x-text="t('nav.iqMath')"></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- User Stats, Language Switcher & Action Buttons -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        
+        <!-- Language Switcher Dropdown in Header -->
+        <div class="relative" x-data="{ open: false }">
+          <button @click="open = !open" 
+                  class="bg-purple-50 hover:bg-purple-100 border border-purple-300 text-purple-800 px-3.5 py-1.5 rounded-2xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-sm active:scale-95 transition-all">
+            <span class="text-base" x-text="getCurrentLangFlag()"></span>
+            <span x-text="getCurrentLangLabel()"></span>
+            <span class="text-[10px] ml-0.5">▼</span>
+          </button>
+          
+          <div x-show="open" 
+               @click.outside="open = false" 
+               x-transition
+               class="absolute right-0 mt-2 w-44 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 py-1.5 overflow-hidden">
+            <template x-for="langItem in languages" :key="langItem.code">
+              <button @click="setLang(langItem.code); open = false;" 
+                      class="w-full text-left px-4 py-2 hover:bg-purple-50 flex items-center gap-2.5 font-extrabold text-xs sm:text-sm transition-colors"
+                      :class="currentLang === langItem.code ? 'text-purple-700 bg-purple-50 font-black' : 'text-slate-700'">
+                <span class="text-lg" x-text="langItem.flag"></span>
+                <span x-text="langItem.label"></span>
+                <span x-show="currentLang === langItem.code" class="ml-auto text-purple-600 font-black">✓</span>
+              </button>
+            </template>
+          </div>
+        </div>
+
+        <!-- Global Stars Counter -->
+        <div class="bg-amber-300 border-2 border-amber-500 px-4 py-1.5 rounded-2xl font-black text-amber-950 flex items-center gap-2 shadow-sm text-xs sm:text-sm">
+          <span>⭐</span>
+          <span x-text="globalState.stars"></span>
+        </div>
+
+        <!-- Mute Sound Toggle -->
+        <button @click="toggleSound()" class="w-10 h-10 rounded-2xl bg-slate-100 border border-slate-300 flex items-center justify-center text-lg hover:bg-slate-200 transition-all">
+          <span x-text="globalState.isMuted ? '🔇' : '🔊'"></span>
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- 2. EXAM TOPBAR (FULL WIDTH) -->
+  <div class="bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 sm:px-8 py-3 shadow-sm">
+    <div class="w-full flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Breadcrumb Navigation -->
+      <div class="flex items-center gap-2 text-sm sm:text-base font-extrabold text-slate-700">
+        <a href="../index.html" class="hover:text-purple-700">← Toán TIMO</a>
+        <span class="text-slate-400">›</span>
+        <span>Luyện Tập</span>
+        <span class="text-slate-400">›</span>
+        <b class="text-purple-700 font-black text-base" x-text="examConfig.sectionLabel || getLocalized(examConfig.title) || 'Tổ hợp'"></b>
+      </div>
+
+      <!-- Action Group: Timer, Pause, Report, Submit -->
+      <div class="flex items-center gap-3">
+        
+        <!-- Status Box -->
+        <div class="bg-slate-100 border border-slate-300 rounded-2xl px-4 py-1.5 flex items-center gap-3 shadow-inner">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+            <span class="text-base">🕐</span>
+            <div class="flex flex-col leading-none">
+              <span class="text-[10px] text-slate-500 font-extrabold uppercase" x-text="t('exam.timeRemaining')"></span>
+              <b class="text-base font-black text-slate-950" 
+                 x-text="formatTime(remainingSeconds)"
+                 :class="remainingSeconds < 300 ? 'text-rose-600 animate-pulse' : ''"></b>
+            </div>
+          </div>
+
+          <span class="w-px h-6 bg-slate-300"></span>
+
+          <!-- Pause Button -->
+          <button type="button" @click="pauseExam()" class="text-xs sm:text-sm font-black text-slate-800 hover:text-purple-700 flex items-center gap-1 active:scale-95">
+            <span>⏸</span>
+            <span class="hidden sm:inline" x-text="t('exam.pause')"></span>
+          </button>
+
+          <span class="w-px h-6 bg-slate-300"></span>
+
+          <!-- Report Error Button -->
+          <button type="button" @click="openReportModal()" class="text-xs sm:text-sm font-black text-slate-800 hover:text-rose-600 flex items-center gap-1 active:scale-95">
+            <span>🚩</span>
+            <span class="hidden sm:inline" x-text="t('exam.report')"></span>
+          </button>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="button" @click="confirmSubmit()" 
+                class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-black px-6 py-2.5 rounded-2xl text-sm shadow-md border border-purple-400 active:scale-95 transition-all"
+                x-text="t('exam.submit')">
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3. OCTOKIDS FULL-WIDTH BODY LAYOUT (75% Main Card - 25% Sidebar) -->
+  <main class="w-full px-4 sm:px-8 py-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    
+    <!-- LEFT MAIN QUESTION CARD (lg:col-span-9 = ~75% width) -->
+    <section class="lg:col-span-9 flex flex-col gap-4">
+      
+      <!-- QUESTION CARD CONTAINER -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-md flex flex-col justify-between min-h-[500px] relative overflow-hidden"
+           :style="`--ok-zoom: ${zoomScale / 100}`">
+        
+        <!-- Pause Overlay inside Card -->
+        <div x-show="isPaused" 
+             x-transition.opacity
+             class="absolute inset-0 bg-slate-950/90 backdrop-blur-sm z-30 flex flex-col items-center justify-center text-white p-6 text-center animate-pop">
+          <span class="text-6xl mb-3 animate-bounceSlow">⏸</span>
+          <h3 class="text-3xl font-black mb-2" x-text="t('exam.pause')"></h3>
+          <p class="text-base font-bold text-slate-300 mb-6">Bấm "Tiếp tục" để tiếp tục thử sức nhé!</p>
+          <button @click="resumeExam()" class="bg-amber-400 hover:bg-amber-500 text-amber-950 font-black px-8 py-3.5 rounded-2xl shadow-lg text-base active:scale-95 transition-all">
+            ▶ Tiếp tục làm bài
+          </button>
+        </div>
+
+        <!-- CARD HEADER BAR -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200">
+          
+          <div class="flex items-center gap-2.5">
+            <span class="bg-slate-950 text-white font-black text-sm px-3.5 py-1 rounded-xl shadow-sm" x-text="`${t('exam.question')} ${currentQuestionIndex + 1}`"></span>
+            <span class="bg-purple-100 text-purple-900 font-black text-xs sm:text-sm px-3.5 py-1 rounded-xl uppercase tracking-wider border border-purple-200" x-text="getLocalized(currentQuestion.topic) || 'TỔ HỢP'"></span>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            
+            <!-- Zoom Controls -->
+            <div class="flex items-center bg-slate-100 rounded-xl p-1 border border-slate-300 shadow-inner">
+              <button @click="adjustZoom(-10)" class="w-8 h-8 rounded-lg text-sm font-black text-slate-800 hover:bg-white flex items-center justify-center transition-all" title="Thu nhỏ chữ">−</button>
+              <span class="px-2.5 text-xs font-black text-purple-800" x-text="`${zoomScale}%`"></span>
+              <button @click="adjustZoom(10)" class="w-8 h-8 rounded-lg text-sm font-black text-slate-800 hover:bg-white flex items-center justify-center transition-all" title="Phóng to chữ">+</button>
+            </div>
+
+            <!-- TTS Speech Buttons -->
+            <div class="flex items-center gap-1.5">
+              <button @click="playQuestionSpeech('vi')" class="bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 active:scale-95 transition-all shadow-sm">
+                <span>🔊</span><span x-text="t('exam.readVi')"></span>
+              </button>
+              <button @click="playQuestionSpeech('en')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-300 px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 active:scale-95 transition-all shadow-sm">
+                <span>🔊</span><span x-text="t('exam.readEn')"></span>
+              </button>
+            </div>
+
+            <!-- Hint & Answer buttons -->
+            <button x-show="examConfig.allowInstantFeedback" 
+                    @click="toggleInstantHint()" 
+                    class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition-all shadow-sm">
+              <span>✅</span><span x-text="t('exam.viewAnswer')"></span>
+            </button>
+            <button @click="toggleHelpHint()" class="bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition-all shadow-sm">
+              <span>💡</span><span x-text="t('exam.help')"></span>
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- QUESTION CONTENT STAGE (Scalable via --ok-zoom) -->
+        <div class="my-6 space-y-5 transition-all duration-200" :style="`transform-origin: top left; font-size: calc(1.05rem * var(--ok-zoom, 1.2));`">
+          
+          <!-- Question Text (Reacts to currentLang) -->
+          <p class="font-extrabold text-slate-950 leading-relaxed text-lg sm:text-xl" x-html="getLocalized(currentQuestion.questionText)"></p>
+
+          <!-- Media Visual: Emoji Grid, Image, or none -->
+          <template x-if="currentQuestion.media && currentQuestion.media.type === 'emojiGrid'">
+            <div class="emoji-grid-box max-w-2xl mx-auto my-4 shadow-sm">
+              <template x-for="(item, i) in (currentQuestion.media.emojis || currentQuestion.media.items || [])" :key="i">
+                <span x-text="item"></span>
+              </template>
+            </div>
+          </template>
+
+          <template x-if="currentQuestion.media && (currentQuestion.media.type === 'image' || currentQuestion.media.url)">
+            <div class="flex justify-center my-4">
+              <img :src="currentQuestion.media.url" 
+                   :alt="currentQuestion.media.alt || 'Hình minh họa'" 
+                   class="max-h-[280px] rounded-2xl border-2 border-slate-200 shadow-sm cursor-pointer hover:scale-105 transition-transform"
+                   @click="previewImage(currentQuestion.media.url)">
+            </div>
+          </template>
+
+        </div>
+
+        <!-- CHOICES GRID (Octokids Colorful Choice Buttons A-F) -->
+        <div class="my-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <template x-for="(opt, cIdx) in currentQuestion.options" :key="opt.id">
+              
+              <button @click="selectChoice(opt.id)"
+                      class="rounded-2xl p-4 border-2 text-left flex items-center justify-between gap-3.5 transition-all duration-200 shadow-sm active:scale-[0.98] group"
+                      :class="getChoiceButtonClass(opt.id, cIdx)">
+                
+                <div class="flex items-center gap-3.5">
+                  <!-- Individual Choice TTS Speaker -->
+                  <span @click.stop="speakOption(opt.id, getLocalized(opt.text))" 
+                        class="w-8 h-8 rounded-xl bg-slate-100 text-slate-600 hover:bg-purple-100 hover:text-purple-700 text-xs font-black flex items-center justify-center shadow-inner"
+                        title="Đọc đáp án này">🔊</span>
+
+                  <!-- Choice Badge (A, B, C, D, E, F) -->
+                  <span class="w-9 h-9 rounded-xl font-black text-base flex items-center justify-center text-white shadow-md flex-shrink-0"
+                        :class="getBadgeColorClass(cIdx)"
+                        x-text="opt.id"></span>
+
+                  <!-- Choice Text & optional Image -->
+                  <div class="flex flex-col">
+                    <span class="font-black text-lg text-slate-900" x-text="getLocalized(opt.text)"></span>
+                    <template x-if="opt.imageUrl">
+                      <img :src="opt.imageUrl" class="h-16 w-auto object-contain rounded-lg border border-slate-200 mt-1">
+                    </template>
+                  </div>
+                </div>
+
+                <!-- Choice Checkmark icon if selected -->
+                <div x-show="userAnswers[currentQuestion.id] === opt.id" class="w-7 h-7 rounded-full bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow">
+                  ✓
+                </div>
+
+              </button>
+
+            </template>
+          </div>
+        </div>
+
+        <!-- Instant Solution / Help Popup Box -->
+        <div x-show="showInstantHint || showHelpHint" 
+             x-transition
+             class="bg-emerald-50 border-2 border-emerald-400 p-4 sm:p-5 rounded-2xl text-emerald-950 text-sm font-extrabold my-3 shadow-inner">
+          <div class="flex items-center gap-2 font-black text-emerald-900 mb-1.5">
+            <span>💡 Lời Giải Gợi Ý:</span>
+            <span class="bg-emerald-200 text-emerald-950 px-3 py-0.5 rounded-lg" x-text="`Đáp án đúng: ${currentQuestion.correctAnswer}`"></span>
+          </div>
+          <p x-text="getLocalized(currentQuestion.explanation)"></p>
+        </div>
+
+        <!-- CARD FOOTER ROW (Prev & Next buttons) -->
+        <div class="pt-5 border-t border-slate-200 flex justify-between items-center gap-4">
+          <button type="button" @click="prevQuestion()" :disabled="currentQuestionIndex === 0"
+                  class="bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed text-slate-900 font-black px-6 py-3 rounded-2xl text-sm border border-slate-300 transition-all flex items-center gap-1">
+            <span>←</span><span x-text="t('exam.prev')"></span>
+          </button>
+
+          <button type="button" @click="nextQuestion()" :disabled="currentQuestionIndex === filteredQuestions.length - 1"
+                  class="bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-black px-7 py-3 rounded-2xl text-sm shadow-md active:scale-95 transition-all flex items-center gap-1">
+            <span x-text="t('exam.next')"></span><span>→</span>
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR (lg:col-span-3 = ~25% width) -->
+    <aside class="lg:col-span-3 flex flex-col gap-5">
+      
+      <!-- SIDE CARD 1: PROGRESS CARD -->
+      <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm flex flex-col gap-3">
+        <div class="flex justify-between items-center text-xs font-black text-slate-800">
+          <span x-text="t('exam.progress')"></span>
+          <b class="text-purple-700 text-base font-black" x-text="`${getAnsweredCount()}/${filteredQuestions.length}`"></b>
+        </div>
+        <div class="w-full h-3.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+          <div class="h-full bg-gradient-to-r from-purple-600 to-indigo-600 transition-all duration-500"
+               :style="`width: ${(getAnsweredCount() / filteredQuestions.length) * 100}%`"></div>
+        </div>
+      </div>
+
+      <!-- SIDE CARD 2: QUESTION PALETTE GRID -->
+      <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm flex flex-col gap-3.5">
+        <h4 class="font-black text-xs text-slate-800 uppercase tracking-wider" x-text="t('exam.statusLegend')"></h4>
+        
+        <!-- Palette Legend -->
+        <div class="flex flex-wrap gap-2 text-xs font-extrabold text-slate-700 pb-2 border-b border-slate-100">
+          <span class="flex items-center gap-1.5"><i class="w-3.5 h-3.5 rounded-full bg-emerald-500 border border-emerald-600 inline-block"></i><span x-text="t('exam.done')"></span></span>
+          <span class="flex items-center gap-1.5"><i class="w-3.5 h-3.5 rounded-full bg-amber-500 border border-amber-600 inline-block"></i><span x-text="t('exam.current')"></span></span>
+          <span class="flex items-center gap-1.5"><i class="w-3.5 h-3.5 rounded-full bg-white border border-slate-300 inline-block"></i><span x-text="t('exam.unanswered')"></span></span>
+          <span class="flex items-center gap-1.5"><i class="w-3.5 h-3.5 rounded-full bg-rose-500 border border-rose-600 inline-block"></i><span x-text="t('exam.flagged')"></span></span>
+        </div>
+
+        <!-- Jump Input & Difficulty Filter Row -->
+        <div class="grid grid-cols-2 gap-2">
+          <div class="flex items-center bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-1.5">
+            <input type="number" x-model.number="jumpInput" min="1" :max="filteredQuestions.length" :placeholder="t('exam.jumpToPlaceholder')" class="w-full bg-transparent text-xs font-extrabold text-slate-900 focus:outline-none">
+            <button @click="doJump()" class="text-xs font-black text-purple-700 px-1">Go</button>
+          </div>
+
+          <select x-model="selectedDifficulty" class="bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs font-black text-slate-900 focus:outline-none">
+            <option value="0" x-text="t('exam.allDifficulties')"></option>
+            <option value="1" x-text="t('exam.level1')"></option>
+            <option value="2" x-text="t('exam.level2')"></option>
+            <option value="3" x-text="t('exam.level3')"></option>
+            <option value="4" x-text="t('exam.level4')"></option>
+            <option value="5" x-text="t('exam.level5')"></option>
+          </select>
+        </div>
+
+        <!-- 5-COLUMN PALETTE GRID -->
+        <div class="grid grid-cols-5 gap-2.5 max-h-[280px] overflow-y-auto p-1">
+          <template x-for="(q, idx) in paginatedQuestions" :key="q.id">
+            
+            <button type="button" 
+                    @click="jumpToQuestion(getAbsoluteIndex(idx))"
+                    class="h-10 rounded-xl font-black text-xs flex items-center justify-center relative transition-all duration-150 border-2 shadow-sm"
+                    :class="getPaletteItemClass(getAbsoluteIndex(idx))">
+              <span x-text="getAbsoluteIndex(idx) + 1"></span>
+              <span x-show="isFlagged(getAbsoluteIndex(idx))" class="absolute -top-1 -right-1 text-[10px]">🚩</span>
+            </button>
+
+          </template>
+        </div>
+
+        <!-- PALETTE PAGER -->
+        <div class="flex items-center justify-between pt-2.5 border-t border-slate-100 text-xs font-black text-slate-700">
+          <button type="button" @click="prevPage()" :disabled="gridPage === 0" class="w-8 h-8 rounded-xl bg-slate-100 disabled:opacity-40 font-black">‹</button>
+          <span>Page <strong class="text-purple-700 text-sm" x-text="gridPage + 1"></strong> / <span x-text="totalPages"></span></span>
+          <button type="button" @click="nextPage()" :disabled="gridPage === totalPages - 1" class="w-8 h-8 rounded-xl bg-slate-100 disabled:opacity-40 font-black">›</button>
+        </div>
+
+      </div>
+
+      <!-- SIDE CARD 3: EXAM INFO CARD -->
+      <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm flex flex-col gap-2.5">
+        <h4 class="font-black text-xs text-slate-800 uppercase tracking-wider" x-text="t('exam.examInfo')"></h4>
+        <div class="space-y-2 text-xs text-slate-700 font-extrabold">
+          <div class="flex justify-between"><span>Bài thi:</span><b class="text-slate-950 font-black" x-text="getLocalized(examConfig.title) || 'Toán TIMO'"></b></div>
+          <div class="flex justify-between"><span>Số câu:</span><b class="text-slate-950 font-black" x-text="`${questions.length}`"></b></div>
+        </div>
+      </div>
+
+      <!-- SIDE CARD 4: OCTO MASCOT CHEER CARD -->
+      <div class="bg-gradient-to-br from-purple-600 via-indigo-600 to-purple-800 text-white rounded-3xl p-5 shadow-md text-center flex flex-col items-center gap-2 border-2 border-purple-400">
+        <div class="w-16 h-16 rounded-2xl bg-white/20 border-2 border-white/60 flex items-center justify-center text-4xl animate-bounceSlow">
+          🐙
+        </div>
+        <p class="text-sm font-black text-amber-200 leading-snug" x-text="t('exam.mascotCheer')">
+        </p>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- 4. MODALS & OVERLAYS -->
+
+  <!-- Submit Confirmation Modal -->
+  <div x-show="showWarningModal" 
+       class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+       x-transition.opacity>
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border-4 border-amber-400 shadow-2xl text-center animate-pop">
+      <div class="w-16 h-16 mx-auto rounded-full bg-amber-100 text-amber-600 border-2 border-amber-400 flex items-center justify-center text-3xl font-black mb-3">
+        ❓
+      </div>
+      <h3 class="text-xl font-black text-slate-900 mb-2">BÉ CÓ CHẮC CHẮN NỘP BÀI?</h3>
+      <p class="text-xs sm:text-sm font-bold text-slate-600 mb-5 leading-relaxed">
+        Sau khi nộp bài sẽ không thể sửa lại đáp án nữa. Bé hiện còn <strong class="text-amber-600 font-black" x-text="filteredQuestions.length - getAnsweredCount()"></strong> câu chưa làm.
+      </p>
+
+      <div class="flex justify-center gap-3">
+        <button @click="showWarningModal = false" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-black px-5 py-2.5 rounded-2xl text-xs sm:text-sm border border-slate-300">
+          Làm tiếp
+        </button>
+        <button @click="submitExamNow()" class="bg-purple-600 hover:bg-purple-700 text-white font-black px-5 py-2.5 rounded-2xl text-xs sm:text-sm shadow-md">
+          Nộp bài ngay 📤
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Error Modal -->
+  <div x-show="showReportModal" 
+       class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+       x-transition.opacity>
+    <div class="bg-white rounded-3xl p-6 max-w-md w-full border-4 border-rose-400 shadow-2xl text-center animate-pop">
+      <h3 class="text-lg font-black text-slate-900 mb-3">🚩 BÁO LỖI CÂU <span x-text="currentQuestionIndex + 1"></span></h3>
+      <div class="space-y-3 text-left">
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 mb-1">Loại lỗi:</label>
+          <select x-model="reportType" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-900">
+            <option value="WrongAnswer">Sai đáp án</option>
+            <option value="WrongImage">Sai hình ảnh</option>
+            <option value="WrongContent">Sai nội dung câu hỏi</option>
+            <option value="Other">Khác</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 mb-1">Mô tả chi tiết:</label>
+          <textarea x-model="reportDesc" rows="3" placeholder="Bé thấy lỗi gì..." class="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-900 focus:outline-none"></textarea>
+        </div>
+      </div>
+      <div class="flex justify-center gap-3 mt-4">
+        <button @click="showReportModal = false" class="bg-slate-100 text-slate-800 font-black px-5 py-2 rounded-xl text-xs">Hủy</button>
+        <button @click="submitReport()" class="bg-rose-600 text-white font-black px-5 py-2 rounded-xl text-xs shadow-md">Gửi báo lỗi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Results Modal -->
+  <div x-show="showResultModal" 
+       class="fixed inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 z-50 overflow-y-auto"
+       x-transition.opacity>
+    
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full border-8 border-purple-400 shadow-2xl relative my-auto text-center animate-pop max-h-[92vh] flex flex-col justify-between">
+      
+      <div class="overflow-y-auto pr-1">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-amber-300 via-amber-400 to-yellow-500 border-4 border-white shadow-xl flex items-center justify-center text-5xl animate-bounceSlow mb-2">
+          🏆
+        </div>
+        
+        <span class="bg-purple-100 text-purple-900 text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider">🎉 HOÀN THÀNH XUẤT SẮC BÀI THI!</span>
+        <h3 class="text-2xl font-black text-slate-900 mt-2 mb-1" x-text="getLocalized(examConfig.title)"></h3>
+
+        <!-- Score Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-purple-50 border-2 border-purple-200 p-4 rounded-2xl my-4">
+          <div class="bg-white p-3 rounded-xl border border-purple-200">
+            <span class="text-[10px] font-black text-slate-500 block uppercase">ĐIỂM SỐ</span>
+            <span class="text-2xl font-black text-purple-700" x-text="`${calculatedScore}/100`"></span>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-purple-200">
+            <span class="text-[10px] font-black text-slate-500 block uppercase">TỶ LỆ ĐÚNG</span>
+            <span class="text-2xl font-black text-emerald-600" x-text="`${correctCount}/${filteredQuestions.length}`"></span>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-purple-200">
+            <span class="text-[10px] font-black text-slate-500 block uppercase">THỜI GIAN</span>
+            <span class="text-lg font-black text-slate-800" x-text="formatTime(timeSpentSeconds)"></span>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-purple-200">
+            <span class="text-[10px] font-black text-slate-500 block uppercase">HUY CHƯƠNG</span>
+            <span class="text-base font-black text-amber-600" x-text="earnedMedal"></span>
+          </div>
+        </div>
+
+        <!-- Review Solution List -->
+        <div class="text-left border-t border-slate-200 pt-4">
+          <h4 class="text-xs font-black text-slate-800 uppercase mb-3">🔍 XEM LẠI LỜI GIẢI CHI TIẾT:</h4>
+          <div class="space-y-3 max-h-[220px] overflow-y-auto pr-1">
+            <template x-for="(q, idx) in filteredQuestions" :key="q.id">
+              <div class="p-3.5 rounded-2xl border-2 text-xs font-bold"
+                   :class="userAnswers[q.id] === q.correctAnswer ? 'bg-emerald-50 border-emerald-300' : 'bg-rose-50 border-rose-300'">
+                <div class="flex justify-between font-black mb-1">
+                  <span x-text="`Câu ${idx + 1}:`"></span>
+                  <span x-text="userAnswers[q.id] === q.correctAnswer ? '✓ ĐÚNG' : '✕ SAI'"></span>
+                </div>
+                <p class="text-slate-950 font-bold mb-1" x-html="getLocalized(q.questionText)"></p>
+                <div class="text-[11px] mb-1">Đáp án chọn: <b x-text="userAnswers[q.id] || 'Chưa làm'"></b> | Đáp án đúng: <b class="text-emerald-700" x-text="q.correctAnswer"></b></div>
+                <div class="bg-white p-2.5 rounded-xl text-[11px] text-slate-800 border border-slate-200">💡 <span x-text="getLocalized(q.explanation)"></span></div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-slate-200 flex justify-center gap-3">
+        <button @click="retakeExam()" class="bg-amber-400 text-amber-950 font-black px-6 py-2.5 rounded-2xl shadow-md text-sm">🔄 Làm Lại Bài Thi</button>
+        <a href="../index.html" class="bg-purple-600 text-white font-black px-6 py-2.5 rounded-2xl shadow-md text-sm">🗺️ Trở Về Bản Đồ</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ALPINE ENGINE SCRIPT -->
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('octoQuizApp', () => ({
+        globalState: PortalCore.getState(),
+        
+        // Settings
+        zoomScale: 120,
+        jumpInput: null,
+        selectedDifficulty: "0",
+        currentLang: OctoI18n.currentLang,
+        languages: OctoI18n.languages,
+
+        t(key, defaultVal) {
+          return OctoI18n.t(key, defaultVal);
+        },
+
+        getLocalized(obj) {
+          return OctoI18n.getLangText(obj, this.currentLang);
+        },
+
+        setLang(code) {
+          OctoI18n.setLanguage(code);
+          this.currentLang = code;
+          PortalCore.playPop();
+        },
+
+        getCurrentLangFlag() {
+          const l = this.languages.find(item => item.code === this.currentLang);
+          return l ? l.flag : '🌐';
+        },
+
+        getCurrentLangLabel() {
+          const l = this.languages.find(item => item.code === this.currentLang);
+          return l ? l.label : 'Tiếng Việt';
+        },
+        
+        // Exam Config (Loaded dynamically from JSON)
+        examConfig: {
+          id: "timo-to-hop-g1",
+          title: { vi: "Toán TIMO Lớp 1 - Chủ đề Tổ hợp", en: "TIMO Math Grade 1 - Combinatorics" },
+          durationMinutes: 15,
+          questionsPerPage: 20,
+          allowInstantFeedback: true
+        },
+
+        // Computed Getters for Alpine.js reactive scope
+        get filteredQuestions() {
+          if (!this.questions || !this.questions.length) return [];
+          if (!this.selectedDifficulty || this.selectedDifficulty === "0") {
+            return this.questions;
+          }
+          const level = parseInt(this.selectedDifficulty);
+          return this.questions.filter(q => (q.difficultyLevel || q.difficulty || q.level) === level);
+        },
+
+        get currentQuestion() {
+          const list = this.filteredQuestions;
+          if (!list || list.length === 0) {
+            return {
+              id: 0,
+              topic: { vi: "TỔ HỢP", en: "COMBINATORICS", zh: "组合" },
+              questionText: { vi: "Đang tải câu hỏi...", en: "Loading question...", zh: "加载中..." },
+              media: null,
+              options: [],
+              correctAnswer: "",
+              explanation: { vi: "", en: "", zh: "" }
+            };
+          }
+          const safeIndex = Math.min(this.currentQuestionIndex, list.length - 1);
+          return list[safeIndex] || list[0];
+        },
+
+        get totalPages() {
+          const perPage = this.examConfig.questionsPerPage || 20;
+          const total = this.filteredQuestions.length;
+          return Math.max(1, Math.ceil(total / perPage));
+        },
+
+        get paginatedQuestions() {
+          const perPage = this.examConfig.questionsPerPage || 20;
+          const start = this.gridPage * perPage;
+          return this.filteredQuestions.slice(start, start + perPage);
+        },
+
+        // Questions Array (Default dataset fallback + dynamic JSON loading)
+        questions: [
+          {
+            id: 1,
+            topic: { vi: "TỔ HỢP", en: "COMBINATORICS", zh: "组合" },
+            difficultyLevel: 1,
+            questionText: {
+              vi: "Có bao nhiêu hình vuông trong hình bên dưới?",
+              en: "How many squares are there in the figure below?",
+              zh: "下图中有多少个正方形？"
+            },
+            speechText: {
+              vi: "Hỏi có bao nhiêu hình vuông trong hình bên dưới?",
+              en: "How many squares are there in the figure below?",
+              zh: "请问下图中有多少个正方形？"
+            },
+            media: { type: "emojiGrid", emojis: ["🟦", "🟦", "🟦", "🟦"], columns: 2 },
+            options: [
+              { id: "A", text: { vi: "3 hình", en: "3 squares", zh: "3个" } },
+              { id: "B", text: { vi: "4 hình", en: "4 squares", zh: "4个" } },
+              { id: "C", text: { vi: "5 hình", en: "5 squares", zh: "5个" } },
+              { id: "D", text: { vi: "6 hình", en: "6 squares", zh: "6个" } }
+            ],
+            correctAnswer: "C",
+            explanation: {
+              vi: "Hình gồm có 4 hình vuông nhỏ và 1 hình vuông lớn bao bên ngoài. Tổng cộng: 4 + 1 = 5 hình vuông.",
+              en: "The figure consists of 4 small squares and 1 large outer square. Total: 4 + 1 = 5 squares.",
+              zh: "图中有 4 个小正方形和 1 个外围的大正方形。总共：4 + 1 = 5 个正方形。"
+            }
+          },
+          {
+            id: 2,
+            topic: { vi: "TỔ HỢP", en: "COMBINATORICS", zh: "组合" },
+            difficultyLevel: 2,
+            questionText: {
+              vi: "An có 3 chiếc áo (Đỏ, Xanh, Vàng) và 2 chiếc quần (Đen, Trắng). Hỏi An có bao nhiêu cách chọn 1 bộ quần áo?",
+              en: "An has 3 shirts (Red, Blue, Yellow) and 2 pants (Black, White). How many different outfits can An choose?",
+              zh: "小安有 3 件上衣（红、蓝、黄）和 2 条裤子（黑、白）。小安有多少种 point 穿搭组合？"
+            },
+            speechText: {
+              vi: "An có 3 chiếc áo và 2 chiếc quần. Hỏi An có bao nhiêu cách chọn một bộ quần áo?",
+              en: "An has 3 shirts and 2 pants. How many different outfits can An choose?",
+              zh: "小安有 3 件上衣和 2 条裤子。小安有多少种 point 穿搭组合？"
+            },
+            media: { type: "emojiGrid", emojis: ["👕", "👕", "👕", "👖", "👖"], columns: 5 },
+            options: [
+              { id: "A", text: { vi: "5 cách", en: "5 ways", zh: "5种" } },
+              { id: "B", text: { vi: "6 cách", en: "6 ways", zh: "6种" } },
+              { id: "C", text: { vi: "7 cách", en: "7 ways", zh: "7种" } },
+              { id: "D", text: { vi: "8 cách", en: "8 ways", zh: "8种" } }
+            ],
+            correctAnswer: "B",
+            explanation: {
+              vi: "Mỗi chiếc áo có thể ghép với 2 chiếc quần. Vì có 3 chiếc áo nên số cách chọn là: 3 × 2 = 6 bộ quần áo.",
+              en: "Each shirt can be paired with 2 different pants. Since there are 3 shirts, total combinations = 3 × 2 = 6 outfits.",
+              zh: "每件上衣都可以搭配 2 条裤子。因为有 3 件上衣，所以穿搭总数：3 × 2 = 6 种。"
+            }
+          },
+          {
+            id: 3,
+            topic: { vi: "TỔ HỢP", en: "COMBINATORICS", zh: "组合" },
+            difficultyLevel: 2,
+            questionText: {
+              vi: "Trong một buổi tiệc có 4 bạn nhỏ. Mỗi bạn bắt tay với tất cả các bạn còn lại 1 lần. Hỏi có tổng cộng bao nhiêu cái bắt tay?",
+              en: "There are 4 children at a party. Each child shakes hands with every other child once. How many handshakes are there in total?",
+              zh: "聚会上有 4 个小朋友。每个小朋友都与其他人握手一次。请问一共有多少次握手？"
+            },
+            speechText: {
+              vi: "Có 4 bạn nhỏ, mỗi bạn bắt tay với các bạn còn lại một lần. Hỏi có tổng cộng bao nhiêu cái bắt tay?",
+              en: "There are 4 children at a party. Each child shakes hands with every other child once. How many handshakes in total?",
+              zh: "有 4 个小朋友，每个小朋友与其他人握手一次。一共有多少次握手？"
+            },
+            media: { type: "emojiGrid", emojis: ["🤝", "🤝", "🤝", "🤝", "🤝", "🤝"], columns: 3 },
+            options: [
+              { id: "A", text: { vi: "4 cái", en: "4 handshakes", zh: "4次" } },
+              { id: "B", text: { vi: "6 cái", en: "6 handshakes", zh: "6次" } },
+              { id: "C", text: { vi: "8 cái", en: "8 handshakes", zh: "8次" } },
+              { id: "D", text: { vi: "12 cái", en: "12 handshakes", zh: "12次" } }
+            ],
+            correctAnswer: "B",
+            explanation: {
+              vi: "Số cái bắt tay = (4 × 3) ÷ 2 = 6 cái bắt tay.",
+              en: "Total handshakes = (4 × 3) ÷ 2 = 6 handshakes.",
+              zh: "握手总次数 = (4 × 3) ÷ 2 = 6 次。"
+            }
+          },
+          {
+            id: 4,
+            topic: { vi: "TỔ HỢP", en: "COMBINATORICS", zh: "组合" },
+            difficultyLevel: 3,
+            questionText: {
+              vi: "Có bao nhiêu hình tam giác trong hình bên dưới?",
+              en: "How many triangles are there in the figure below?",
+              zh: "下图中有多少个三角形？"
+            },
+            speechText: {
+              vi: "Hỏi có bao nhiêu hình tam giác trong hình bên dưới?",
+              en: "How many triangles are there in the figure below?",
+              zh: "请问下图中有多少个三角形？"
+            },
+            media: { type: "emojiGrid", emojis: ["🔺", "🔺", "🔺"], columns: 3 },
+            options: [
+              { id: "A", text: { vi: "2 hình", en: "2 triangles", zh: "2个" } },
+              { id: "B", text: { vi: "3 hình", en: "3 triangles", zh: "3个" } },
+              { id: "C", text: { vi: "4 hình", en: "4 triangles", zh: "4个" } },
+              { id: "D", text: { vi: "6 hình", en: "6 triangles", zh: "6个" } }
+            ],
+            correctAnswer: "D",
+            explanation: {
+              vi: "Đếm 3 tam giác đơn + 2 tam giác đôi + 1 tam giác lớn = 6 tam giác.",
+              en: "Count 3 single triangles + 2 double triangles + 1 large triangle = 6 triangles in total.",
+              zh: "计数：3个单体三角形 + 2个双体复合三角形 + 1个整体大三角形 = 6 个三角形。"
+            }
+          },
+          {
+            id: 5,
+            topic: { vi: "TỔ HỢP", en: "COMBINATORICS", zh: "组合" },
+            difficultyLevel: 3,
+            questionText: {
+              vi: "Điền số tiếp theo vào dãy quy luật: 2, 4, 6, 8, ...?",
+              en: "Find the next number in the pattern: 2, 4, 6, 8, ...?",
+              zh: "在数列中填入下一个数字：2, 4, 6, 8, ...？"
+            },
+            speechText: {
+              vi: "Điền số tiếp theo vào dãy quy luật: 2, 4, 6, 8...",
+              en: "Find the next number in the pattern: 2, 4, 6, 8...",
+              zh: "请填入数列中的下一个数字：2, 4, 6, 8..."
+            },
+            media: { type: "emojiGrid", emojis: ["2️⃣", "4️⃣", "6️⃣", "8️⃣", "❓"], columns: 5 },
+            options: [
+              { id: "A", text: { vi: "9", en: "9", zh: "9" } },
+              { id: "B", text: { vi: "10", en: "10", zh: "10" } },
+              { id: "C", text: { vi: "11", en: "11", zh: "11" } },
+              { id: "D", text: { vi: "12", en: "12", zh: "12" } }
+            ],
+            correctAnswer: "B",
+            explanation: {
+              vi: "Dãy số tăng dần 2 đơn vị. Số tiếp theo là 8 + 2 = 10.",
+              en: "The sequence increases by 2 each step. Next number = 8 + 2 = 10.",
+              zh: "数列递增 2。下一个数字是 8 + 2 = 10。"
+            }
+          }
+        ],
+
+        // App State
+        currentQuestionIndex: 0,
+        userAnswers: {},
+        flaggedIndexes: [],
+        remainingSeconds: 900,
+        timerInterval: null,
+        isPaused: false,
+        showWarningModal: false,
+        showResultModal: false,
+        showInstantHint: false,
+        showHelpHint: false,
+        showReportModal: false,
+        reportType: "WrongAnswer",
+        reportDesc: "",
+        gridPage: 0,
+
+        // Results
+        calculatedScore: 0,
+        correctCount: 0,
+        timeSpentSeconds: 0,
+        earnedMedal: '🥇 Huy Chương Vàng',
+
+        async initApp() {
+          try {
+            const res = await fetch('../assets/data/timo-to-hop-g1.json');
+            if (res.ok) {
+              const data = await res.json();
+              if (data.examConfig) this.examConfig = { ...this.examConfig, ...data.examConfig };
+              if (data.questions && data.questions.length) this.questions = data.questions;
+            }
+          } catch (err) {
+            console.warn("Unable to fetch JSON exam dataset, fallback enabled.", err);
+          }
+          const mins = this.examConfig.timeLimitMinutes || this.examConfig.durationMinutes || 15;
+          this.remainingSeconds = mins * 60;
+          this.startTimer();
+          window.addEventListener('octo-lang-changed', (e) => {
+            this.currentLang = e.detail;
+          });
+        },
+
+        toggleSound() {
+          this.globalState.isMuted = !this.globalState.isMuted;
+          PortalCore.saveState(this.globalState);
+        },
+
+        adjustZoom(delta) {
+          this.zoomScale = Math.min(160, Math.max(80, this.zoomScale + delta));
+          PortalCore.playPop();
+        },
+
+        startTimer() {
+          clearInterval(this.timerInterval);
+          this.timerInterval = setInterval(() => {
+            if (!this.isPaused && !this.showResultModal) {
+              if (this.remainingSeconds > 0) {
+                this.remainingSeconds--;
+                this.timeSpentSeconds++;
+              } else {
+                clearInterval(this.timerInterval);
+                this.submitExamNow();
+              }
+            }
+          }, 1000);
+        },
+
+        formatTime(sec) {
+          const m = Math.floor(sec / 60);
+          const s = sec % 60;
+          return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        },
+
+        selectChoice(id) {
+          PortalCore.playPop();
+          const qId = this.currentQuestion.id;
+          this.userAnswers[qId] = id;
+        },
+
+        getAnsweredCount() {
+          return Object.keys(this.userAnswers).length;
+        },
+
+        getAbsoluteIndex(idxInPage) {
+          return this.gridPage * this.examConfig.questionsPerPage + idxInPage;
+        },
+
+        getChoiceButtonClass(id, idx) {
+          const isSelected = this.userAnswers[this.currentQuestion.id] === id;
+          if (isSelected) {
+            return 'bg-purple-50 border-purple-600 ring-2 ring-purple-400 shadow-md';
+          }
+          return 'bg-white border-slate-200 hover:border-purple-300 hover:bg-slate-50';
+        },
+
+        getBadgeColorClass(idx) {
+          const colors = ['bg-blue-500', 'bg-purple-600', 'bg-emerald-500', 'bg-amber-500', 'bg-indigo-500', 'bg-rose-500'];
+          return colors[idx % colors.length];
+        },
+
+        getPaletteItemClass(index) {
+          const qId = this.filteredQuestions[index]?.id;
+          if (index === this.currentQuestionIndex) {
+            return 'bg-amber-500 text-white border-amber-600 ring-2 ring-amber-300 scale-105';
+          }
+          if (this.userAnswers[qId]) {
+            return 'bg-emerald-500 text-white border-emerald-600';
+          }
+          return 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100';
+        },
+
+        jumpToQuestion(index) {
+          if (index >= 0 && index < this.filteredQuestions.length) {
+            PortalCore.playPop();
+            this.currentQuestionIndex = index;
+            this.showInstantHint = false;
+            this.showHelpHint = false;
+          }
+        },
+
+        doJump() {
+          if (this.jumpInput && this.jumpInput >= 1 && this.jumpInput <= this.filteredQuestions.length) {
+            this.jumpToQuestion(this.jumpInput - 1);
+          }
+        },
+
+        nextQuestion() {
+          if (this.currentQuestionIndex < this.filteredQuestions.length - 1) {
+            this.jumpToQuestion(this.currentQuestionIndex + 1);
+          }
+        },
+
+        prevQuestion() {
+          if (this.currentQuestionIndex > 0) {
+            this.jumpToQuestion(this.currentQuestionIndex - 1);
+          }
+        },
+
+        prevPage() {
+          if (this.gridPage > 0) this.gridPage--;
+        },
+
+        nextPage() {
+          if (this.gridPage < this.totalPages - 1) this.gridPage++;
+        },
+
+        isFlagged(index) {
+          return this.flaggedIndexes.includes(index);
+        },
+
+        playQuestionSpeech(lang) {
+          const q = this.currentQuestion;
+          const text = q.speechText ? this.getLocalized(q.speechText) : this.getLocalized(q.questionText);
+          PortalCore.speak(text.replace(/<[^>]*>?/gm, ''));
+        },
+
+        speakOption(id, text) {
+          PortalCore.speak(`Đáp án ${id}: ${text}`);
+        },
+
+        toggleInstantHint() {
+          PortalCore.playPop();
+          this.showInstantHint = !this.showInstantHint;
+        },
+
+        toggleHelpHint() {
+          PortalCore.playPop();
+          this.showHelpHint = !this.showHelpHint;
+        },
+
+        pauseExam() {
+          PortalCore.playPop();
+          this.isPaused = true;
+        },
+
+        resumeExam() {
+          PortalCore.playPop();
+          this.isPaused = false;
+        },
+
+        openReportModal() {
+          PortalCore.playPop();
+          this.showReportModal = true;
+        },
+
+        submitReport() {
+          this.showReportModal = false;
+          if (!this.flaggedIndexes.includes(this.currentQuestionIndex)) {
+            this.flaggedIndexes.push(this.currentQuestionIndex);
+          }
+          alert("✅ Cảm ơn bé đã báo lỗi! Câu này cũng đã được đánh dấu để xem lại.");
+        },
+
+        confirmSubmit() {
+          PortalCore.playPop();
+          this.showWarningModal = true;
+        },
+
+        submitExamNow() {
+          this.showWarningModal = false;
+          clearInterval(this.timerInterval);
+
+          let correct = 0;
+          this.filteredQuestions.forEach(q => {
+            if (this.userAnswers[q.id] === q.correctAnswer) correct++;
+          });
+
+          const total = this.filteredQuestions.length || 1;
+          this.correctCount = correct;
+          this.calculatedScore = Math.round((correct / total) * 100);
+
+          if (this.calculatedScore >= 90) this.earnedMedal = '🥇 Huy Chương Vàng';
+          else if (this.calculatedScore >= 75) this.earnedMedal = '🥈 Huy Chương Bạc';
+          else if (this.calculatedScore >= 50) this.earnedMedal = '🥉 Huy Chương Đồng';
+          else this.earnedMedal = '🎗️ Bằng Khen Cố Gắng';
+
+          PortalCore.addStars(correct * 2);
+          this.showResultModal = true;
+          this.triggerConfetti();
+          PortalCore.playSuccess();
+        },
+
+        retakeExam() {
+          this.userAnswers = {};
+          this.flaggedIndexes = [];
+          this.currentQuestionIndex = 0;
+          this.showResultModal = false;
+          this.remainingSeconds = (this.examConfig.durationMinutes || 45) * 60;
+          this.timeSpentSeconds = 0;
+          this.startTimer();
+        },
+
+        previewImage(url) {
+          window.open(url, '_blank');
+        },
+
+        triggerConfetti() {
+          const canvas = document.getElementById('confettiCanvas');
+          if (!canvas) return;
+          const ctx = canvas.getContext('2d');
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+
+          const pieces = [];
+          const colors = ['#7c3aed', '#ec4899', '#3b82f6', '#10b981', '#f59e0b'];
+          for (let i = 0; i < 90; i++) {
+            pieces.push({
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height - canvas.height,
+              size: Math.random() * 8 + 4,
+              color: colors[Math.floor(Math.random() * colors.length)],
+              speedY: Math.random() * 3 + 2,
+              speedX: Math.random() * 2 - 1
+            });
+          }
+
+          function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            pieces.forEach(p => {
+              p.y += p.speedY;
+              p.x += p.speedX;
+              ctx.fillStyle = p.color;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+              ctx.fill();
+            });
+            if (pieces.some(p => p.y < canvas.height)) {
+              requestAnimationFrame(animate);
+            }
+          }
+          animate();
+        }
+      }));
+    });
+  </script>
+</body>
+</html>
