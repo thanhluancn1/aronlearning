@@ -18,6 +18,10 @@
    - Sử dụng **Web Audio API** tạo hiệu ứng âm thanh nổ bong bóng, ting đếm cá, pháo hoa mừng chiến thắng.
    - Sử dụng **Web Speech API (`vi-VN`, `en-US`, `zh-CN`)** hoặc file MP3 chất lượng cao để đọc đề bài, phát âm từng tùy chọn đáp án A-F và phát lời giải chi tiết theo ngôn ngữ đang chọn.
 
+4. **Hệ Thống Thông Báo & Màn Hình Báo Lỗi Tái Sử Dụng (OctoNotify Module `assets/js/notification.js`)**
+   - Cung cấp API dùng chung cho toàn bộ các trang: Màn hình báo lỗi (`renderErrorCard`, `showErrorScreen`), Toast thông báo nổi đa trạng thái (`toast`), Hộp thoại cảnh báo/xác nhận (`alert`, `confirm`).
+   - Tương thích 100% Web Tĩnh, tự động đồng bộ đa ngôn ngữ qua `OctoI18n` và âm thanh qua `PortalCore`.
+
 ---
 
 ## 🌐 Kiến Trúc Đa Ngôn Ngữ (i18n Architecture)
@@ -58,6 +62,15 @@
 
 ---
 
+## ⛔ NGUYÊN TẮC BẮT BUỘC: 100% DATA GỐC - TUYỆT ĐỐI KHÔNG DÙNG INIT / FALLBACK / HARDCODED DATA (FAIL-FAST POLICY)
+
+- **CẤM TUYỆT ĐỐI**: Không bao giờ được phép để dữ liệu mẫu giả định (hardcoded/fallback/init mock data) trong mã nguồn HTML/JS (kể cả trong `Alpine.data()` hay biến toàn cục) để che giấu lỗi kết nối dữ liệu.
+- **100% SỬ DỤNG DỮ LIỆU GỐC TỪ JSON**: Toàn bộ dữ liệu đề thi, danh mục chương trình học, bài thi nổi bật... BẮT BUỘC phải được nạp thuần động từ các tệp JSON gốc (`assets/data/exams-index.json`, `assets/data/*.json`).
+- **BÁO LỖI NGAY LẬP TỨC (FAIL-FAST ERROR STATE)**: Nếu không tải được tệp dữ liệu (do lỗi mạng, lỗi CORS khi mở bằng file://, sai đường dẫn, hoặc JSON hỏng), hệ thống **BẮT BUỘC BÁO LỖI NGAY LẬP TỨC** bằng màn hình báo lỗi trực quan (`OctoNotify.renderErrorCard` / `loadError = true`), hiển thị rõ nguyên nhân và nút Thử lại / Về trang chủ.
+- **NGHIÊM CẤM TÁI PHẠM**: Mọi trang trong dự án (cả Trang Chủ `index.html`, Phân hệ thi `modules/luyen-thi-trac-nghiem.html`, và các module mở rộng sau này) đều phải tuân thủ nghiêm ngặt nguyên tắc này.
+
+---
+
 ## 🔒 Quy Tắc Thay Đổi & Xác Nhận Với User (Strict Confirmation Rules)
 
 - **TUÂN THỦ TUYỆT ĐỐI**: Mỗi khi sửa đổi hoặc xóa bỏ bất kỳ tính năng, giao diện, logic nào có nguy cơ ảnh hưởng đến các phần đã hoàn thành/chốt trong Checklist dưới đây:
@@ -76,7 +89,7 @@
   - Alpine.js v3 (CDN) reactive state management.
   - Web Audio API (hiệu ứng âm thanh Pop & Win/Success).
   - Web Speech API (giọng đọc đa ngôn ngữ `vi-VN`, `en-US`, `zh-CN` cho câu hỏi, tùy chọn đáp án A-F & lời giải).
-  - Hỗ trợ chạy Offline / `file://` với mảng câu hỏi mặc định dự phòng (fallback dataset).
+  - Nạp dữ liệu đề thi thuần động qua tệp JSON (đã loại bỏ fallback dataset mặc định theo yêu cầu; kích hoạt cơ chế báo lỗi trực quan Error State khi nạp thất bại).
 
 - [x] **2. Hệ Thống Đa Ngôn Ngữ (OctoI18n Engine)**
   - Từ điển tĩnh `assets/js/i18n.js` hỗ trợ 3 ngôn ngữ (🇻🇳 Tiếng Việt, 🇬🇧 English, 🇨🇳 中文).
@@ -128,6 +141,18 @@
   - **Phân Khu 3: Luyện tập nhanh (`ok-quick-mini-grid` Quick Practice)**:
     - 4 ô luyện nhanh phương pháp Spiral Practice: 🟣 **Daily Quiz**, 🔵 **Try Hard**, 🟢 **10 câu**, 🟠 **20 câu**.
   - **Bảo tồn toàn bộ tính năng gốc**: Header Topbar, Nút Âm thanh, Điểm Sao ⭐, Modal Sticker Album & Modal Đổi tên/Avatar.
+
+- [x] **7. Module Thông Báo & Báo Lỗi Dùng Chung (`assets/js/notification.js`)**
+  - Màn hình báo lỗi Error State Card chuẩn thiết kế Octokids (icon ⚠️ pulse, chi tiết lỗi, hướng dẫn CORS/đường dẫn, nút Tải lại & Về bản đồ).
+  - Toast thông báo nổi tự động ẩn (`OctoNotify.toast`) kèm hiệu ứng âm thanh Web Audio API.
+  - Hộp thoại cảnh báo (`OctoNotify.alert`, `OctoNotify.confirm`).
+  - Đã tích hợp tái sử dụng trên cả `index.html` và `modules/luyen-thi-trac-nghiem.html`.
+
+- [x] **8. Kiến Trúc Hướng Dữ Liệu & Nạp Động Đề Thi (Data-Driven Architecture)**
+  - Tệp danh mục trung tâm `assets/data/exams-index.json` quản lý toàn bộ cấu trúc: Đấu trường nổi bật (`featuredExams`), 4 bước Stepper nền tảng (`foundational`), 6 thẻ tư duy mở rộng (`enrichment`), 4 ô luyện nhanh (`quickPractice`).
+  - Hệ thống dữ liệu đề thi JSON chuẩn hóa (`assets/data/*.json`) độc lập, hỗ trợ đa ngôn ngữ (`vi`, `en`, `zh`), emoji visual grid và giải thích chi tiết.
+  - Trang chủ `index.html` nạp dữ liệu động từ `exams-index.json` qua Alpine.js, hỗ trợ fallback dữ liệu an toàn khi chạy offline qua giao thức `file://`.
+  - Mọi nút bấm trên Trang Chủ tự động tạo liên kết động chuẩn: `modules/luyen-thi-trac-nghiem.html?exam={id}&data={dataFile}`.
 
 ---
 

@@ -1,0 +1,196 @@
+{
+  "examConfig": {
+    "id": "timo-quy-luat-g1",
+    "title": {
+      "vi": "Toán TIMO Lớp 1 - Bài toán Quy luật",
+      "en": "TIMO Math Grade 1 - Pattern Problems",
+      "zh": "TIMO 奥数一年级 - 规律与周期专题"
+    },
+    "grade": 1,
+    "totalQuestions": 5,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": [
+    {
+      "id": 1,
+      "topic": {
+        "vi": "QUY LUẬT",
+        "en": "PATTERNS",
+        "zh": "找规律"
+      },
+      "difficultyLevel": 1,
+      "questionText": {
+        "vi": "Hình nào dưới đây sẽ tiếp tục dãy quy luật: 🔴, 🔵, 🔴, 🔵, 🔴, ...?",
+        "en": "Which shape comes next in the pattern: 🔴, 🔵, 🔴, 🔵, 🔴, ...?",
+        "zh": "按照规律，下一个图形是什么：🔴, 🔵, 🔴, 🔵, 🔴, ...？"
+      },
+      "speechText": {
+        "vi": "Hình nào dưới đây sẽ tiếp tục dãy quy luật: đỏ, xanh, đỏ, xanh, đỏ...",
+        "en": "Which shape comes next: red, blue, red, blue, red...",
+        "zh": "请问下一个图形是什么：红，蓝，红，蓝，红..."
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🔴", "🔵", "🔴", "🔵", "🔴", "❓"],
+        "columns": 6
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "🔴 Hình tròn đỏ", "en": "🔴 Red circle", "zh": "🔴 红色圆形" } },
+        { "id": "B", "text": { "vi": "🔵 Hình tròn xanh", "en": "🔵 Blue circle", "zh": "🔵 蓝色圆形" } },
+        { "id": "C", "text": { "vi": "🟡 Hình tròn vàng", "en": "🟡 Yellow circle", "zh": "🟡 黄色圆形" } },
+        { "id": "D", "text": { "vi": "🟩 Hình vuông xanh", "en": "🟩 Green square", "zh": "🟩 绿色方形" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Dãy quy luật lặp lại theo chu kỳ 2 hình: [🔴, 🔵]. Sau hình 🔴 thứ ba sẽ là hình 🔵.",
+        "en": "The pattern repeats with period 2: [🔴, 🔵]. After the 3rd 🔴 is 🔵.",
+        "zh": "规律是以 [🔴, 🔵] 为周期循环交替。在第 3 个 🔴 之后是 🔵。"
+      }
+    },
+    {
+      "id": 2,
+      "topic": {
+        "vi": "QUY LUẬT",
+        "en": "PATTERNS",
+        "zh": "找规律"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Tìm số thích hợp điền vào dấu hỏi chấm: 3, 6, 9, 12, ?",
+        "en": "Find the next number in the pattern: 3, 6, 9, 12, ?",
+        "zh": "在数列的问号处填入正确的数字：3, 6, 9, 12, ？"
+      },
+      "speechText": {
+        "vi": "Tìm số thích hợp điền vào dấu hỏi chấm: 3, 6, 9, 12...",
+        "en": "Find the next number: 3, 6, 9, 12...",
+        "zh": "请找出下一个数字：3, 6, 9, 12..."
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["3️⃣", "6️⃣", "9️⃣", "1️⃣2️⃣", "❓"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "13", "en": "13", "zh": "13" } },
+        { "id": "B", "text": { "vi": "14", "en": "14", "zh": "14" } },
+        { "id": "C", "text": { "vi": "15", "en": "15", "zh": "15" } },
+        { "id": "D", "text": { "vi": "16", "en": "16", "zh": "16" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "Dãy số tăng dần cách đều 3 đơn vị: 3 + 3 = 6; 6 + 3 = 9; 9 + 3 = 12; 12 + 3 = 15. Vậy số tiếp theo là 15.",
+        "en": "The sequence increases by 3 each step: 12 + 3 = 15.",
+        "zh": "等差数列，每次增加 3：12 + 3 = 15。"
+      }
+    },
+    {
+      "id": 3,
+      "topic": {
+        "vi": "QUY LUẬT",
+        "en": "PATTERNS",
+        "zh": "找规律"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Quan sát dãy hình: 🐱, 🐶, 🐭, 🐱, 🐶, 🐭, 🐱, 🐶, ... Hỏi con vật thứ 12 trong dãy là con vật nào?",
+        "en": "Observe the pattern: 🐱, 🐶, 🐭, 🐱, 🐶, 🐭, 🐱, 🐶, ... What is the 12th animal in this sequence?",
+        "zh": "观察动物序列：🐱, 🐶, 🐭, 🐱, 🐶, 🐭, 🐱, 🐶, ... 请问第 12 只动物是什么？"
+      },
+      "speechText": {
+        "vi": "Quan sát dãy: mèo, chó, chuột lặp lại. Hỏi con vật thứ 12 trong dãy là con nào?",
+        "en": "Observe sequence: cat, dog, mouse repeating. What is the 12th animal?",
+        "zh": "猫、狗、老鼠循环排列，请问第 12 只动物是什么？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🐱", "🐶", "🐭", "🐱", "🐶", "🐭"],
+        "columns": 3
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "🐱 Mèo", "en": "🐱 Cat", "zh": "🐱 猫" } },
+        { "id": "B", "text": { "vi": "🐶 Chó", "en": "🐶 Dog", "zh": "🐶 狗" } },
+        { "id": "C", "text": { "vi": "🐭 Chuột", "en": "🐭 Mouse", "zh": "🐭 老鼠" } },
+        { "id": "D", "text": { "vi": "🐰 Thỏ", "en": "🐰 Rabbit", "zh": "🐰 兔子" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "Chu kỳ lặp lại gồm 3 con vật: (1-Mèo, 2-Chó, 3-Chuột). Lấy 12 chia cho 3 được 4 (chia hết, không dư). Do đó con vật thứ 12 là con cuối cùng của chu kỳ: Chuột 🐭.",
+        "en": "Period length = 3 (1-Cat, 2-Dog, 3-Mouse). 12 ÷ 3 = 4 with remainder 0. The 12th animal is the last in the period: Mouse 🐭.",
+        "zh": "循环周期为 3 只：(1-猫, 2-狗, 3-鼠)。12 ÷ 3 = 4（整除无余数）。因此第 12 只正是周期的末位：老鼠 🐭。"
+      }
+    },
+    {
+      "id": 4,
+      "topic": {
+        "vi": "QUY LUẬT",
+        "en": "PATTERNS",
+        "zh": "找规律"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Điền số tiếp theo vào dãy số giảm dần: 25, 21, 17, 13, ?",
+        "en": "Find the next number in the decreasing sequence: 25, 21, 17, 13, ?",
+        "zh": "在递减数列的问号处填入下一个数字：25, 21, 17, 13, ？"
+      },
+      "speechText": {
+        "vi": "Điền số tiếp theo vào dãy số giảm dần: 25, 21, 17, 13...",
+        "en": "Find the next number in the sequence: 25, 21, 17, 13...",
+        "zh": "请填入递减数列的下一个数字：25, 21, 17, 13..."
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["2️⃣5️⃣", "2️⃣1️⃣", "1️⃣7️⃣", "1️⃣3️⃣", "❓"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "7", "en": "7", "zh": "7" } },
+        { "id": "B", "text": { "vi": "8", "en": "8", "zh": "8" } },
+        { "id": "C", "text": { "vi": "9", "en": "9", "zh": "9" } },
+        { "id": "D", "text": { "vi": "10", "en": "10", "zh": "10" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "Quy luật: Mỗi số đứng sau bằng số đứng trước trừ đi 4 (25 - 4 = 21; 21 - 4 = 17; 17 - 4 = 13). Số tiếp theo là 13 - 4 = 9.",
+        "en": "Rule: Subtract 4 each time (25 - 4 = 21; 21 - 4 = 17; 17 - 4 = 13). Next number = 13 - 4 = 9.",
+        "zh": "递减规律：每次减去 4。下一个数字为 13 - 4 = 9。"
+      }
+    },
+    {
+      "id": 5,
+      "topic": {
+        "vi": "QUY LUẬT",
+        "en": "PATTERNS",
+        "zh": "找规律"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Bé hãy tìm số còn thiếu trong quy luật hình tam giác bên dưới: (2, 3 ➔ 5); (4, 5 ➔ 9); (6, 7 ➔ ?)",
+        "en": "Find the missing number in the triangle pattern: (2, 3 ➔ 5); (4, 5 ➔ 9); (6, 7 ➔ ?)",
+        "zh": "找出规律中的缺失数字：(2, 3 ➔ 5); (4, 5 ➔ 9); (6, 7 ➔ ？)"
+      },
+      "speechText": {
+        "vi": "Tìm số còn thiếu theo quy luật: 2 và 3 ra 5; 4 và 5 ra 9; 6 và 7 ra mấy?",
+        "en": "Find missing number: 2 and 3 gives 5; 4 and 5 gives 9; 6 and 7 gives what?",
+        "zh": "请找出规律中的数字：2与3得5；4与5得9；6与7得多少？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🔺", "5️⃣", "🔺", "9️⃣", "🔺", "❓"],
+        "columns": 6
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "11", "en": "11", "zh": "11" } },
+        { "id": "B", "text": { "vi": "12", "en": "12", "zh": "12" } },
+        { "id": "C", "text": { "vi": "13", "en": "13", "zh": "13" } },
+        { "id": "D", "text": { "vi": "14", "en": "14", "zh": "14" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "Quy luật: Số đỉnh bằng tổng hai số ở đáy: 2 + 3 = 5; 4 + 5 = 9; vì vậy: 6 + 7 = 13.",
+        "en": "Rule: Sum of base numbers = apex number: 2 + 3 = 5; 4 + 5 = 9; thus: 6 + 7 = 13.",
+        "zh": "规律：底部的两个数相加等于顶点数字：2 + 3 = 5；4 + 5 = 9；所以 6 + 7 = 13。"
+      }
+    }
+  ]
+}

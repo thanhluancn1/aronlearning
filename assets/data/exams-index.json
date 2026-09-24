@@ -1,0 +1,256 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-09-24",
+  "featuredExams": [
+    {
+      "id": "timo-to-hop-g1",
+      "title": {
+        "vi": "📝 Đấu Trường Luyện Thi Trắc Nghiệm Toán TIMO",
+        "en": "📝 TIMO & Olympic Math Multiple-Choice Practice Arena",
+        "zh": "📝 TIMO 与奥数多项选择题模拟考试竞技场"
+      },
+      "ageTag": {
+        "vi": "5 - 6 Tuổi / Grade 1",
+        "en": "Ages 5 - 6 / Grade 1",
+        "zh": "5 - 6 岁 / 一年级"
+      },
+      "target": {
+        "vi": "Luyện Thi Toán TIMO & Tư Duy Trắc Nghiệm",
+        "en": "TIMO Math Contest Prep & Reasoning",
+        "zh": "TIMO 奥数与逻辑思维模拟考试"
+      },
+      "description": {
+        "vi": "Nền tảng thi trực tuyến giao diện 7/3 hiện đại: Zoom text & ảnh, đọc giọng nói đa ngôn ngữ, đếm giờ, bảng phân màu câu hỏi và xem lại lời giải chi tiết.",
+        "en": "Modern online contest platform: Text/image zoom, multi-language speech TTS, countdown timer, question palette legend, and step-by-step solutions.",
+        "zh": "现代在线奥数备考平台：支持字体与图片缩放、多语言语音朗读、倒计时、题目状态图例与图文详细解析。"
+      },
+      "dataFile": "assets/data/timo-to-hop-g1.json",
+      "bgGradient": "from-purple-600 via-indigo-600 to-purple-800",
+      "borderColor": "border-purple-600",
+      "icon": "📝",
+      "badge": {
+        "vi": "TIMO & Lớp 1 🔥",
+        "en": "TIMO Grade 1 🔥",
+        "zh": "TIMO 一年级 🔥"
+      }
+    }
+  ],
+  "curriculum": {
+    "foundational": [
+      {
+        "step": 1,
+        "id": "timo-chu-so-g1",
+        "title": {
+          "vi": "Hệ thống Số và Chữ số",
+          "en": "Number System & Digits",
+          "zh": "数字与数位系统"
+        },
+        "icon": "🔢",
+        "questionCount": 40,
+        "durationMinutes": 15,
+        "difficulty": 1,
+        "dataFile": "assets/data/timo-chu-so-g1.json",
+        "isActive": true
+      },
+      {
+        "step": 2,
+        "id": "timo-phep-cong-tru-g1",
+        "title": {
+          "vi": "Phép cộng và Phép trừ",
+          "en": "Addition & Subtraction",
+          "zh": "加法与减法运算"
+        },
+        "icon": "➕",
+        "questionCount": 44,
+        "durationMinutes": 15,
+        "difficulty": 1,
+        "dataFile": "assets/data/timo-phep-cong-tru-g1.json",
+        "isActive": false
+      },
+      {
+        "step": 3,
+        "id": "timo-so-sanh-thay-the-g1",
+        "title": {
+          "vi": "So sánh và Thay thế",
+          "en": "Comparison & Substitution",
+          "zh": "比较大小与代换"
+        },
+        "icon": "⚖️",
+        "questionCount": 50,
+        "durationMinutes": 15,
+        "difficulty": 2,
+        "dataFile": "assets/data/timo-to-hop-g1.json",
+        "isActive": false
+      },
+      {
+        "step": 4,
+        "id": "timo-do-luong-thoi-gian-g1",
+        "title": {
+          "vi": "Đo lường và Thời gian",
+          "en": "Measurement & Time",
+          "zh": "时间与度量衡"
+        },
+        "icon": "⏰",
+        "questionCount": 50,
+        "durationMinutes": 15,
+        "difficulty": 2,
+        "dataFile": "assets/data/timo-to-hop-g1.json",
+        "isActive": false
+      }
+    ],
+    "enrichment": [
+      {
+        "id": "timo-quy-luat-g1",
+        "title": {
+          "vi": "Bài toán Quy luật",
+          "en": "Pattern Problems",
+          "zh": "规律与序列问题"
+        },
+        "icon": "🧩",
+        "colorTheme": "emerald",
+        "questionCount": 50,
+        "durationMinutes": 15,
+        "dataFile": "assets/data/timo-quy-luat-g1.json"
+      },
+      {
+        "id": "timo-bieu-do-phan-loai-g1",
+        "title": {
+          "vi": "Biểu đồ và Phân loại",
+          "en": "Charts & Classification",
+          "zh": "图表与集合分类"
+        },
+        "icon": "📊",
+        "colorTheme": "amber",
+        "questionCount": 30,
+        "durationMinutes": 15,
+        "dataFile": "assets/data/timo-to-hop-g1.json"
+      },
+      {
+        "id": "timo-hinh-hoc-dem-hinh-g1",
+        "title": {
+          "vi": "Hình học và Đếm hình",
+          "en": "Geometry & Counting",
+          "zh": "几何与图形计数"
+        },
+        "icon": "📐",
+        "colorTheme": "sky",
+        "questionCount": 58,
+        "durationMinutes": 15,
+        "dataFile": "assets/data/timo-hinh-hoc-g1.json"
+      },
+      {
+        "id": "timo-can-bang-co-ban-g1",
+        "title": {
+          "vi": "Toán cân bằng cơ bản",
+          "en": "Basic Balance Math",
+          "zh": "天平平衡与等式"
+        },
+        "icon": "⚖️",
+        "colorTheme": "purple",
+        "questionCount": 50,
+        "durationMinutes": 15,
+        "dataFile": "assets/data/timo-to-hop-g1.json"
+      },
+      {
+        "id": "timo-logic-thuc-te-g1",
+        "title": {
+          "vi": "Toán đố Logic thực tế",
+          "en": "Real-world Logic Puzzles",
+          "zh": "生活趣味逻辑题"
+        },
+        "icon": "💡",
+        "colorTheme": "rose",
+        "questionCount": 30,
+        "durationMinutes": 15,
+        "dataFile": "assets/data/timo-to-hop-g1.json"
+      },
+      {
+        "id": "timo-tu-duy-thay-the-g1",
+        "title": {
+          "vi": "Toán tư duy thay thế",
+          "en": "Substitution Reasoning",
+          "zh": "等量代换思维"
+        },
+        "icon": "🔄",
+        "colorTheme": "teal",
+        "questionCount": 40,
+        "durationMinutes": 15,
+        "dataFile": "assets/data/timo-to-hop-g1.json"
+      }
+    ],
+    "quickPractice": [
+      {
+        "id": "quick-daily",
+        "title": {
+          "vi": "Daily Quiz",
+          "en": "Daily Quiz",
+          "zh": "每日一练"
+        },
+        "subtitle": {
+          "vi": "Luyện sâu nhớ lâu",
+          "en": "Deep practice for long memory",
+          "zh": "温故知新"
+        },
+        "icon": "🏆",
+        "colorTheme": "purple",
+        "questionCount": 10,
+        "durationMinutes": 10,
+        "dataFile": "assets/data/timo-to-hop-g1.json"
+      },
+      {
+        "id": "quick-tryhard",
+        "title": {
+          "vi": "Try Hard",
+          "en": "Try Hard",
+          "zh": "错题攻坚"
+        },
+        "subtitle": {
+          "vi": "Ôn tập câu đã sai",
+          "en": "Review missed questions",
+          "zh": "突破薄弱点"
+        },
+        "icon": "🎯",
+        "colorTheme": "sky",
+        "questionCount": 10,
+        "durationMinutes": 10,
+        "dataFile": "assets/data/timo-to-hop-g1.json"
+      },
+      {
+        "id": "quick-10",
+        "title": {
+          "vi": "10 câu",
+          "en": "10 Questions",
+          "zh": "10道速练"
+        },
+        "subtitle": {
+          "vi": "Ngẫu nhiên",
+          "en": "Randomized",
+          "zh": "随机题目"
+        },
+        "icon": "🎲",
+        "colorTheme": "emerald",
+        "questionCount": 10,
+        "durationMinutes": 10,
+        "dataFile": "assets/data/timo-to-hop-g1.json"
+      },
+      {
+        "id": "quick-20",
+        "title": {
+          "vi": "20 câu",
+          "en": "20 Questions",
+          "zh": "20道速练"
+        },
+        "subtitle": {
+          "vi": "Ngẫu nhiên",
+          "en": "Randomized",
+          "zh": "随机题目"
+        },
+        "icon": "⚡",
+        "colorTheme": "amber",
+        "questionCount": 20,
+        "durationMinutes": 15,
+        "dataFile": "assets/data/timo-to-hop-g1.json"
+      }
+    ]
+  }
+}

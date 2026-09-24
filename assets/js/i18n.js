@@ -123,6 +123,16 @@ window.OctoI18n = {
         weakPoints: 'Cần rèn luyện thêm:',
         retryExam: 'Luyện tập lại bài này',
         backHome: 'Về trang chủ'
+      },
+      error: {
+        loadFailedTitle: 'Không Thể Nạp Dữ Liệu Đề Thi!',
+        loadFailedSubtitle: 'Hệ thống không tìm thấy hoặc không thể đọc file câu hỏi',
+        errorLabel: 'Chi tiết lỗi:',
+        corsHintTitle: 'Nguyên nhân phổ biến:',
+        corsHintFileProtocol: 'Nếu mở trực tiếp từ file://, trình duyệt sẽ chặn tải file JSON do cơ chế bảo mật CORS. Hãy mở qua Web Server (VD: Live Server trong VS Code hoặc GitHub Pages).',
+        corsHintPath: 'Đường dẫn file JSON (?data=...) không chính xác hoặc tệp bị thiếu/rỗng.',
+        retryBtn: 'Tải Lại Trang',
+        backHomeBtn: 'Quay Về Bản Đồ'
       }
     },
 
@@ -235,6 +245,16 @@ window.OctoI18n = {
         weakPoints: 'Areas for Improvement:',
         retryExam: 'Retake Practice Exam',
         backHome: 'Back to Home'
+      },
+      error: {
+        loadFailedTitle: 'Unable to Load Exam Dataset!',
+        loadFailedSubtitle: 'System could not find or parse the question dataset',
+        errorLabel: 'Error details:',
+        corsHintTitle: 'Common causes:',
+        corsHintFileProtocol: 'If opening directly via file://, browsers block JSON fetching due to CORS security policies. Please use a local Web Server (e.g. Live Server) or deploy to GitHub Pages.',
+        corsHintPath: 'The JSON dataset path (?data=...) is incorrect or the file is missing/empty.',
+        retryBtn: 'Reload Page',
+        backHomeBtn: 'Back to Map'
       }
     },
 
@@ -347,6 +367,16 @@ window.OctoI18n = {
         weakPoints: '需要加强:',
         retryExam: '重新练习',
         backHome: '返回首页'
+      },
+      error: {
+        loadFailedTitle: '无法加载试卷题库数据！',
+        loadFailedSubtitle: '系统未找到或无法解析题目文件',
+        errorLabel: '错误详情:',
+        corsHintTitle: '常见原因:',
+        corsHintFileProtocol: '如果直接通过 file:// 协议打开，浏览器出于 CORS 安全策略会拦截本地 JSON 请求。请通过 Web 服务器（如 Live Server）或 GitHub Pages 打开。',
+        corsHintPath: 'JSON 题库文件路径 (?data=...) 不正确或文件不存在/为空。',
+        retryBtn: '重新加载',
+        backHomeBtn: '返回地图'
       }
     }
   },

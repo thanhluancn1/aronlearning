@@ -1,0 +1,196 @@
+{
+  "examConfig": {
+    "id": "timo-phep-cong-tru-g1",
+    "title": {
+      "vi": "Toán TIMO Lớp 1 - Phép cộng và Phép trừ",
+      "en": "TIMO Math Grade 1 - Addition & Subtraction",
+      "zh": "TIMO 奥数一年级 - 加法与减法运算"
+    },
+    "grade": 1,
+    "totalQuestions": 5,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": [
+    {
+      "id": 1,
+      "topic": {
+        "vi": "PHÉP TÍNH",
+        "en": "ARITHMETIC",
+        "zh": "加减运算"
+      },
+      "difficultyLevel": 1,
+      "questionText": {
+        "vi": "Bé hãy tính kết quả của phép tính: 7 + 8 = ?",
+        "en": "Calculate the result of: 7 + 8 = ?",
+        "zh": "计算下列算式的结果：7 + 8 = ？"
+      },
+      "speechText": {
+        "vi": "Bé hãy tính kết quả của phép tính: 7 cộng 8 bằng bao nhiêu?",
+        "en": "Calculate the result of: 7 plus 8 equals what?",
+        "zh": "请计算：7 加 8 等于多少？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["⭐", "⭐", "⭐", "⭐", "⭐", "⭐", "⭐", "➕", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟"],
+        "columns": 8
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "14", "en": "14", "zh": "14" } },
+        { "id": "B", "text": { "vi": "15", "en": "15", "zh": "15" } },
+        { "id": "C", "text": { "vi": "16", "en": "16", "zh": "16" } },
+        { "id": "D", "text": { "vi": "17", "en": "17", "zh": "17" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Tách 8 thành 3 + 5. Ta có: 7 + 3 = 10, rồi 10 + 5 = 15.",
+        "en": "Split 8 into 3 + 5. We have: 7 + 3 = 10, then 10 + 5 = 15.",
+        "zh": "凑十法：把 8 分解为 3 和 5。7 + 3 = 10，10 + 5 = 15。"
+      }
+    },
+    {
+      "id": 2,
+      "topic": {
+        "vi": "PHÉP TÍNH",
+        "en": "ARITHMETIC",
+        "zh": "加减运算"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "An có 14 viên kẹo. An cho Bình 5 viên kẹo và cho Cúc 3 viên kẹo. Hỏi An còn lại bao nhiêu viên kẹo?",
+        "en": "An has 14 candies. An gives 5 candies to Binh and 3 candies to Cuc. How many candies does An have left?",
+        "zh": "小安有 14 颗糖。小安给了小明 5 颗，给了小红 3 颗。请问小安还剩多少颗糖？"
+      },
+      "speechText": {
+        "vi": "An có 14 viên kẹo, cho Bình 5 viên và cho Cúc 3 viên. Hỏi An còn lại bao nhiêu viên kẹo?",
+        "en": "An has 14 candies, gives 5 to Binh and 3 to Cuc. How many candies are left?",
+        "zh": "小安有 14 颗糖，给了小明 5 颗，给了小红 3 颗。还剩多少颗？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🍬", "🍬", "🍬", "🍬", "🍬", "🍬", "🍬", "🍬", "🍬", "🍬", "🍬", "🍬", "🍬", "🍬"],
+        "columns": 7
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "5 viên", "en": "5 candies", "zh": "5颗" } },
+        { "id": "B", "text": { "vi": "6 viên", "en": "6 candies", "zh": "6颗" } },
+        { "id": "C", "text": { "vi": "7 viên", "en": "7 candies", "zh": "7颗" } },
+        { "id": "D", "text": { "vi": "8 viên", "en": "8 candies", "zh": "8颗" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Tổng số kẹo An đã cho là: 5 + 3 = 8 viên kẹo. Số kẹo An còn lại: 14 - 8 = 6 viên kẹo.",
+        "en": "Total candies given away: 5 + 3 = 8 candies. Remaining candies: 14 - 8 = 6 candies.",
+        "zh": "小安送出的糖果总数：5 + 3 = 8 颗。剩下的糖果：14 - 8 = 6 颗。"
+      }
+    },
+    {
+      "id": 3,
+      "topic": {
+        "vi": "PHÉP TÍNH",
+        "en": "ARITHMETIC",
+        "zh": "加减运算"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Tìm số thích hợp điền vào dấu hỏi chấm: 20 - ? = 11",
+        "en": "Find the missing number for the question mark: 20 - ? = 11",
+        "zh": "在问号处填入正确的数字：20 - ？ = 11"
+      },
+      "speechText": {
+        "vi": "Tìm số thích hợp điền vào dấu hỏi chấm: 20 trừ mấy bằng 11?",
+        "en": "Find the missing number: 20 minus what equals 11?",
+        "zh": "请找出问号处的数字：20 减去几等于 11？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["2️⃣", "0️⃣", "➖", "❓", "🟰", "1️⃣", "1️⃣"],
+        "columns": 7
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "8", "en": "8", "zh": "8" } },
+        { "id": "B", "text": { "vi": "9", "en": "9", "zh": "9" } },
+        { "id": "C", "text": { "vi": "10", "en": "10", "zh": "10" } },
+        { "id": "D", "text": { "vi": "11", "en": "11", "zh": "11" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Số trừ = Số bị trừ - Hiệu. Ta có: 20 - 11 = 9. Vậy số cần điền là 9.",
+        "en": "Missing number = 20 - 11 = 9. The answer is 9.",
+        "zh": "减数 = 被减数 - 差。计算：20 - 11 = 9。所以答案是 9。"
+      }
+    },
+    {
+      "id": 4,
+      "topic": {
+        "vi": "PHÉP TÍNH",
+        "en": "ARITHMETIC",
+        "zh": "加减运算"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Có 15 chú chim đậu trên cành cây. Có 4 chú chim bay đi, sau đó lại có 6 chú chim khác bay tới. Hỏi trên cành cây hiện có bao nhiêu chú chim?",
+        "en": "There are 15 birds on a tree branch. 4 fly away, then 6 other birds fly in. How many birds are there on the branch now?",
+        "zh": "树枝上有 15 只小鸟。飞走了 4 只，接着又飞来了 6 只。现在树上一共有多少只小鸟？"
+      },
+      "speechText": {
+        "vi": "Có 15 chú chim, 4 chú bay đi, sau đó 6 chú khác bay tới. Hỏi hiện có bao nhiêu chú chim?",
+        "en": "15 birds on a branch, 4 fly away, 6 fly in. How many birds now?",
+        "zh": "树上有 15 只鸟，飞走 4 只，又飞来 6 只。现在一共有多少只鸟？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🐦", "🐦", "🐦", "🐦", "🐦", "🐦", "🐦", "🐦", "🐦", "🐦"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "16 con", "en": "16 birds", "zh": "16只" } },
+        { "id": "B", "text": { "vi": "17 con", "en": "17 birds", "zh": "17只" } },
+        { "id": "C", "text": { "vi": "18 con", "en": "18 birds", "zh": "18只" } },
+        { "id": "D", "text": { "vi": "19 con", "en": "19 birds", "zh": "19只" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Số chim sau khi 4 con bay đi: 15 - 4 = 11 con. Số chim sau khi 6 con bay tới: 11 + 6 = 17 con chim.",
+        "en": "Birds left after 4 fly away: 15 - 4 = 11. Birds after 6 fly in: 11 + 6 = 17 birds.",
+        "zh": "飞走 4 只后：15 - 4 = 11 只。飞来 6 只后：11 + 6 = 17 只小鸟。"
+      }
+    },
+    {
+      "id": 5,
+      "topic": {
+        "vi": "PHÉP TÍNH",
+        "en": "ARITHMETIC",
+        "zh": "加减运算"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Tính giá trị của biểu thức: 1 + 2 + 3 + 4 + 5 + 6 = ?",
+        "en": "Find the sum: 1 + 2 + 3 + 4 + 5 + 6 = ?",
+        "zh": "计算算式的总和：1 + 2 + 3 + 4 + 5 + 6 = ？"
+      },
+      "speechText": {
+        "vi": "Tính giá trị của biểu thức: 1 cộng 2 cộng 3 cộng 4 cộng 5 cộng 6 bằng bao nhiêu?",
+        "en": "Find the sum of: 1 plus 2 plus 3 plus 4 plus 5 plus 6.",
+        "zh": "请计算：1 加 2 加 3 加 4 加 5 加 6 等于多少？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["1️⃣", "➕", "2️⃣", "➕", "3️⃣", "➕", "4️⃣", "➕", "5️⃣", "➕", "6️⃣"],
+        "columns": 6
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "20", "en": "20", "zh": "20" } },
+        { "id": "B", "text": { "vi": "21", "en": "21", "zh": "21" } },
+        { "id": "C", "text": { "vi": "22", "en": "22", "zh": "22" } },
+        { "id": "D", "text": { "vi": "24", "en": "24", "zh": "24" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Nhóm các cặp có tổng bằng 7: (1 + 6) + (2 + 5) + (3 + 4) = 7 + 7 + 7 = 21.",
+        "en": "Group into pairs summing to 7: (1 + 6) + (2 + 5) + (3 + 4) = 7 + 7 + 7 = 21.",
+        "zh": "配对求和法：(1 + 6) + (2 + 5) + (3 + 4) = 7 + 7 + 7 = 21。"
+      }
+    }
+  ]
+}

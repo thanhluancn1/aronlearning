@@ -1,0 +1,196 @@
+{
+  "examConfig": {
+    "id": "timo-hinh-hoc-g1",
+    "title": {
+      "vi": "Toán TIMO Lớp 1 - Hình học và Đếm hình",
+      "en": "TIMO Math Grade 1 - Geometry & Shape Counting",
+      "zh": "TIMO 奥数一年级 - 几何与图形计数"
+    },
+    "grade": 1,
+    "totalQuestions": 5,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": [
+    {
+      "id": 1,
+      "topic": {
+        "vi": "HÌNH HỌC",
+        "en": "GEOMETRY",
+        "zh": "几何图形"
+      },
+      "difficultyLevel": 1,
+      "questionText": {
+        "vi": "Hình nào sau đây có 3 cạnh và 3 đỉnh?",
+        "en": "Which of the following shapes has 3 sides and 3 vertices?",
+        "zh": "下列哪一个图形有 3 条边和 3 个顶点？"
+      },
+      "speechText": {
+        "vi": "Hình nào sau đây có 3 cạnh và 3 đỉnh?",
+        "en": "Which shape has 3 sides and 3 vertices?",
+        "zh": "下列哪一个图形有 3 条边和 3 个顶点？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🔺", "🟦", "🟡", "⭐"],
+        "columns": 4
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "Hình tròn", "en": "Circle", "zh": "圆形" } },
+        { "id": "B", "text": { "vi": "Hình vuông", "en": "Square", "zh": "正方形" } },
+        { "id": "C", "text": { "vi": "Hình tam giác", "en": "Triangle", "zh": "三角形" } },
+        { "id": "D", "text": { "vi": "Hình chữ nhật", "en": "Rectangle", "zh": "长方形" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "Hình tam giác là hình học phẳng có đúng 3 cạnh và 3 đỉnh.",
+        "en": "A triangle is a polygon with exactly 3 sides and 3 vertices.",
+        "zh": "三角形是有 3 条边和 3 个顶点的平面图形。"
+      }
+    },
+    {
+      "id": 2,
+      "topic": {
+        "vi": "HÌNH HỌC",
+        "en": "GEOMETRY",
+        "zh": "几何图形"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Có bao nhiêu hình chữ nhật đơn trong hình bên dưới?",
+        "en": "How many individual rectangles are there in the figure below?",
+        "zh": "下图中有多少个单独的长方形？"
+      },
+      "speechText": {
+        "vi": "Có bao nhiêu hình chữ nhật đơn trong hình bên dưới?",
+        "en": "How many individual rectangles in the figure?",
+        "zh": "下图中有多少个单独的长方形？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🟩", "🟩", "🟩", "🟩", "🟩", "🟩"],
+        "columns": 3
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "4 hình", "en": "4 rectangles", "zh": "4个" } },
+        { "id": "B", "text": { "vi": "5 hình", "en": "5 rectangles", "zh": "5个" } },
+        { "id": "C", "text": { "vi": "6 hình", "en": "6 rectangles", "zh": "6个" } },
+        { "id": "D", "text": { "vi": "8 hình", "en": "8 rectangles", "zh": "8个" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "Đếm hàng trên có 3 hình, hàng dưới có 3 hình. Tổng cộng có 3 + 3 = 6 hình chữ nhật đơn.",
+        "en": "Top row has 3, bottom row has 3. Total = 3 + 3 = 6 individual rectangles.",
+        "zh": "上面一行有 3 个，下面一行有 3 个。总共有 3 + 3 = 6 个单体长方形。"
+      }
+    },
+    {
+      "id": 3,
+      "topic": {
+        "vi": "HÌNH HỌC",
+        "en": "GEOMETRY",
+        "zh": "几何图形"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Một khối rubik lập phương có bao nhiêu mặt phẳng?",
+        "en": "How many faces does a cube (like a Rubik's cube) have?",
+        "zh": "一个正方体（如魔方）一共有多少个面？"
+      },
+      "speechText": {
+        "vi": "Một khối lập phương có bao nhiêu mặt phẳng?",
+        "en": "How many faces does a cube have?",
+        "zh": "一个正方体一共有多少个面？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🧊", "🎲", "🧊", "🎲"],
+        "columns": 4
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "4 mặt", "en": "4 faces", "zh": "4个面" } },
+        { "id": "B", "text": { "vi": "6 mặt", "en": "6 faces", "zh": "6个面" } },
+        { "id": "C", "text": { "vi": "8 mặt", "en": "8 faces", "zh": "8个面" } },
+        { "id": "D", "text": { "vi": "12 mặt", "en": "12 faces", "zh": "12个面" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Khối lập phương (hoặc con xúc xắc 🎲) luôn có đúng 6 mặt bằng nhau.",
+        "en": "A cube (or die 🎲) always has exactly 6 identical square faces.",
+        "zh": "正方体（如骰子 🎲）正好有 6 个大小相同的平面。"
+      }
+    },
+    {
+      "id": 4,
+      "topic": {
+        "vi": "HÌNH HỌC",
+        "en": "GEOMETRY",
+        "zh": "几何图形"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Có bao nhiêu đoạn thẳng nối giữa 4 điểm không thẳng hàng?",
+        "en": "How many line segments can you draw connecting 4 non-collinear points?",
+        "zh": "连接不在同一直线上的 4 个点，一共可以画出多少条线段？"
+      },
+      "speechText": {
+        "vi": "Có bao nhiêu đoạn thẳng nối giữa 4 điểm không thẳng hàng?",
+        "en": "How many line segments connecting 4 non-collinear points?",
+        "zh": "连接 4 个不在同一直线上的点，可以画出多少条线段？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🟣", "➖", "🟣", "➖", "🟣", "➖", "🟣"],
+        "columns": 7
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "4 đoạn", "en": "4 segments", "zh": "4条" } },
+        { "id": "B", "text": { "vi": "5 đoạn", "en": "5 segments", "zh": "5条" } },
+        { "id": "C", "text": { "vi": "6 đoạn", "en": "6 segments", "zh": "6条" } },
+        { "id": "D", "text": { "vi": "8 đoạn", "en": "8 segments", "zh": "8条" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "Công thức tính số đoạn thẳng nối từ 4 điểm: (4 × 3) ÷ 2 = 6 đoạn thẳng.",
+        "en": "Formula for segments between 4 points: (4 × 3) ÷ 2 = 6 segments.",
+        "zh": "4 个点连成线段公式：(4 × 3) ÷ 2 = 6 条线段。"
+      }
+    },
+    {
+      "id": 5,
+      "topic": {
+        "vi": "HÌNH HỌC",
+        "en": "GEOMETRY",
+        "zh": "几何图形"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Xếp 3 khối lập phương nhỏ thành 1 hàng dọc, sau đó đặt thêm 2 khối bên cạnh hàng dưới cùng. Hỏi có tất cả bao nhiêu khối lập phương?",
+        "en": "Stack 3 small cubes vertically, then place 2 more cubes next to the bottom one. How many cubes are there in total?",
+        "zh": "将 3 个小正方体竖着叠成一列，再在最底部的一旁放置 2 个。请问一共有多少个小正方体？"
+      },
+      "speechText": {
+        "vi": "Xếp 3 khối lập phương dọc, đặt thêm 2 khối bên cạnh. Hỏi có tất cả bao nhiêu khối lập phương?",
+        "en": "Stack 3 cubes vertically, place 2 next to bottom. How many cubes in total?",
+        "zh": "竖着叠 3 个正方体，旁边放 2 个。总共多少个正方体？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🧊", "🧊", "🧊", "🧊", "🧊"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "4 khối", "en": "4 cubes", "zh": "4个" } },
+        { "id": "B", "text": { "vi": "5 khối", "en": "5 cubes", "zh": "5个" } },
+        { "id": "C", "text": { "vi": "6 khối", "en": "6 cubes", "zh": "6个" } },
+        { "id": "D", "text": { "vi": "7 khối", "en": "7 cubes", "zh": "7个" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Hàng dọc có 3 khối + thêm 2 khối bên cạnh: 3 + 2 = 5 khối lập phương.",
+        "en": "Vertical stack has 3 + 2 adjacent cubes = 5 cubes in total.",
+        "zh": "竖列 3 个 + 旁边 2 个：3 + 2 = 5 个正方体。"
+      }
+    }
+  ]
+}

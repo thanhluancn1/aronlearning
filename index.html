@@ -42,7 +42,7 @@
   <!-- Core Scripts -->
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/core.js"></script>
-  <script src="assets/js/data-modules.js"></script>
+  <script src="assets/js/notification.js"></script>
 
   <style>
     * {
@@ -160,8 +160,45 @@
   </nav>
 
   <!-- 2. OCTOKIDS CURRICULUM SECTIONS (FULL WIDTH) -->
-  <main class="w-full px-4 sm:px-8 py-8 flex-1 space-y-8">
-    
+  <main class="w-full px-4 sm:px-8 py-8 flex-1">
+
+    <!-- A. LOADING SPINNER -->
+    <div x-show="isLoadingCurriculum && !loadError" class="w-full flex flex-col items-center justify-center py-24 text-center">
+      <div class="w-14 h-14 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mb-4"></div>
+      <p class="text-purple-800 font-black text-base">Đang tải danh mục chương trình học...</p>
+      <p class="text-slate-500 font-bold text-xs mt-1">Vui lòng chờ trong giây lát</p>
+    </div>
+
+    <!-- B. ERROR STATE CARD (POWERED BY REUSABLE OCTONOTIFY MODULE) -->
+    <div x-show="loadError" x-html="renderErrorState()" class="max-w-3xl mx-auto py-8"></div>
+
+    <!-- C. MAIN CURRICULUM CONTENT -->
+    <div x-show="!isLoadingCurriculum && !loadError" class="space-y-8">
+      <!-- 0. ĐẤU TRƯỜNG LUYỆN THI NỔI BẬT (Featured Exam Arena Banner) -->
+    <template x-for="exam in featuredExams" :key="exam.id">
+      <section class="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-900 text-white shadow-xl relative overflow-hidden border-4 border-purple-400">
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div class="flex-1 space-y-3">
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="bg-amber-400 text-amber-950 font-black text-xs px-3.5 py-1 rounded-full uppercase tracking-wider shadow-sm" x-text="getLocalized(exam.badge)"></span>
+              <span class="bg-white/20 text-white font-extrabold text-xs px-3.5 py-1 rounded-full backdrop-blur-sm" x-text="getLocalized(exam.ageTag)"></span>
+              <span class="bg-purple-500/40 text-purple-200 font-extrabold text-xs px-3.5 py-1 rounded-full border border-purple-300/30" x-text="getLocalized(exam.target)"></span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-tight drop-shadow-sm" x-text="getLocalized(exam.title)"></h2>
+            <p class="text-purple-100/90 text-xs sm:text-sm md:text-base font-medium max-w-3xl leading-relaxed" x-text="getLocalized(exam.description)"></p>
+          </div>
+          <div class="flex-shrink-0 w-full md:w-auto">
+            <a :href="getExamUrl(exam)" 
+               @click="PortalCore.playPop()" 
+               class="w-full md:w-auto inline-flex items-center justify-center gap-3 bg-amber-400 hover:bg-amber-300 text-amber-950 font-black text-base sm:text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all text-center">
+              <span>🚀</span>
+              <span x-text="t('home.startExamBtn')"></span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </template>
 
     <!-- PHÂN KHU 1: TƯ DUY NỀN TẢNG (Foundational Path) -->
     <section class="ok-curriculum-section">
@@ -201,55 +238,23 @@
 
             <!-- Horizontal Scroll Track -->
             <div x-ref="pathScroll" class="flex items-stretch gap-5 overflow-x-auto py-3 px-2 scroll-smooth no-scrollbar">
-              
-              <!-- Step 1 (Current Active Step) -->
-              <div class="min-w-[250px] sm:min-w-[270px] bg-gradient-to-b from-purple-50 via-white to-purple-50/40 border-4 border-purple-500 rounded-3xl p-5 flex flex-col justify-between items-center text-center shadow-lg relative group hover:scale-[1.02] transition-transform">
-                <div class="w-9 h-9 rounded-full bg-purple-600 text-white font-black text-sm flex items-center justify-center shadow-md mb-2">1</div>
-                <div class="text-5xl my-2 group-hover:scale-110 transition-transform">🔢</div>
-                <h4 class="font-black text-slate-950 text-base sm:text-lg my-1 leading-snug" x-text="t('curriculum.step1Title')"></h4>
-                <span class="text-xs font-black text-purple-800 bg-purple-100 border border-purple-300 px-3.5 py-1 rounded-full my-2" x-text="t('curriculum.questionsCount').replace('{count}', 40)"></span>
-                <div class="grid grid-cols-2 gap-2 w-full mt-4">
-                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-50 text-purple-800 border-2 border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
-                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+              <template x-for="item in curriculum.foundational" :key="item.id">
+                <div class="min-w-[250px] sm:min-w-[270px] rounded-3xl p-5 flex flex-col justify-between items-center text-center relative group transition-all"
+                     :class="item.isActive ? 'bg-gradient-to-b from-purple-50 via-white to-purple-50/40 border-4 border-purple-500 shadow-lg hover:scale-[1.02]' : 'bg-white border-2 border-slate-200 shadow-sm hover:border-purple-300 hover:scale-[1.01]'">
+                  <div class="w-9 h-9 rounded-full font-black text-sm flex items-center justify-center shadow-md mb-2"
+                       :class="item.isActive ? 'bg-purple-600 text-white' : 'bg-slate-200 text-slate-700'"
+                       x-text="item.step"></div>
+                  <div class="text-5xl my-2 group-hover:scale-110 transition-transform" x-text="item.icon"></div>
+                  <h4 class="font-black text-slate-950 text-base sm:text-lg my-1 leading-snug" x-text="getLocalized(item.title)"></h4>
+                  <span class="text-xs font-black px-3.5 py-1 rounded-full my-2"
+                        :class="item.isActive ? 'text-purple-800 bg-purple-100 border border-purple-300' : 'text-slate-600 bg-slate-100 border border-slate-200'"
+                        x-text="t('curriculum.questionsCount').replace('{count}', item.questionCount)"></span>
+                  <div class="grid grid-cols-2 gap-2 w-full mt-4">
+                    <a :href="getExamUrl(item)" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-50 text-purple-800 border-2 border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+                    <a :href="getExamUrl(item)" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+                  </div>
                 </div>
-              </div>
-
-              <!-- Step 2 -->
-              <div class="min-w-[250px] sm:min-w-[270px] bg-white border-2 border-slate-200 rounded-3xl p-5 flex flex-col justify-between items-center text-center shadow-sm relative group hover:border-purple-300 hover:scale-[1.01] transition-all">
-                <div class="w-9 h-9 rounded-full bg-slate-200 text-slate-700 font-black text-sm flex items-center justify-center shadow-sm mb-2">2</div>
-                <div class="text-5xl my-2 group-hover:scale-110 transition-transform">➕</div>
-                <h4 class="font-black text-slate-950 text-base sm:text-lg my-1 leading-snug" x-text="t('curriculum.step2Title')"></h4>
-                <span class="text-xs font-extrabold text-slate-600 bg-slate-100 border border-slate-200 px-3.5 py-1 rounded-full my-2" x-text="t('curriculum.questionsCount').replace('{count}', 44)"></span>
-                <div class="grid grid-cols-2 gap-2 w-full mt-4">
-                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-50 text-purple-800 border border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
-                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
-                </div>
-              </div>
-
-              <!-- Step 3 -->
-              <div class="min-w-[250px] sm:min-w-[270px] bg-white border-2 border-slate-200 rounded-3xl p-5 flex flex-col justify-between items-center text-center shadow-sm relative group hover:border-purple-300 hover:scale-[1.01] transition-all">
-                <div class="w-9 h-9 rounded-full bg-slate-200 text-slate-700 font-black text-sm flex items-center justify-center shadow-sm mb-2">3</div>
-                <div class="text-5xl my-2 group-hover:scale-110 transition-transform">⚖️</div>
-                <h4 class="font-black text-slate-950 text-base sm:text-lg my-1 leading-snug" x-text="t('curriculum.step3Title')"></h4>
-                <span class="text-xs font-extrabold text-slate-600 bg-slate-100 border border-slate-200 px-3.5 py-1 rounded-full my-2" x-text="t('curriculum.questionsCount').replace('{count}', 50)"></span>
-                <div class="grid grid-cols-2 gap-2 w-full mt-4">
-                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-50 text-purple-800 border border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
-                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
-                </div>
-              </div>
-
-              <!-- Step 4 -->
-              <div class="min-w-[250px] sm:min-w-[270px] bg-white border-2 border-slate-200 rounded-3xl p-5 flex flex-col justify-between items-center text-center shadow-sm relative group hover:border-purple-300 hover:scale-[1.01] transition-all">
-                <div class="w-9 h-9 rounded-full bg-slate-200 text-slate-700 font-black text-sm flex items-center justify-center shadow-sm mb-2">4</div>
-                <div class="text-5xl my-2 group-hover:scale-110 transition-transform">⏰</div>
-                <h4 class="font-black text-slate-950 text-base sm:text-lg my-1 leading-snug" x-text="t('curriculum.step4Title')"></h4>
-                <span class="text-xs font-extrabold text-slate-600 bg-slate-100 border border-slate-200 px-3.5 py-1 rounded-full my-2" x-text="t('curriculum.questionsCount').replace('{count}', 50)"></span>
-                <div class="grid grid-cols-2 gap-2 w-full mt-4">
-                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-50 text-purple-800 border border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
-                  <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
-                </div>
-              </div>
-
+              </template>
             </div>
 
             <button type="button" 
@@ -280,73 +285,24 @@
 
         <!-- Lesson Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          
-          <!-- Card 1: Green -->
-          <div class="bg-emerald-50/70 border-2 border-emerald-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardRules')"></h4>
-            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">🧩</div>
-            <span class="text-xs font-black text-emerald-800 bg-emerald-100 border border-emerald-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 50)"></span>
-            <div class="grid grid-cols-2 gap-2.5 w-full">
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-emerald-100 text-emerald-800 border-2 border-emerald-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+          <template x-for="item in curriculum.enrichment" :key="item.id">
+            <div class="border-2 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+                 :class="getThemeClasses(item.colorTheme).card">
+              <h4 class="font-black text-slate-950 text-xl mb-2" x-text="getLocalized(item.title)"></h4>
+              <div class="text-6xl my-3 group-hover:scale-110 transition-transform" x-text="item.icon"></div>
+              <span class="text-xs font-black border px-3.5 py-1 rounded-full mb-5"
+                    :class="getThemeClasses(item.colorTheme).badge"
+                    x-text="t('curriculum.questionsCount').replace('{count}', item.questionCount)"></span>
+              <div class="grid grid-cols-2 gap-2.5 w-full">
+                <a :href="getExamUrl(item)" @click="PortalCore.playPop()" class="border-2 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all"
+                   :class="getThemeClasses(item.colorTheme).exploreBtn"
+                   x-text="t('curriculum.exploreBtn')"></a>
+                <a :href="getExamUrl(item)" @click="PortalCore.playPop()" class="font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all text-white"
+                   :class="getThemeClasses(item.colorTheme).practiceBtn"
+                   x-text="t('curriculum.practiceBtn')"></a>
+              </div>
             </div>
-          </div>
-
-          <!-- Card 2: Orange -->
-          <div class="bg-amber-50/70 border-2 border-amber-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardChart')"></h4>
-            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">📊</div>
-            <span class="text-xs font-black text-amber-900 bg-amber-100 border border-amber-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 30)"></span>
-            <div class="grid grid-cols-2 gap-2.5 w-full">
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-amber-100 text-amber-900 border-2 border-amber-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-amber-500 hover:bg-amber-600 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
-            </div>
-          </div>
-
-          <!-- Card 3: Blue -->
-          <div class="bg-sky-50/70 border-2 border-sky-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardGeometry')"></h4>
-            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">📐</div>
-            <span class="text-xs font-black text-sky-800 bg-sky-100 border border-sky-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 58)"></span>
-            <div class="grid grid-cols-2 gap-2.5 w-full">
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-sky-100 text-sky-800 border-2 border-sky-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-sky-600 hover:bg-sky-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
-            </div>
-          </div>
-
-          <!-- Card 4: Purple -->
-          <div class="bg-purple-50/70 border-2 border-purple-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardBalance')"></h4>
-            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">⚖️</div>
-            <span class="text-xs font-black text-purple-800 bg-purple-100 border border-purple-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 50)"></span>
-            <div class="grid grid-cols-2 gap-2.5 w-full">
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-100 text-purple-800 border-2 border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
-            </div>
-          </div>
-
-          <!-- Card 5: Pink -->
-          <div class="bg-rose-50/70 border-2 border-rose-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardLogic')"></h4>
-            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">💡</div>
-            <span class="text-xs font-black text-rose-800 bg-rose-100 border border-rose-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 30)"></span>
-            <div class="grid grid-cols-2 gap-2.5 w-full">
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-rose-100 text-rose-800 border-2 border-rose-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-rose-500 hover:bg-rose-600 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
-            </div>
-          </div>
-
-          <!-- Card 6: Teal -->
-          <div class="bg-teal-50/70 border-2 border-teal-300 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-            <h4 class="font-black text-slate-950 text-xl mb-2" x-text="t('curriculum.cardSubst')"></h4>
-            <div class="text-6xl my-3 group-hover:scale-110 transition-transform">🔄</div>
-            <span class="text-xs font-black text-teal-800 bg-teal-100 border border-teal-300 px-3.5 py-1 rounded-full mb-5" x-text="t('curriculum.questionsCount').replace('{count}', 40)"></span>
-            <div class="grid grid-cols-2 gap-2.5 w-full">
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-white hover:bg-teal-100 text-teal-800 border-2 border-teal-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
-              <a href="modules/luyen-thi-trac-nghiem.html" @click="PortalCore.playPop()" class="bg-teal-600 hover:bg-teal-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
-            </div>
-          </div>
-
+          </template>
         </div>
       </div>
     </section>
@@ -368,67 +324,31 @@
 
         <!-- 4 Quick Mini Grid Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          
-          <!-- Daily Quiz -->
-          <a href="modules/luyen-thi-trac-nghiem.html" 
-             @click="PortalCore.playPop()" 
-             class="bg-purple-50/80 border-2 border-purple-300 hover:border-purple-500 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
-            <div class="flex items-center gap-3">
-              <span class="w-11 h-11 rounded-2xl bg-purple-600 text-white text-xl flex items-center justify-center shadow-sm flex-shrink-0">🏆</span>
-              <div class="flex flex-col">
-                <b class="font-black text-slate-950 text-base group-hover:text-purple-700 transition-colors" x-text="t('curriculum.quickDaily')"></b>
-                <span class="text-xs font-bold text-slate-600" x-text="t('curriculum.quickDailySub')"></span>
+          <template x-for="item in curriculum.quickPractice" :key="item.id">
+            <a :href="getExamUrl(item)" 
+               @click="PortalCore.playPop()" 
+               class="border-2 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
+               :class="getQuickThemeClasses(item.colorTheme).card">
+              <div class="flex items-center gap-3">
+                <span class="w-11 h-11 rounded-2xl text-xl flex items-center justify-center shadow-sm flex-shrink-0"
+                      :class="getQuickThemeClasses(item.colorTheme).iconBox"
+                      x-text="item.icon"></span>
+                <div class="flex flex-col">
+                  <b class="font-black text-slate-950 text-base transition-colors"
+                     :class="getQuickThemeClasses(item.colorTheme).title"
+                     x-text="getLocalized(item.title)"></b>
+                  <span class="text-xs font-bold text-slate-600" x-text="getLocalized(item.subtitle)"></span>
+                </div>
               </div>
-            </div>
-            <span class="text-2xl font-black text-purple-600 group-hover:translate-x-1 transition-transform">›</span>
-          </a>
-
-          <!-- Try Hard -->
-          <a href="modules/luyen-thi-trac-nghiem.html" 
-             @click="PortalCore.playPop()" 
-             class="bg-sky-50/80 border-2 border-sky-300 hover:border-sky-500 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
-            <div class="flex items-center gap-3">
-              <span class="w-11 h-11 rounded-2xl bg-sky-600 text-white text-xl flex items-center justify-center shadow-sm flex-shrink-0">🎯</span>
-              <div class="flex flex-col">
-                <b class="font-black text-slate-950 text-base group-hover:text-sky-700 transition-colors" x-text="t('curriculum.quickTryhard')"></b>
-                <span class="text-xs font-bold text-slate-600" x-text="t('curriculum.quickTryhardSub')"></span>
-              </div>
-            </div>
-            <span class="text-2xl font-black text-sky-600 group-hover:translate-x-1 transition-transform">›</span>
-          </a>
-
-          <!-- 10 Questions -->
-          <a href="modules/luyen-thi-trac-nghiem.html" 
-             @click="PortalCore.playPop()" 
-             class="bg-emerald-50/80 border-2 border-emerald-300 hover:border-emerald-500 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
-            <div class="flex items-center gap-3">
-              <span class="w-11 h-11 rounded-2xl bg-emerald-600 text-white text-xl flex items-center justify-center shadow-sm flex-shrink-0">🎲</span>
-              <div class="flex flex-col">
-                <b class="font-black text-slate-950 text-base group-hover:text-emerald-700 transition-colors" x-text="t('curriculum.quick10')"></b>
-                <span class="text-xs font-bold text-slate-600" x-text="t('curriculum.quick10Sub')"></span>
-              </div>
-            </div>
-            <span class="text-2xl font-black text-emerald-600 group-hover:translate-x-1 transition-transform">›</span>
-          </a>
-
-          <!-- 20 Questions -->
-          <a href="modules/luyen-thi-trac-nghiem.html" 
-             @click="PortalCore.playPop()" 
-             class="bg-amber-50/80 border-2 border-amber-300 hover:border-amber-500 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
-            <div class="flex items-center gap-3">
-              <span class="w-11 h-11 rounded-2xl bg-amber-500 text-white text-xl flex items-center justify-center shadow-sm flex-shrink-0">⚡</span>
-              <div class="flex flex-col">
-                <b class="font-black text-slate-950 text-base group-hover:text-amber-700 transition-colors" x-text="t('curriculum.quick20')"></b>
-                <span class="text-xs font-bold text-slate-600" x-text="t('curriculum.quick20Sub')"></span>
-              </div>
-            </div>
-            <span class="text-2xl font-black text-amber-600 group-hover:translate-x-1 transition-transform">›</span>
-          </a>
-
+              <span class="text-2xl font-black group-hover:translate-x-1 transition-transform"
+                    :class="getQuickThemeClasses(item.colorTheme).arrow">›</span>
+            </a>
+          </template>
         </div>
       </div>
     </section>
 
+    </div>
   </main>
 
   <!-- STICKER ALBUM MODAL -->
@@ -501,7 +421,6 @@
     document.addEventListener('alpine:init', () => {
       Alpine.data('portalHubApp', () => ({
         state: PortalCore.getState(),
-        modules: window.LEARNING_MODULES,
         stickers: window.GLOBAL_STICKERS,
         currentLang: OctoI18n.currentLang,
         languages: OctoI18n.languages,
@@ -511,8 +430,137 @@
         tempName: '',
         tempAvatar: '',
 
+        curriculum: {
+          foundational: [],
+          enrichment: [],
+          quickPractice: []
+        },
+        featuredExams: [],
+        isLoadingCurriculum: true,
+        loadError: false,
+        loadErrorMessage: '',
+
+        renderErrorState() {
+          return window.OctoNotify ? OctoNotify.renderErrorCard({
+            error: this.loadErrorMessage,
+            retryFnName: 'window.location.reload()',
+            backUrl: 'index.html'
+          }) : '';
+        },
+
         t(key, defaultVal) {
           return OctoI18n.t(key, defaultVal);
+        },
+
+        getLocalized(obj) {
+          return OctoI18n.getLangText(obj, this.currentLang);
+        },
+
+        getLangText(obj) {
+          return OctoI18n.getLangText(obj, this.currentLang);
+        },
+
+        getExamUrl(item) {
+          if (!item) return 'modules/luyen-thi-trac-nghiem.html';
+          const examId = item.id || 'timo-to-hop-g1';
+          const dataFile = item.dataFile || 'assets/data/timo-to-hop-g1.json';
+          return `modules/luyen-thi-trac-nghiem.html?exam=${encodeURIComponent(examId)}&data=${encodeURIComponent(dataFile)}`;
+        },
+
+        getThemeClasses(colorTheme) {
+          const map = {
+            emerald: {
+              card: 'bg-emerald-50/70 border-emerald-300',
+              badge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+              exploreBtn: 'bg-white hover:bg-emerald-100 text-emerald-800 border-emerald-300',
+              practiceBtn: 'bg-emerald-600 hover:bg-emerald-700'
+            },
+            amber: {
+              card: 'bg-amber-50/70 border-amber-300',
+              badge: 'bg-amber-100 text-amber-900 border-amber-300',
+              exploreBtn: 'bg-white hover:bg-amber-100 text-amber-900 border-amber-300',
+              practiceBtn: 'bg-amber-500 hover:bg-amber-600'
+            },
+            sky: {
+              card: 'bg-sky-50/70 border-sky-300',
+              badge: 'bg-sky-100 text-sky-800 border-sky-300',
+              exploreBtn: 'bg-white hover:bg-sky-100 text-sky-800 border-sky-300',
+              practiceBtn: 'bg-sky-600 hover:bg-sky-700'
+            },
+            purple: {
+              card: 'bg-purple-50/70 border-purple-300',
+              badge: 'bg-purple-100 text-purple-800 border-purple-300',
+              exploreBtn: 'bg-white hover:bg-purple-100 text-purple-800 border-purple-300',
+              practiceBtn: 'bg-purple-600 hover:bg-purple-700'
+            },
+            rose: {
+              card: 'bg-rose-50/70 border-rose-300',
+              badge: 'bg-rose-100 text-rose-800 border-rose-300',
+              exploreBtn: 'bg-white hover:bg-rose-100 text-rose-800 border-rose-300',
+              practiceBtn: 'bg-rose-500 hover:bg-rose-600'
+            },
+            teal: {
+              card: 'bg-teal-50/70 border-teal-300',
+              badge: 'bg-teal-100 text-teal-800 border-teal-300',
+              exploreBtn: 'bg-white hover:bg-teal-100 text-teal-800 border-teal-300',
+              practiceBtn: 'bg-teal-600 hover:bg-teal-700'
+            }
+          };
+          return map[colorTheme] || map.purple;
+        },
+
+        getQuickThemeClasses(colorTheme) {
+          const map = {
+            purple: {
+              card: 'bg-purple-50/80 border-purple-300 hover:border-purple-500',
+              iconBox: 'bg-purple-600 text-white',
+              title: 'group-hover:text-purple-700',
+              arrow: 'text-purple-600'
+            },
+            sky: {
+              card: 'bg-sky-50/80 border-sky-300 hover:border-sky-500',
+              iconBox: 'bg-sky-600 text-white',
+              title: 'group-hover:text-sky-700',
+              arrow: 'text-sky-600'
+            },
+            emerald: {
+              card: 'bg-emerald-50/80 border-emerald-300 hover:border-emerald-500',
+              iconBox: 'bg-emerald-600 text-white',
+              title: 'group-hover:text-emerald-700',
+              arrow: 'text-emerald-600'
+            },
+            amber: {
+              card: 'bg-amber-50/80 border-amber-300 hover:border-amber-500',
+              iconBox: 'bg-amber-500 text-white',
+              title: 'group-hover:text-amber-700',
+              arrow: 'text-amber-600'
+            }
+          };
+          return map[colorTheme] || map.purple;
+        },
+
+        async loadCurriculum() {
+          this.isLoadingCurriculum = true;
+          this.loadError = false;
+          this.loadErrorMessage = '';
+          try {
+            const res = await fetch('assets/data/exams-index.json');
+            if (!res.ok) {
+              throw new Error(`Không thể nạp tệp "assets/data/exams-index.json" (HTTP ${res.status}: ${res.statusText || 'Lỗi mạng / Không tìm thấy tệp'}).`);
+            }
+            const data = await res.json();
+            if (!data || (!data.curriculum && !data.featuredExams)) {
+              throw new Error('Tệp "assets/data/exams-index.json" không đúng định dạng dữ liệu danh mục đề thi!');
+            }
+            if (data.curriculum) this.curriculum = data.curriculum;
+            if (data.featuredExams) this.featuredExams = data.featuredExams;
+          } catch (e) {
+            console.error('Lỗi nạp danh mục exams-index.json:', e);
+            this.loadError = true;
+            this.loadErrorMessage = e.message || 'Không thể kết nối hoặc nạp tệp danh mục đề thi.';
+          } finally {
+            this.isLoadingCurriculum = false;
+          }
         },
 
         setLang(code) {
@@ -537,6 +585,7 @@
           window.addEventListener('octo-lang-changed', (e) => {
             this.currentLang = e.detail;
           });
+          this.loadCurriculum();
         },
 
         toggleSound() {
@@ -555,6 +604,9 @@
           this.state.avatar = this.tempAvatar || '👦';
           PortalCore.saveState(this.state);
           this.showAvatarModal = false;
+          if (window.OctoNotify) {
+            OctoNotify.toast('Đã lưu thông tin bé thành công! ✨', 'success');
+          }
         }
       }));
     });

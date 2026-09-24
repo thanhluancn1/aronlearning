@@ -25,7 +25,7 @@ window.LEARNING_MODULES = [
       en: 'Modern online contest platform: Text/image zoom, multi-language speech TTS, countdown timer, question palette legend, and step-by-step solutions.',
       zh: '现代在线奥数备考平台：支持字体与图片缩放、多语言语音朗读、倒计时、题目状态图例与图文详细解析。'
     },
-    link: 'modules/luyen-thi-trac-nghiem.html',
+    link: 'modules/luyen-thi-trac-nghiem.html?exam=timo-to-hop-g1&data=assets/data/timo-to-hop-g1.json',
     dataPath: 'assets/data/timo-to-hop-g1.json',
     bgGradient: 'from-purple-600 via-indigo-600 to-purple-800',
     borderColor: 'border-purple-600',

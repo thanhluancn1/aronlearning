@@ -58,6 +58,7 @@
   <!-- Core i18n Engine & Sound Engine -->
   <script src="../assets/js/i18n.js"></script>
   <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/notification.js"></script>
 
   <style>
     * {
@@ -200,7 +201,7 @@
       </div>
 
       <!-- Action Group: Timer, Pause, Report, Submit -->
-      <div class="flex items-center gap-3">
+      <div x-show="!loadError && !isLoading" class="flex items-center gap-3">
         
         <!-- Status Box -->
         <div class="bg-slate-100 border border-slate-300 rounded-2xl px-4 py-1.5 flex items-center gap-3 shadow-inner">
@@ -239,14 +240,33 @@
 
       </div>
 
+      <!-- Error notice in Topbar -->
+      <div x-show="loadError" class="flex items-center gap-2 text-rose-700 font-black text-xs sm:text-sm bg-rose-50 px-3.5 py-1.5 rounded-xl border border-rose-200">
+        <span>⚠️</span>
+        <span x-text="t('error.loadFailedTitle', 'Lỗi tải đề thi')"></span>
+      </div>
+
     </div>
   </div>
 
   <!-- 3. OCTOKIDS FULL-WIDTH BODY LAYOUT (75% Main Card - 25% Sidebar) -->
-  <main class="w-full px-4 sm:px-8 py-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+  <main class="w-full px-4 sm:px-8 py-6 flex-1">
     
-    <!-- LEFT MAIN QUESTION CARD (lg:col-span-9 = ~75% width) -->
-    <section class="lg:col-span-9 flex flex-col gap-4">
+    <!-- A. LOADING SPINNER -->
+    <div x-show="isLoading && !loadError" class="w-full flex flex-col items-center justify-center py-24 text-center">
+      <div class="w-14 h-14 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mb-4"></div>
+      <p class="text-purple-800 font-black text-base">Đang tải đề thi...</p>
+      <p class="text-slate-500 font-bold text-xs mt-1">Vui lòng chờ trong giây lát</p>
+    </div>
+
+    <!-- B. ERROR STATE CARD (POWERED BY REUSABLE OCTONOTIFY MODULE) -->
+    <div x-show="loadError" x-html="renderErrorState()"></div>
+
+    <!-- C. MAIN QUIZ GRID -->
+    <div x-show="!isLoading && !loadError" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    
+      <!-- LEFT MAIN QUESTION CARD (lg:col-span-9 = ~75% width) -->
+      <section class="lg:col-span-9 flex flex-col gap-4">
       
       <!-- QUESTION CARD CONTAINER -->
       <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-md flex flex-col justify-between min-h-[500px] relative overflow-hidden"
@@ -487,6 +507,8 @@
 
     </aside>
 
+    </div>
+
   </main>
 
   <!-- 4. MODALS & OVERLAYS -->
@@ -644,6 +666,14 @@
           const l = this.languages.find(item => item.code === this.currentLang);
           return l ? l.label : 'Tiếng Việt';
         },
+
+        renderErrorState() {
+          return window.OctoNotify ? OctoNotify.renderErrorCard({
+            error: this.loadErrorMessage,
+            retryFnName: 'window.location.reload()',
+            backUrl: '../index.html'
+          }) : '';
+        },
         
         // Exam Config (Loaded dynamically from JSON)
         examConfig: {
@@ -693,149 +723,11 @@
           return this.filteredQuestions.slice(start, start + perPage);
         },
 
-        // Questions Array (Default dataset fallback + dynamic JSON loading)
-        questions: [
-          {
-            id: 1,
-            topic: { vi: "TỔ HỢP", en: "COMBINATORICS", zh: "组合" },
-            difficultyLevel: 1,
-            questionText: {
-              vi: "Có bao nhiêu hình vuông trong hình bên dưới?",
-              en: "How many squares are there in the figure below?",
-              zh: "下图中有多少个正方形？"
-            },
-            speechText: {
-              vi: "Hỏi có bao nhiêu hình vuông trong hình bên dưới?",
-              en: "How many squares are there in the figure below?",
-              zh: "请问下图中有多少个正方形？"
-            },
-            media: { type: "emojiGrid", emojis: ["🟦", "🟦", "🟦", "🟦"], columns: 2 },
-            options: [
-              { id: "A", text: { vi: "3 hình", en: "3 squares", zh: "3个" } },
-              { id: "B", text: { vi: "4 hình", en: "4 squares", zh: "4个" } },
-              { id: "C", text: { vi: "5 hình", en: "5 squares", zh: "5个" } },
-              { id: "D", text: { vi: "6 hình", en: "6 squares", zh: "6个" } }
-            ],
-            correctAnswer: "C",
-            explanation: {
-              vi: "Hình gồm có 4 hình vuông nhỏ và 1 hình vuông lớn bao bên ngoài. Tổng cộng: 4 + 1 = 5 hình vuông.",
-              en: "The figure consists of 4 small squares and 1 large outer square. Total: 4 + 1 = 5 squares.",
-              zh: "图中有 4 个小正方形和 1 个外围的大正方形。总共：4 + 1 = 5 个正方形。"
-            }
-          },
-          {
-            id: 2,
-            topic: { vi: "TỔ HỢP", en: "COMBINATORICS", zh: "组合" },
-            difficultyLevel: 2,
-            questionText: {
-              vi: "An có 3 chiếc áo (Đỏ, Xanh, Vàng) và 2 chiếc quần (Đen, Trắng). Hỏi An có bao nhiêu cách chọn 1 bộ quần áo?",
-              en: "An has 3 shirts (Red, Blue, Yellow) and 2 pants (Black, White). How many different outfits can An choose?",
-              zh: "小安有 3 件上衣（红、蓝、黄）和 2 条裤子（黑、白）。小安有多少种 point 穿搭组合？"
-            },
-            speechText: {
-              vi: "An có 3 chiếc áo và 2 chiếc quần. Hỏi An có bao nhiêu cách chọn một bộ quần áo?",
-              en: "An has 3 shirts and 2 pants. How many different outfits can An choose?",
-              zh: "小安有 3 件上衣和 2 条裤子。小安有多少种 point 穿搭组合？"
-            },
-            media: { type: "emojiGrid", emojis: ["👕", "👕", "👕", "👖", "👖"], columns: 5 },
-            options: [
-              { id: "A", text: { vi: "5 cách", en: "5 ways", zh: "5种" } },
-              { id: "B", text: { vi: "6 cách", en: "6 ways", zh: "6种" } },
-              { id: "C", text: { vi: "7 cách", en: "7 ways", zh: "7种" } },
-              { id: "D", text: { vi: "8 cách", en: "8 ways", zh: "8种" } }
-            ],
-            correctAnswer: "B",
-            explanation: {
-              vi: "Mỗi chiếc áo có thể ghép với 2 chiếc quần. Vì có 3 chiếc áo nên số cách chọn là: 3 × 2 = 6 bộ quần áo.",
-              en: "Each shirt can be paired with 2 different pants. Since there are 3 shirts, total combinations = 3 × 2 = 6 outfits.",
-              zh: "每件上衣都可以搭配 2 条裤子。因为有 3 件上衣，所以穿搭总数：3 × 2 = 6 种。"
-            }
-          },
-          {
-            id: 3,
-            topic: { vi: "TỔ HỢP", en: "COMBINATORICS", zh: "组合" },
-            difficultyLevel: 2,
-            questionText: {
-              vi: "Trong một buổi tiệc có 4 bạn nhỏ. Mỗi bạn bắt tay với tất cả các bạn còn lại 1 lần. Hỏi có tổng cộng bao nhiêu cái bắt tay?",
-              en: "There are 4 children at a party. Each child shakes hands with every other child once. How many handshakes are there in total?",
-              zh: "聚会上有 4 个小朋友。每个小朋友都与其他人握手一次。请问一共有多少次握手？"
-            },
-            speechText: {
-              vi: "Có 4 bạn nhỏ, mỗi bạn bắt tay với các bạn còn lại một lần. Hỏi có tổng cộng bao nhiêu cái bắt tay?",
-              en: "There are 4 children at a party. Each child shakes hands with every other child once. How many handshakes in total?",
-              zh: "有 4 个小朋友，每个小朋友与其他人握手一次。一共有多少次握手？"
-            },
-            media: { type: "emojiGrid", emojis: ["🤝", "🤝", "🤝", "🤝", "🤝", "🤝"], columns: 3 },
-            options: [
-              { id: "A", text: { vi: "4 cái", en: "4 handshakes", zh: "4次" } },
-              { id: "B", text: { vi: "6 cái", en: "6 handshakes", zh: "6次" } },
-              { id: "C", text: { vi: "8 cái", en: "8 handshakes", zh: "8次" } },
-              { id: "D", text: { vi: "12 cái", en: "12 handshakes", zh: "12次" } }
-            ],
-            correctAnswer: "B",
-            explanation: {
-              vi: "Số cái bắt tay = (4 × 3) ÷ 2 = 6 cái bắt tay.",
-              en: "Total handshakes = (4 × 3) ÷ 2 = 6 handshakes.",
-              zh: "握手总次数 = (4 × 3) ÷ 2 = 6 次。"
-            }
-          },
-          {
-            id: 4,
-            topic: { vi: "TỔ HỢP", en: "COMBINATORICS", zh: "组合" },
-            difficultyLevel: 3,
-            questionText: {
-              vi: "Có bao nhiêu hình tam giác trong hình bên dưới?",
-              en: "How many triangles are there in the figure below?",
-              zh: "下图中有多少个三角形？"
-            },
-            speechText: {
-              vi: "Hỏi có bao nhiêu hình tam giác trong hình bên dưới?",
-              en: "How many triangles are there in the figure below?",
-              zh: "请问下图中有多少个三角形？"
-            },
-            media: { type: "emojiGrid", emojis: ["🔺", "🔺", "🔺"], columns: 3 },
-            options: [
-              { id: "A", text: { vi: "2 hình", en: "2 triangles", zh: "2个" } },
-              { id: "B", text: { vi: "3 hình", en: "3 triangles", zh: "3个" } },
-              { id: "C", text: { vi: "4 hình", en: "4 triangles", zh: "4个" } },
-              { id: "D", text: { vi: "6 hình", en: "6 triangles", zh: "6个" } }
-            ],
-            correctAnswer: "D",
-            explanation: {
-              vi: "Đếm 3 tam giác đơn + 2 tam giác đôi + 1 tam giác lớn = 6 tam giác.",
-              en: "Count 3 single triangles + 2 double triangles + 1 large triangle = 6 triangles in total.",
-              zh: "计数：3个单体三角形 + 2个双体复合三角形 + 1个整体大三角形 = 6 个三角形。"
-            }
-          },
-          {
-            id: 5,
-            topic: { vi: "TỔ HỢP", en: "COMBINATORICS", zh: "组合" },
-            difficultyLevel: 3,
-            questionText: {
-              vi: "Điền số tiếp theo vào dãy quy luật: 2, 4, 6, 8, ...?",
-              en: "Find the next number in the pattern: 2, 4, 6, 8, ...?",
-              zh: "在数列中填入下一个数字：2, 4, 6, 8, ...？"
-            },
-            speechText: {
-              vi: "Điền số tiếp theo vào dãy quy luật: 2, 4, 6, 8...",
-              en: "Find the next number in the pattern: 2, 4, 6, 8...",
-              zh: "请填入数列中的下一个数字：2, 4, 6, 8..."
-            },
-            media: { type: "emojiGrid", emojis: ["2️⃣", "4️⃣", "6️⃣", "8️⃣", "❓"], columns: 5 },
-            options: [
-              { id: "A", text: { vi: "9", en: "9", zh: "9" } },
-              { id: "B", text: { vi: "10", en: "10", zh: "10" } },
-              { id: "C", text: { vi: "11", en: "11", zh: "11" } },
-              { id: "D", text: { vi: "12", en: "12", zh: "12" } }
-            ],
-            correctAnswer: "B",
-            explanation: {
-              vi: "Dãy số tăng dần 2 đơn vị. Số tiếp theo là 8 + 2 = 10.",
-              en: "The sequence increases by 2 each step. Next number = 8 + 2 = 10.",
-              zh: "数列递增 2。下一个数字是 8 + 2 = 10。"
-            }
-          }
-        ],
+        // Questions Array (Dynamically loaded via JSON dataset - No hardcoded fallback)
+        questions: [],
+        isLoading: true,
+        loadError: false,
+        loadErrorMessage: '',
 
         // App State
         currentQuestionIndex: 0,
@@ -860,22 +752,49 @@
         earnedMedal: '🥇 Huy Chương Vàng',
 
         async initApp() {
-          try {
-            const res = await fetch('../assets/data/timo-to-hop-g1.json');
-            if (res.ok) {
-              const data = await res.json();
-              if (data.examConfig) this.examConfig = { ...this.examConfig, ...data.examConfig };
-              if (data.questions && data.questions.length) this.questions = data.questions;
-            }
-          } catch (err) {
-            console.warn("Unable to fetch JSON exam dataset, fallback enabled.", err);
-          }
-          const mins = this.examConfig.timeLimitMinutes || this.examConfig.durationMinutes || 15;
-          this.remainingSeconds = mins * 60;
-          this.startTimer();
+          this.isLoading = true;
+          this.loadError = false;
+          this.loadErrorMessage = '';
+
           window.addEventListener('octo-lang-changed', (e) => {
             this.currentLang = e.detail;
           });
+
+          try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dataParam = urlParams.get('data') || urlParams.get('dataset');
+            const examParam = urlParams.get('exam');
+            let dataPath = '../assets/data/timo-to-hop-g1.json';
+            if (dataParam) {
+              dataPath = (dataParam.startsWith('http') || dataParam.startsWith('/')) ? dataParam : (dataParam.startsWith('../') ? dataParam : `../${dataParam}`);
+            } else if (examParam) {
+              dataPath = `../assets/data/${examParam}.json`;
+            }
+
+            const res = await fetch(dataPath);
+            if (!res.ok) {
+              throw new Error(`Không thể nạp tệp "${dataPath}" (HTTP ${res.status}: ${res.statusText || 'Lỗi mạng / Không tìm thấy tệp'})`);
+            }
+            const data = await res.json();
+            if (!data || !data.questions || !Array.isArray(data.questions) || data.questions.length === 0) {
+              throw new Error(`Tệp dữ liệu "${dataPath}" không có danh sách câu hỏi hợp lệ!`);
+            }
+
+            if (data.examConfig) {
+              this.examConfig = { ...this.examConfig, ...data.examConfig };
+            }
+            this.questions = data.questions;
+
+            const mins = this.examConfig.timeLimitMinutes || this.examConfig.durationMinutes || 15;
+            this.remainingSeconds = mins * 60;
+            this.startTimer();
+            this.isLoading = false;
+          } catch (err) {
+            console.error("Lỗi nạp dữ liệu đề thi:", err);
+            this.isLoading = false;
+            this.loadError = true;
+            this.loadErrorMessage = err.message || 'Không thể kết nối hoặc nạp tệp câu hỏi.';
+          }
         },
 
         toggleSound() {
@@ -1026,7 +945,11 @@
           if (!this.flaggedIndexes.includes(this.currentQuestionIndex)) {
             this.flaggedIndexes.push(this.currentQuestionIndex);
           }
-          alert("✅ Cảm ơn bé đã báo lỗi! Câu này cũng đã được đánh dấu để xem lại.");
+          if (window.OctoNotify) {
+            OctoNotify.toast("✅ Đã ghi nhận báo lỗi! Câu này đã được đánh dấu cờ.", "success");
+          } else {
+            alert("✅ Cảm ơn bé đã báo lỗi! Câu này cũng đã được đánh dấu để xem lại.");
+          }
         },
 
         confirmSubmit() {
@@ -1035,6 +958,7 @@
         },
 
         submitExamNow() {
+          if (this.loadError || !this.questions.length) return;
           this.showWarningModal = false;
           clearInterval(this.timerInterval);
 
@@ -1059,11 +983,12 @@
         },
 
         retakeExam() {
+          if (this.loadError || !this.questions.length) return;
           this.userAnswers = {};
           this.flaggedIndexes = [];
           this.currentQuestionIndex = 0;
           this.showResultModal = false;
-          this.remainingSeconds = (this.examConfig.durationMinutes || 45) * 60;
+          this.remainingSeconds = (this.examConfig.durationMinutes || 15) * 60;
           this.timeSpentSeconds = 0;
           this.startTimer();
         },

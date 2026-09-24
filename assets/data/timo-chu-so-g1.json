@@ -1,0 +1,196 @@
+{
+  "examConfig": {
+    "id": "timo-chu-so-g1",
+    "title": {
+      "vi": "Toán TIMO Lớp 1 - Hệ thống Số và Chữ số",
+      "en": "TIMO Math Grade 1 - Number System & Digits",
+      "zh": "TIMO 奥数一年级 - 数字与数位系统"
+    },
+    "grade": 1,
+    "totalQuestions": 5,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": [
+    {
+      "id": 1,
+      "topic": {
+        "vi": "SỐ & CHỮ SỐ",
+        "en": "NUMBERS & DIGITS",
+        "zh": "数与数字"
+      },
+      "difficultyLevel": 1,
+      "questionText": {
+        "vi": "Có bao nhiêu quả táo màu đỏ trong giỏ bên dưới?",
+        "en": "How many red apples are there in the box below?",
+        "zh": "下面的方框里一共有多少个红苹果？"
+      },
+      "speechText": {
+        "vi": "Hỏi có bao nhiêu quả táo màu đỏ trong giỏ bên dưới?",
+        "en": "How many red apples are there in the box below?",
+        "zh": "请问下面的方框里一共有多少个红苹果？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🍎", "🍎", "🍎", "🍏", "🍎", "🍎", "🍏"],
+        "columns": 4
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "4 quả", "en": "4 apples", "zh": "4个" } },
+        { "id": "B", "text": { "vi": "5 quả", "en": "5 apples", "zh": "5个" } },
+        { "id": "C", "text": { "vi": "6 quả", "en": "6 apples", "zh": "6个" } },
+        { "id": "D", "text": { "vi": "7 quả", "en": "7 apples", "zh": "7个" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Đếm số táo đỏ 🍎: 1, 2, 3, 4, 5 quả (có 2 quả táo xanh 🍏 không tính). Vậy có tất cả 5 quả táo đỏ.",
+        "en": "Count the red apples 🍎: 1, 2, 3, 4, 5 (2 green apples 🍏 are not counted). Total = 5 red apples.",
+        "zh": "数红苹果 🍎：1, 2, 3, 4, 5 个（2个青苹果 🍏 不计入）。所以一共有 5 个红苹果。"
+      }
+    },
+    {
+      "id": 2,
+      "topic": {
+        "vi": "SỐ & CHỮ SỐ",
+        "en": "NUMBERS & DIGITS",
+        "zh": "数与数字"
+      },
+      "difficultyLevel": 1,
+      "questionText": {
+        "vi": "Số nào sau đây là số chẵn lớn nhất có một chữ số?",
+        "en": "Which of the following is the largest single-digit even number?",
+        "zh": "下列哪一个是最大的一位数偶数（双数）？"
+      },
+      "speechText": {
+        "vi": "Số nào sau đây là số chẵn lớn nhất có một chữ số?",
+        "en": "Which of the following is the largest single-digit even number?",
+        "zh": "下列哪一个是最大的一位数偶数？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["2️⃣", "4️⃣", "6️⃣", "8️⃣", "9️⃣"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "6", "en": "6", "zh": "6" } },
+        { "id": "B", "text": { "vi": "8", "en": "8", "zh": "8" } },
+        { "id": "C", "text": { "vi": "9", "en": "9", "zh": "9" } },
+        { "id": "D", "text": { "vi": "10", "en": "10", "zh": "10" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Các số chẵn có một chữ số là: 0, 2, 4, 6, 8. Trong đó số lớn nhất là số 8. (Số 9 là số lẻ, số 10 có hai chữ số).",
+        "en": "Single-digit even numbers are: 0, 2, 4, 6, 8. The largest one is 8. (9 is odd, 10 is a 2-digit number).",
+        "zh": "一位数偶数包含：0, 2, 4, 6, 8。其中最大的是 8。（9 是奇数，10 是两位数）。"
+      }
+    },
+    {
+      "id": 3,
+      "topic": {
+        "vi": "SỐ & CHỮ SỐ",
+        "en": "NUMBERS & DIGITS",
+        "zh": "数与数字"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Số liền trước của số 19 trừ đi 3 bằng bao nhiêu?",
+        "en": "What is the number immediately before 19 minus 3?",
+        "zh": "19 前面的相邻数减去 3 是多少？"
+      },
+      "speechText": {
+        "vi": "Số liền trước của số 19 trừ đi 3 bằng bao nhiêu?",
+        "en": "What is the number immediately before 19 minus 3?",
+        "zh": "19 前面的相邻数减去 3 是多少？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["1️⃣", "8️⃣", "➖", "3️⃣", "❓"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "14", "en": "14", "zh": "14" } },
+        { "id": "B", "text": { "vi": "15", "en": "15", "zh": "15" } },
+        { "id": "C", "text": { "vi": "16", "en": "16", "zh": "16" } },
+        { "id": "D", "text": { "vi": "17", "en": "17", "zh": "17" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Số liền trước của 19 là 18. Lấy 18 trừ đi 3 ta được: 18 - 3 = 15.",
+        "en": "The number immediately before 19 is 18. Subtracting 3 gives: 18 - 3 = 15.",
+        "zh": "19 前面的相邻数是 18。减去 3 得：18 - 3 = 15。"
+      }
+    },
+    {
+      "id": 4,
+      "topic": {
+        "vi": "SỐ & CHỮ SỐ",
+        "en": "NUMBERS & DIGITS",
+        "zh": "数与数字"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Dùng hai chữ số 3 và 7, ta có thể ghép được bao nhiêu số có hai chữ số khác nhau?",
+        "en": "Using the two digits 3 and 7, how many different two-digit numbers can you form?",
+        "zh": "使用 3 和 7 两个数字，可以组成多少个数字互不相同的两位数？"
+      },
+      "speechText": {
+        "vi": "Dùng hai chữ số 3 và 7, có thể ghép được bao nhiêu số có hai chữ số khác nhau?",
+        "en": "Using digits 3 and 7, how many different two-digit numbers can you form?",
+        "zh": "使用 3 和 7 两个数字，可以组成多少个数字互不相同的两位数？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["3️⃣", "7️⃣", "➡️", "🔢", "❓"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "1 số", "en": "1 number", "zh": "1个" } },
+        { "id": "B", "text": { "vi": "2 số", "en": "2 numbers", "zh": "2个" } },
+        { "id": "C", "text": { "vi": "3 số", "en": "3 numbers", "zh": "3个" } },
+        { "id": "D", "text": { "vi": "4 số", "en": "4 numbers", "zh": "4个" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Hai số có hai chữ số khác nhau ghép từ 3 và 7 là: 37 và 73. Tổng cộng có 2 số.",
+        "en": "The two-digit numbers with distinct digits formed from 3 and 7 are: 37 and 73. Total = 2 numbers.",
+        "zh": "由 3 和 7 组成的互不相同两位数有：37 和 73。总共 2 个数。"
+      }
+    },
+    {
+      "id": 5,
+      "topic": {
+        "vi": "SỐ & CHỮ SỐ",
+        "en": "NUMBERS & DIGITS",
+        "zh": "数与数字"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Trong dãy số từ 1 đến 20, có bao nhiêu số có chữ số 1?",
+        "en": "From numbers 1 to 20, how many numbers contain the digit 1?",
+        "zh": "在 1 到 20 的数字中，有多少个数字包含数字“1”？"
+      },
+      "speechText": {
+        "vi": "Trong dãy số từ 1 đến 20, có bao nhiêu số có chữ số 1?",
+        "en": "From numbers 1 to 20, how many numbers contain the digit 1?",
+        "zh": "在 1 到 20 的数字中，有多少个数字包含数字 1？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["1️⃣", "🔟", "1️⃣1️⃣", "1️⃣2️⃣", "2️⃣0️⃣"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "10 số", "en": "10 numbers", "zh": "10个" } },
+        { "id": "B", "text": { "vi": "11 số", "en": "11 numbers", "zh": "11个" } },
+        { "id": "C", "text": { "vi": "12 số", "en": "12 numbers", "zh": "12个" } },
+        { "id": "D", "text": { "vi": "13 số", "en": "13 numbers", "zh": "13个" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Các số chứa chữ số 1 từ 1 đến 20 là: 1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19. Tổng cộng có 11 số.",
+        "en": "Numbers containing digit 1 from 1 to 20 are: 1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19. Total = 11 numbers.",
+        "zh": "1 到 20 中含有数字 1 的数为：1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19。一共 11 个数。"
+      }
+    }
+  ]
+}
