@@ -152,13 +152,24 @@
   - Trang chủ `index.html` nạp dữ liệu động từ `exams-index.json` qua Alpine.js, hỗ trợ fallback dữ liệu an toàn khi chạy offline qua giao thức `file://`.
   - Mọi nút bấm trên Trang Chủ tự động tạo liên kết động chuẩn: `modules/luyen-thi-trac-nghiem.html?exam={id}&data={dataFile}`.
 
-- [x] **9. Module Đăng Nhập / Ghi Danh Học Sinh Dùng Chung (`assets/js/auth-modal.js`) & Cơ Chế Gated Login Khi Nộp Bài**
-  - **Module tái sử dụng độc lập (`OctoAuthModal`)**: Quản lý cửa sổ Đăng nhập / Ghi danh học sinh dùng chung trên cả Trang Chủ `index.html` và Phân hệ thi `modules/luyen-thi-trac-nghiem.html`.
-  - **4 Thông tin bắt buộc chuẩn hóa**: Tên của bé (`fullName`), Mấy tuổi (`age`), Tên bố mẹ (`parentName`), Số điện thoại phụ huynh (`parentPhone`) kèm Chọn Avatar đại diện (👦, 👧, 🐰, 🐻, 🐱, 🐶).
+- [x] **9. Module Tài Khoản Học Sinh: 2 Tab Đăng Nhập Bằng SĐT & Đăng Ký Mới (`assets/js/auth-modal.js`)**
+  - **Cơ chế Student ID & Tên file bằng Số điện thoại (`phone.json`)**: Chuẩn hóa `studentId` lấy luôn số điện thoại bố mẹ (VD: `0901234567`), tên file hồ sơ tương ứng là `assets/data/students/{phone}.json` (ví dụ `0901234567.json`, `0987654321.json`).
+  - **Tab 1: 🔑 Đăng Nhập (Bằng Số Điện Thoại)**: Dành cho học sinh đã có hồ sơ; chỉ cần nhập số điện thoại -> hệ thống kiểm tra sự tồn tại trong `localStorage` hoặc nạp trực tiếp file `assets/data/students/{phone}.json`. Nếu không tồn tại sẽ báo lỗi và hướng dẫn chuyển sang tab Đăng ký.
+  - **Tab 2: ✨ Đăng Ký Mới**: Dành cho học sinh mới (Tên bé, Tuổi, Tên bố mẹ, SĐT, Avatar). Hệ thống kiểm tra trước xem số điện thoại đã tồn tại chưa: nếu trùng thì cảnh báo và chuyển tab Đăng nhập; nếu chưa thì tạo hồ sơ mới với ID là SĐT.
   - **Trải nghiệm duyệt tự do (Frictionless Practice)**: Học sinh và phụ huynh vào Trang chủ xem danh mục, chọn bài và làm bài trắc nghiệm hoàn toàn bình thường mà không bị chặn cổng đăng nhập trước.
-  - **Bắt buộc đăng nhập khi nộp bài (Gated Submission)**: Khi bấm "Nộp bài", nếu chưa đăng nhập thì hệ thống tự động hiển thị cửa sổ ghi danh; sau khi hoàn tất xác nhận, hệ thống tự động nộp bài và tính điểm ngay mà không làm mất bài làm của bé.
+  - **Bắt buộc đăng nhập khi nộp bài (Gated Submission)**: Khi bấm "Nộp bài", nếu chưa đăng nhập thì tự động hiển thị cửa sổ tài khoản; sau khi đăng nhập hoặc đăng ký thành công, hệ thống tự động nộp bài và tính điểm ngay mà không làm mất bài làm của bé.
   - **Đồng bộ toàn cục**: Tích hợp với `PortalCore.login` / `logout`, phát sự kiện `octo-student-changed` cập nhật tức thì Header Topbar ở mọi trang.
   - **Hiển thị thông tin thí sinh trong Modal Kết Quả**: Hiển thị trang trọng thẻ Thí sinh (`Tên bé, Tuổi, Tên bố mẹ, SĐT`) kèm huy chương và điểm số.
+
+- [x] **10. Cơ Chế Tự Động Nạp Kết Quả Thi Vào Hồ Sơ Cá Nhân & Xuất Tệp JSON (`PortalCore.recordExamResult`)**
+  - **Tự động nạp dữ liệu khi nộp bài**: Ngay khi học sinh nộp bài và chấm điểm xong, hệ thống tự động ghi lại toàn diện kết quả vào Student Profile (`octo_profile_{phone}`):
+    - `lastSession`: Cập nhật bài thi vừa hoàn thành, điểm số, thời gian.
+    - `summaryStats`: Tự động cộng dồn tổng số bài thi (`totalExamsTaken`), tổng số câu làm (`totalQuestionsDone`), tổng số câu đúng (`correctAnswers`), tính lại tỷ lệ chính xác tổng thể (`overallAccuracy %`), tổng thời gian học, và huy chương tương ứng (Vàng/Bạc/Đồng).
+    - `progress`: Cập nhật trạng thái từng bài thi (`explored`, `practiced`, điểm cao nhất `bestScore`, số lần thi `attempts`, ngày thi gần nhất).
+    - `examHistory`: Thêm lịch sử từng lần thi vào mảng `examHistory` kèm timestamp, điểm số, huy chương và thời gian làm bài.
+    - `mistakeBank`: Tự động trích xuất các câu làm sai đưa vào Ngân Hàng Câu Hỏi Sai (`mistakeBank`) kèm số lần làm sai, đáp án sai của bé, đáp án đúng và chủ đề kiến thức để phục vụ tính năng ôn tập câu sai (*Try Hard*).
+  - **Hiển thị tiến độ tích lũy**: Trên Modal Kết Quả, hiển thị ngay số bài đã tích lũy và tỷ lệ đúng tổng thể của bé.
+  - **Xuất / Tải tệp hồ sơ cá nhân (`{phone}.json`)**: Cung cấp nút tải tệp JSON hồ sơ học sinh (`📥 Tải Hồ Sơ`) cả trên Modal Kết Quả và Cửa Sổ Tài Khoản để phụ huynh có thể tải về lưu trữ hoặc gửi cho giáo viên.
 
 ---
 

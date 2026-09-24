@@ -132,18 +132,25 @@ window.OctoI18n = {
         backHomeBtn: 'Quay Về Bản Đồ'
       },
       auth: {
-        loginTitle: 'ĐĂNG NHẬP / GHI DANH HỌC SINH',
-        loginSubtitle: 'Để lưu kết quả bài thi và cấp huy chương cho bé, vui lòng hoàn tất thông tin bên dưới:',
+        loginTitle: 'TÀI KHOẢN HỌC SINH',
+        loginSubtitle: 'Đăng nhập hoặc đăng ký tài khoản cho bé để lưu kết quả và huy chương:',
+        tabLogin: '🔑 Đăng Nhập',
+        tabRegister: '✨ Đăng Ký Mới',
+        loginPhoneLabel: 'Số điện thoại của bố mẹ:',
+        loginPhonePlaceholder: 'Nhập số điện thoại (VD: 0901234567)',
+        loginPhoneHint: '💡 Nhập số điện thoại đã từng đăng ký để tiếp tục hành trình học của bé.',
         studentNameLabel: 'Họ và tên của bé:',
         studentNamePlaceholder: 'VD: Nguyễn Minh Khôi',
         studentAgeLabel: 'Mấy tuổi:',
         parentNameLabel: 'Họ và tên bố mẹ:',
         parentNamePlaceholder: 'VD: Nguyễn Văn Anh',
-        parentPhoneLabel: 'Số điện thoại bố mẹ:',
-        parentPhonePlaceholder: 'VD: 0912 345 678',
+        parentPhoneLabel: 'Số điện thoại bố mẹ (dùng làm ID):',
+        parentPhonePlaceholder: 'VD: 0901234567',
         avatarLabel: 'Chọn biểu tượng bé thích:',
         submitAndLoginBtn: 'Xác Nhận & Nộp Bài 📤',
         saveStudentBtn: 'Lưu Thông Tin ✨',
+        loginBtn: 'Đăng Nhập Ngay 🚀',
+        registerBtn: 'Tạo Tài Khoản Cho Bé 🌟',
         logoutBtn: 'Đăng xuất',
         cancelBtn: 'Để sau / Quay lại',
         notLoggedIn: 'Chưa đăng nhập',
@@ -152,7 +159,9 @@ window.OctoI18n = {
         validationName: 'Vui lòng nhập họ tên của bé nhé!',
         validationAge: 'Vui lòng chọn hoặc nhập số tuổi của bé!',
         validationParent: 'Vui lòng nhập tên bố hoặc mẹ!',
-        validationPhone: 'Vui lòng nhập đúng số điện thoại bố mẹ (9 - 11 chữ số)!'
+        validationPhone: 'Vui lòng nhập đúng số điện thoại bố mẹ (9 - 11 chữ số)!',
+        phoneNotFound: 'Số điện thoại này chưa được đăng ký! Vui lòng chuyển sang tab Đăng ký mới cho bé.',
+        phoneAlreadyExists: 'Số điện thoại này đã được đăng ký! Vui lòng chuyển sang tab Đăng nhập.'
       }
     },
 
@@ -274,18 +283,25 @@ window.OctoI18n = {
         backHomeBtn: 'Back to Map'
       },
       auth: {
-        loginTitle: 'STUDENT REGISTRATION & LOGIN',
-        loginSubtitle: 'To save your exam results and award certificates, please fill in student details below:',
+        loginTitle: 'STUDENT ACCOUNT',
+        loginSubtitle: 'Log in or register an account for the student to track awards & progress:',
+        tabLogin: '🔑 Log In',
+        tabRegister: '✨ Register New',
+        loginPhoneLabel: "Parent's Phone Number:",
+        loginPhonePlaceholder: 'Enter phone number (e.g. 0901234567)',
+        loginPhoneHint: '💡 Enter the registered phone number to resume practice.',
         studentNameLabel: "Student's Full Name:",
         studentNamePlaceholder: 'e.g., Alex Johnson',
         studentAgeLabel: 'Age:',
         parentNameLabel: "Parent's Full Name:",
         parentNamePlaceholder: 'e.g., David Johnson',
-        parentPhoneLabel: "Parent's Phone Number:",
-        parentPhonePlaceholder: 'e.g., 0912 345 678',
+        parentPhoneLabel: "Parent's Phone Number (Used as ID):",
+        parentPhonePlaceholder: 'e.g., 0901234567',
         avatarLabel: 'Choose favorite avatar:',
         submitAndLoginBtn: 'Confirm & Submit Exam 📤',
         saveStudentBtn: 'Save Info ✨',
+        loginBtn: 'Log In Now 🚀',
+        registerBtn: 'Create Student Profile 🌟',
         logoutBtn: 'Log Out',
         cancelBtn: 'Later / Back',
         notLoggedIn: 'Not logged in',
@@ -294,7 +310,9 @@ window.OctoI18n = {
         validationName: 'Please enter student full name!',
         validationAge: 'Please select or enter age!',
         validationParent: 'Please enter parent name!',
-        validationPhone: 'Please enter a valid phone number (9-11 digits)!'
+        validationPhone: 'Please enter a valid phone number (9-11 digits)!',
+        phoneNotFound: 'Phone number not found! Please switch to Register tab to create an account.',
+        phoneAlreadyExists: 'Phone number already registered! Please switch to Log In tab.'
       }
     },
 
@@ -416,18 +434,25 @@ window.OctoI18n = {
         backHomeBtn: '返回地图'
       },
       auth: {
-        loginTitle: '学生登录与登记',
-        loginSubtitle: '为保存考试成绩与颁发奖状，请在下方填写学生信息：',
+        loginTitle: '学生账号',
+        loginSubtitle: '登录或注册宝贝账号，以保存考试成绩与荣誉奖状：',
+        tabLogin: '🔑 登录',
+        tabRegister: '✨ 注册新账号',
+        loginPhoneLabel: '家长联系电话：',
+        loginPhonePlaceholder: '输入手机号（例如：0901234567）',
+        loginPhoneHint: '💡 输入已登记的手机号即可继续宝贝的学习记录。',
         studentNameLabel: '宝贝姓名：',
         studentNamePlaceholder: '例如：张小明',
         studentAgeLabel: '年龄：',
         parentNameLabel: '家长姓名：',
         parentNamePlaceholder: '例如：张伟',
-        parentPhoneLabel: '家长联系电话：',
-        parentPhonePlaceholder: '例如：13800138000',
+        parentPhoneLabel: '家长联系电话（用作账号ID）：',
+        parentPhonePlaceholder: '例如：0901234567',
         avatarLabel: '选择宝贝喜爱的头像：',
         submitAndLoginBtn: '确认并提交试卷 📤',
         saveStudentBtn: '保存信息 ✨',
+        loginBtn: '立即登录 🚀',
+        registerBtn: '创建宝贝档案 🌟',
         logoutBtn: '退出登录',
         cancelBtn: '稍后 / 返回',
         notLoggedIn: '未登录',
@@ -436,7 +461,9 @@ window.OctoI18n = {
         validationName: '请填写宝贝姓名！',
         validationAge: '请选择或填写宝贝年龄！',
         validationParent: '请填写家长姓名！',
-        validationPhone: '请填写正确的联系电话（9-11位数字）！'
+        validationPhone: '请填写正确的联系电话（9-11位数字）！',
+        phoneNotFound: '未找到该手机号码！请切换到“注册”选项卡为宝贝创建账号。',
+        phoneAlreadyExists: '该手机号码已注册！请切换到“登录”选项卡。'
       }
     }
   },
