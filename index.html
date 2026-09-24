@@ -43,6 +43,7 @@
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/core.js"></script>
   <script src="assets/js/notification.js"></script>
+  <script src="assets/js/auth-modal.js"></script>
 
   <style>
     * {
@@ -125,12 +126,13 @@
           </div>
         </div>
 
-        <!-- Player Badge Button -->
+        <!-- Player Badge / Login Button -->
         <button 
-          @click="openAvatarModal()"
-          class="bg-slate-50 border border-slate-300 hover:border-purple-400 px-3.5 py-1.5 rounded-2xl font-black flex items-center gap-2 shadow-sm transition-all text-xs sm:text-sm text-slate-900">
-          <span class="text-xl" x-text="state.avatar"></span>
-          <span class="font-black hidden sm:inline text-slate-900" x-text="state.playerName"></span>
+          @click="openProfileModal()"
+          class="bg-slate-50 border border-slate-300 hover:border-purple-400 px-3.5 py-1.5 rounded-2xl font-black flex items-center gap-2 shadow-sm transition-all text-xs sm:text-sm text-slate-900 active:scale-95 cursor-pointer"
+          :title="state.student ? `${state.student.fullName} (${state.student.age} tuổi)` : 'Nhấp để đăng nhập'">
+          <span class="text-xl" x-text="state.avatar || '👦'"></span>
+          <span class="font-black hidden sm:inline text-slate-900" x-text="state.student ? state.student.fullName : t('auth.notLoggedIn', 'Chưa đăng nhập')"></span>
         </button>
 
       </div>
@@ -293,34 +295,7 @@
 
 
 
-  <!-- AVATAR / PROFILE MODAL -->
-  <div x-show="showAvatarModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50" x-transition.opacity>
-    <div class="bg-white rounded-3xl p-6 max-w-md w-full border-8 border-purple-400 shadow-2xl text-center">
-      <h3 class="text-2xl font-black text-purple-800 mb-2" x-text="t('home.editProfileTitle')"></h3>
-      
-      <div class="my-4">
-        <label class="block text-xs font-black text-slate-600 mb-1" x-text="t('home.playerNameLabel')"></label>
-        <input type="text" x-model="tempName" class="w-full border-4 border-purple-300 rounded-2xl px-4 py-2 font-black text-center text-lg text-slate-900 focus:outline-none focus:border-purple-500">
-      </div>
-
-      <div class="my-4">
-        <label class="block text-xs font-black text-slate-600 mb-2" x-text="t('home.chooseAvatarLabel')"></label>
-        <div class="flex justify-center gap-3">
-          <template x-for="av in ['👦', '👧', '🐰', '🐻', '🐱', '🐶']">
-            <button @click="tempAvatar = av" 
-                    class="w-12 h-12 rounded-2xl text-2xl flex items-center justify-center border-4 transition-transform"
-                    :class="tempAvatar === av ? 'border-purple-600 bg-purple-100 scale-110' : 'border-slate-200 bg-white'">
-              <span x-text="av"></span>
-            </button>
-          </template>
-        </div>
-      </div>
-
-      <div class="flex gap-2 justify-center mt-6">
-        <button @click="saveProfile()" class="bg-purple-600 text-white font-black px-6 py-2.5 rounded-2xl shadow-md" x-text="t('home.saveProfileBtn')"></button>
-      </div>
-    </div>
-  </div>
+  <!-- Student Registration / Profile Modal được quản lý tự động bởi OctoAuthModal (assets/js/auth-modal.js) -->
 
   <!-- FOOTER -->
   <footer class="w-full bg-white border-t border-slate-200 py-4 text-center text-xs font-bold text-slate-600" x-text="t('home.footer')">
@@ -333,9 +308,6 @@
         state: PortalCore.getState(),
         currentLang: OctoI18n.currentLang,
         languages: OctoI18n.languages,
-        showAvatarModal: false,
-        tempName: '',
-        tempAvatar: '',
 
         curriculum: {
           foundational: [],
@@ -485,27 +457,28 @@
         },
 
         init() {
-          this.tempName = this.state.playerName;
-          this.tempAvatar = this.state.avatar;
           window.addEventListener('octo-lang-changed', (e) => {
             this.currentLang = e.detail;
+          });
+          window.addEventListener('octo-student-changed', (e) => {
+            this.state = PortalCore.getState();
           });
           this.loadCurriculum();
         },
 
-        openAvatarModal() {
-          this.tempName = this.state.playerName;
-          this.tempAvatar = this.state.avatar;
-          this.showAvatarModal = true;
-        },
-
-        saveProfile() {
-          this.state.playerName = this.tempName || 'Bé Giỏi Giang';
-          this.state.avatar = this.tempAvatar || '👦';
-          PortalCore.saveState(this.state);
-          this.showAvatarModal = false;
-          if (window.OctoNotify) {
-            OctoNotify.toast('Đã lưu thông tin bé thành công! ✨', 'success');
+        openProfileModal() {
+          if (window.OctoAuthModal) {
+            OctoAuthModal.open({
+              title: this.t('home.editProfileTitle', 'HỒ SƠ HỌC SINH & ĐĂNG NHẬP'),
+              submitBtnText: this.t('home.saveProfileBtn', 'Lưu Thông Tin ✨'),
+              showLogout: true,
+              onSuccess: (student) => {
+                this.state = PortalCore.getState();
+              },
+              onLogout: () => {
+                this.state = PortalCore.getState();
+              }
+            });
           }
         }
       }));

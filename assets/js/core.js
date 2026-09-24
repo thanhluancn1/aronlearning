@@ -4,9 +4,12 @@
  */
 
 const GLOBAL_STORAGE_KEY = 'vui_hoc_toan_portal_state_v1';
+const STUDENT_STORAGE_KEY = 'octo_current_student_v1';
 
 const defaultState = {
-  playerName: 'Bé Giỏi Giang',
+  isLoggedIn: false,
+  student: null,
+  playerName: 'Chưa đăng nhập',
   avatar: '👦',
   stars: 0,
   isMuted: false,
@@ -19,7 +22,19 @@ window.PortalCore = {
   getState() {
     try {
       const saved = localStorage.getItem(GLOBAL_STORAGE_KEY);
-      return saved ? { ...defaultState, ...JSON.parse(saved) } : { ...defaultState };
+      const student = this.getStudent();
+      let state = saved ? { ...defaultState, ...JSON.parse(saved) } : { ...defaultState };
+      if (student) {
+        state.isLoggedIn = true;
+        state.student = student;
+        state.playerName = student.fullName || state.playerName;
+        state.avatar = student.avatar || state.avatar;
+      } else {
+        state.isLoggedIn = false;
+        state.student = null;
+        state.playerName = 'Chưa đăng nhập';
+      }
+      return state;
     } catch (e) {
       return { ...defaultState };
     }
@@ -31,6 +46,65 @@ window.PortalCore = {
       localStorage.setItem(GLOBAL_STORAGE_KEY, JSON.stringify(state));
     } catch (e) {
       console.error('Save state failed', e);
+    }
+  },
+
+  // Student Auth Helpers
+  isLoggedIn() {
+    const s = this.getStudent();
+    return !!(s && s.fullName && s.parentPhone);
+  },
+
+  getStudent() {
+    try {
+      const data = localStorage.getItem(STUDENT_STORAGE_KEY);
+      return data ? JSON.parse(data) : null;
+    } catch (e) {
+      return null;
+    }
+  },
+
+  login(studentData) {
+    try {
+      const student = {
+        studentId: studentData.studentId || `STU_${Date.now()}`,
+        fullName: (studentData.fullName || '').trim(),
+        age: studentData.age || '',
+        parentName: (studentData.parentName || '').trim(),
+        parentPhone: (studentData.parentPhone || '').trim(),
+        avatar: studentData.avatar || '👦',
+        loginAt: new Date().toISOString()
+      };
+      localStorage.setItem(STUDENT_STORAGE_KEY, JSON.stringify(student));
+
+      const state = this.getState();
+      state.isLoggedIn = true;
+      state.student = student;
+      state.playerName = student.fullName;
+      state.avatar = student.avatar;
+      this.saveState(state);
+
+      window.dispatchEvent(new CustomEvent('octo-student-changed', { detail: student }));
+      return student;
+    } catch (e) {
+      console.error('Login failed', e);
+      return null;
+    }
+  },
+
+  logout() {
+    try {
+      localStorage.removeItem(STUDENT_STORAGE_KEY);
+      const state = this.getState();
+      state.isLoggedIn = false;
+      state.student = null;
+      state.playerName = 'Chưa đăng nhập';
+      state.avatar = '👦';
+      this.saveState(state);
+
+      window.dispatchEvent(new CustomEvent('octo-student-changed', { detail: null }));
+    } catch (e) {
+      console.error('Logout failed', e);
     }
   },
 

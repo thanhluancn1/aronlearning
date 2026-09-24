@@ -152,6 +152,14 @@
   - Trang chủ `index.html` nạp dữ liệu động từ `exams-index.json` qua Alpine.js, hỗ trợ fallback dữ liệu an toàn khi chạy offline qua giao thức `file://`.
   - Mọi nút bấm trên Trang Chủ tự động tạo liên kết động chuẩn: `modules/luyen-thi-trac-nghiem.html?exam={id}&data={dataFile}`.
 
+- [x] **9. Module Đăng Nhập / Ghi Danh Học Sinh Dùng Chung (`assets/js/auth-modal.js`) & Cơ Chế Gated Login Khi Nộp Bài**
+  - **Module tái sử dụng độc lập (`OctoAuthModal`)**: Quản lý cửa sổ Đăng nhập / Ghi danh học sinh dùng chung trên cả Trang Chủ `index.html` và Phân hệ thi `modules/luyen-thi-trac-nghiem.html`.
+  - **4 Thông tin bắt buộc chuẩn hóa**: Tên của bé (`fullName`), Mấy tuổi (`age`), Tên bố mẹ (`parentName`), Số điện thoại phụ huynh (`parentPhone`) kèm Chọn Avatar đại diện (👦, 👧, 🐰, 🐻, 🐱, 🐶).
+  - **Trải nghiệm duyệt tự do (Frictionless Practice)**: Học sinh và phụ huynh vào Trang chủ xem danh mục, chọn bài và làm bài trắc nghiệm hoàn toàn bình thường mà không bị chặn cổng đăng nhập trước.
+  - **Bắt buộc đăng nhập khi nộp bài (Gated Submission)**: Khi bấm "Nộp bài", nếu chưa đăng nhập thì hệ thống tự động hiển thị cửa sổ ghi danh; sau khi hoàn tất xác nhận, hệ thống tự động nộp bài và tính điểm ngay mà không làm mất bài làm của bé.
+  - **Đồng bộ toàn cục**: Tích hợp với `PortalCore.login` / `logout`, phát sự kiện `octo-student-changed` cập nhật tức thì Header Topbar ở mọi trang.
+  - **Hiển thị thông tin thí sinh trong Modal Kết Quả**: Hiển thị trang trọng thẻ Thí sinh (`Tên bé, Tuổi, Tên bố mẹ, SĐT`) kèm huy chương và điểm số.
+
 ---
 
 ## 📊 Định Hướng Kiến Trúc Mở Rộng: Google Sheet CMS & Jamstack Sync (Dành Cho 1.000+ Người Dùng)

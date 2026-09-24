@@ -1,6 +1,6 @@
 {
-  "version": "1.0.0",
-  "updatedAt": "2026-09-24T22:30:00Z",
+  "version": "2.0.0",
+  "updatedAt": "2026-09-24T23:35:00Z",
   "identity": {
     "studentId": "STU_2026_002",
     "fullName": "Trần Ngọc Minh Anh",
@@ -22,94 +22,49 @@
   },
   "preferences": {
     "lang": "en",
-    "soundEffects": true,
-    "voiceAutoPlay": true,
-    "voiceSpeed": 0.85,
-    "textZoom": 100,
-    "theme": "octo-purple"
+    "textZoom": 100
   },
-  "rewards": {
-    "totalStars": 46,
-    "currentLevel": 2,
-    "currentExp": 120,
-    "nextLevelExp": 250,
+  "summaryStats": {
+    "totalExamsTaken": 2,
+    "totalQuestionsDone": 40,
+    "correctAnswers": 30,
+    "overallAccuracy": 75.0,
+    "totalTimeSpentMinutes": 23,
     "streakDays": 3,
-    "lastStreakDate": "2026-09-24",
-    "medalsSummary": {
+    "medals": {
       "gold": 0,
       "silver": 1,
-      "bronze": 1,
-      "participation": 0
-    },
-    "badges": [
-      {
-        "id": "first-win",
-        "title": "Bắt Đầu Chinh Phục",
-        "icon": "🚀",
-        "unlockedAt": "2026-09-12"
-      },
-      {
-        "id": "streak-3",
-        "title": "Bé Chăm Chỉ 3 Ngày",
-        "icon": "🌱",
-        "unlockedAt": "2026-09-24"
-      }
-    ]
+      "bronze": 1
+    }
   },
-  "curriculumProgress": {
-    "foundational": {
-      "completedCount": 1,
-      "totalSteps": 4,
-      "steps": {
-        "timo-chu-so-g1": {
-          "status": "completed",
-          "bestScore": 85,
-          "bestMedal": "silver",
-          "attemptsCount": 2,
-          "lastAttemptAt": "2026-09-22T16:15:00Z"
-        },
-        "timo-phep-cong-tru-g1": {
-          "status": "in_progress",
-          "bestScore": 65,
-          "bestMedal": "bronze",
-          "attemptsCount": 1,
-          "lastAttemptAt": "2026-09-24T21:30:00Z"
-        },
-        "timo-so-sanh-thay-the-g1": {
-          "status": "not_started",
-          "bestScore": 0,
-          "bestMedal": null,
-          "attemptsCount": 0,
-          "lastAttemptAt": null
-        },
-        "timo-do-luong-thoi-gian-g1": {
-          "status": "not_started",
-          "bestScore": 0,
-          "bestMedal": null,
-          "attemptsCount": 0,
-          "lastAttemptAt": null
-        }
-      }
+  "lastSession": {
+    "examId": "timo-phep-cong-tru-g1",
+    "examTitle": "Addition & Subtraction",
+    "mode": "explore",
+    "score": 65,
+    "date": "2026-09-24T21:30:00Z"
+  },
+  "progress": {
+    "timo-chu-so-g1": {
+      "explored": true,
+      "practiced": true,
+      "bestScore": 85,
+      "medal": "silver",
+      "attempts": 2
     },
-    "enrichment": {
-      "timo-quy-luat-g1": {
-        "status": "not_started",
-        "bestScore": 0,
-        "bestMedal": null,
-        "attemptsCount": 0
-      },
-      "timo-hinh-hoc-dem-hinh-g1": {
-        "status": "in_progress",
-        "bestScore": 70,
-        "bestMedal": "bronze",
-        "attemptsCount": 1
-      },
-      "timo-bieu-do-phan-loai-g1": {
-        "status": "not_started",
-        "bestScore": 0,
-        "bestMedal": null,
-        "attemptsCount": 0
-      }
+    "timo-phep-cong-tru-g1": {
+      "explored": true,
+      "practiced": false,
+      "bestScore": 65,
+      "medal": "bronze",
+      "attempts": 1
+    },
+    "timo-hinh-hoc-dem-hinh-g1": {
+      "explored": true,
+      "practiced": false,
+      "bestScore": 70,
+      "medal": "bronze",
+      "attempts": 1
     }
   },
   "examHistory": [
@@ -123,8 +78,7 @@
       "correctCount": 17,
       "totalQuestions": 20,
       "timeSpentSeconds": 620,
-      "earnedMedal": "🥈 Huy Chương Bạc",
-      "starsEarned": 34
+      "earnedMedal": "🥈 Huy Chương Bạc"
     },
     {
       "attemptId": "ATT_20260924_002",
@@ -136,8 +90,7 @@
       "correctCount": 13,
       "totalQuestions": 20,
       "timeSpentSeconds": 750,
-      "earnedMedal": "🥉 Huy Chương Đồng",
-      "starsEarned": 12
+      "earnedMedal": "🥉 Huy Chương Đồng"
     }
   ],
   "mistakeBank": [
@@ -148,7 +101,6 @@
       "missedCount": 1,
       "lastWrongAnswer": "A",
       "correctAnswer": "B",
-      "flagged": false,
       "addedAt": "2026-09-22T16:15:00Z",
       "isResolved": false
     },
@@ -159,7 +111,6 @@
       "missedCount": 2,
       "lastWrongAnswer": "C",
       "correctAnswer": "A",
-      "flagged": true,
       "addedAt": "2026-09-24T21:30:00Z",
       "isResolved": false
     }

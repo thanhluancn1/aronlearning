@@ -130,6 +130,29 @@ window.OctoI18n = {
         corsHintPath: 'Đường dẫn file JSON (?data=...) không chính xác hoặc tệp bị thiếu/rỗng.',
         retryBtn: 'Tải Lại Trang',
         backHomeBtn: 'Quay Về Bản Đồ'
+      },
+      auth: {
+        loginTitle: 'ĐĂNG NHẬP / GHI DANH HỌC SINH',
+        loginSubtitle: 'Để lưu kết quả bài thi và cấp huy chương cho bé, vui lòng hoàn tất thông tin bên dưới:',
+        studentNameLabel: 'Họ và tên của bé:',
+        studentNamePlaceholder: 'VD: Nguyễn Minh Khôi',
+        studentAgeLabel: 'Mấy tuổi:',
+        parentNameLabel: 'Họ và tên bố mẹ:',
+        parentNamePlaceholder: 'VD: Nguyễn Văn Anh',
+        parentPhoneLabel: 'Số điện thoại bố mẹ:',
+        parentPhonePlaceholder: 'VD: 0912 345 678',
+        avatarLabel: 'Chọn biểu tượng bé thích:',
+        submitAndLoginBtn: 'Xác Nhận & Nộp Bài 📤',
+        saveStudentBtn: 'Lưu Thông Tin ✨',
+        logoutBtn: 'Đăng xuất',
+        cancelBtn: 'Để sau / Quay lại',
+        notLoggedIn: 'Chưa đăng nhập',
+        candidateInfo: 'Thí sinh:',
+        parentInfo: 'Phụ huynh:',
+        validationName: 'Vui lòng nhập họ tên của bé nhé!',
+        validationAge: 'Vui lòng chọn hoặc nhập số tuổi của bé!',
+        validationParent: 'Vui lòng nhập tên bố hoặc mẹ!',
+        validationPhone: 'Vui lòng nhập đúng số điện thoại bố mẹ (9 - 11 chữ số)!'
       }
     },
 
@@ -249,6 +272,29 @@ window.OctoI18n = {
         corsHintPath: 'The JSON dataset path (?data=...) is incorrect or the file is missing/empty.',
         retryBtn: 'Reload Page',
         backHomeBtn: 'Back to Map'
+      },
+      auth: {
+        loginTitle: 'STUDENT REGISTRATION & LOGIN',
+        loginSubtitle: 'To save your exam results and award certificates, please fill in student details below:',
+        studentNameLabel: "Student's Full Name:",
+        studentNamePlaceholder: 'e.g., Alex Johnson',
+        studentAgeLabel: 'Age:',
+        parentNameLabel: "Parent's Full Name:",
+        parentNamePlaceholder: 'e.g., David Johnson',
+        parentPhoneLabel: "Parent's Phone Number:",
+        parentPhonePlaceholder: 'e.g., 0912 345 678',
+        avatarLabel: 'Choose favorite avatar:',
+        submitAndLoginBtn: 'Confirm & Submit Exam 📤',
+        saveStudentBtn: 'Save Info ✨',
+        logoutBtn: 'Log Out',
+        cancelBtn: 'Later / Back',
+        notLoggedIn: 'Not logged in',
+        candidateInfo: 'Candidate:',
+        parentInfo: 'Parent:',
+        validationName: 'Please enter student full name!',
+        validationAge: 'Please select or enter age!',
+        validationParent: 'Please enter parent name!',
+        validationPhone: 'Please enter a valid phone number (9-11 digits)!'
       }
     },
 
@@ -368,6 +414,29 @@ window.OctoI18n = {
         corsHintPath: 'JSON 题库文件路径 (?data=...) 不正确或文件不存在/为空。',
         retryBtn: '重新加载',
         backHomeBtn: '返回地图'
+      },
+      auth: {
+        loginTitle: '学生登录与登记',
+        loginSubtitle: '为保存考试成绩与颁发奖状，请在下方填写学生信息：',
+        studentNameLabel: '宝贝姓名：',
+        studentNamePlaceholder: '例如：张小明',
+        studentAgeLabel: '年龄：',
+        parentNameLabel: '家长姓名：',
+        parentNamePlaceholder: '例如：张伟',
+        parentPhoneLabel: '家长联系电话：',
+        parentPhonePlaceholder: '例如：13800138000',
+        avatarLabel: '选择宝贝喜爱的头像：',
+        submitAndLoginBtn: '确认并提交试卷 📤',
+        saveStudentBtn: '保存信息 ✨',
+        logoutBtn: '退出登录',
+        cancelBtn: '稍后 / 返回',
+        notLoggedIn: '未登录',
+        candidateInfo: '考生：',
+        parentInfo: '家长：',
+        validationName: '请填写宝贝姓名！',
+        validationAge: '请选择或填写宝贝年龄！',
+        validationParent: '请填写家长姓名！',
+        validationPhone: '请填写正确的联系电话（9-11位数字）！'
       }
     }
   },

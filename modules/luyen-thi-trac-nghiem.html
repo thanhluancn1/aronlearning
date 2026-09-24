@@ -59,6 +59,7 @@
   <script src="../assets/js/i18n.js"></script>
   <script src="../assets/js/core.js"></script>
   <script src="../assets/js/notification.js"></script>
+  <script src="../assets/js/auth-modal.js"></script>
 
   <style>
     * {
@@ -171,6 +172,15 @@
             </template>
           </div>
         </div>
+
+        <!-- Student / Login Badge Button -->
+        <button 
+          @click="openLoginModal()"
+          class="bg-slate-50 border border-slate-300 hover:border-purple-400 px-3.5 py-1.5 rounded-2xl font-black flex items-center gap-2 shadow-sm transition-all text-xs sm:text-sm text-slate-900 active:scale-95"
+          :title="globalState.student ? `${globalState.student.fullName} (${globalState.student.age} tuổi)` : 'Nhấp để đăng nhập'">
+          <span class="text-xl" x-text="globalState.avatar || '👦'"></span>
+          <span class="font-black hidden sm:inline text-slate-900" x-text="globalState.student ? globalState.student.fullName : t('auth.notLoggedIn', 'Chưa đăng nhập')"></span>
+        </button>
 
       </div>
 
@@ -502,6 +512,7 @@
   </main>
 
   <!-- 4. MODALS & OVERLAYS -->
+  <!-- Student Registration / Login Modal được quản lý tự động bởi OctoAuthModal (assets/js/auth-modal.js) -->
 
   <!-- Submit Confirmation Modal -->
   <div x-show="showWarningModal" 
@@ -569,6 +580,25 @@
         
         <span class="bg-purple-100 text-purple-900 text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider">🎉 HOÀN THÀNH XUẤT SẮC BÀI THI!</span>
         <h3 class="text-2xl font-black text-slate-900 mt-2 mb-1" x-text="getLocalized(examConfig.title)"></h3>
+
+        <!-- Candidate Profile Badge in Result Modal -->
+        <div class="inline-flex items-center gap-3 bg-purple-50 border-2 border-purple-200 px-4 py-2 rounded-2xl my-2 text-xs font-black text-slate-800 shadow-sm">
+          <span class="text-3xl" x-text="globalState.student?.avatar || globalState.avatar || '👦'"></span>
+          <div class="text-left">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-slate-500 font-bold" x-text="t('auth.candidateInfo', 'Thí sinh:')"></span>
+              <strong class="text-purple-700 font-black text-sm" x-text="globalState.student?.fullName || 'Học sinh Octokids'"></strong>
+              <span class="bg-purple-200 text-purple-800 text-[11px] px-2 py-0.5 rounded-full font-black" 
+                    x-show="globalState.student?.age" 
+                    x-text="`${globalState.student?.age} tuổi`"></span>
+            </div>
+            <div x-show="globalState.student?.parentName" class="text-[11px] text-slate-600 font-bold mt-0.5">
+              <span x-text="t('auth.parentInfo', 'Phụ huynh:')"></span>
+              <span class="text-slate-900 font-black" x-text="globalState.student?.parentName"></span>
+              <span class="text-slate-500" x-show="globalState.student?.parentPhone" x-text="`(${globalState.student?.parentPhone})`"></span>
+            </div>
+          </div>
+        </div>
 
         <!-- Score Grid -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-purple-50 border-2 border-purple-200 p-4 rounded-2xl my-4">
@@ -748,6 +778,10 @@
 
           window.addEventListener('octo-lang-changed', (e) => {
             this.currentLang = e.detail;
+          });
+
+          window.addEventListener('octo-student-changed', (e) => {
+            this.globalState = PortalCore.getState();
           });
 
           try {
@@ -942,14 +976,50 @@
           }
         },
 
+        openLoginModal(autoSubmitExamAfterLogin = false) {
+          if (window.OctoAuthModal) {
+            OctoAuthModal.open({
+              submitBtnText: autoSubmitExamAfterLogin 
+                ? this.t('auth.submitAndLoginBtn', 'Xác Nhận & Nộp Bài 📤') 
+                : this.t('auth.saveStudentBtn', 'Lưu Thông Tin ✨'),
+              showLogout: true,
+              onSuccess: (student) => {
+                this.globalState = PortalCore.getState();
+                if (autoSubmitExamAfterLogin) {
+                  this.submitExamNow(true);
+                }
+              },
+              onLogout: () => {
+                this.globalState = PortalCore.getState();
+              }
+            });
+          }
+        },
+
         confirmSubmit() {
           PortalCore.playPop();
+          // Nếu chưa đăng nhập, mở trực tiếp cửa sổ đăng nhập để phụ huynh/bé ghi danh rồi nộp luôn
+          if (!PortalCore.isLoggedIn()) {
+            this.openLoginModal(true);
+            return;
+          }
           this.showWarningModal = true;
         },
 
-        submitExamNow() {
+        submitExamNow(bypassLoginCheck = false) {
           if (this.loadError || !this.questions.length) return;
           this.showWarningModal = false;
+
+          // Nếu chưa đăng nhập và không bỏ qua, bắt buộc đăng nhập
+          if (!bypassLoginCheck && !PortalCore.isLoggedIn()) {
+            this.openLoginModal(true);
+            return;
+          }
+
+          this.processExamSubmission();
+        },
+
+        processExamSubmission() {
           clearInterval(this.timerInterval);
 
           let correct = 0;
