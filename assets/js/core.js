@@ -5,13 +5,11 @@
 
 const GLOBAL_STORAGE_KEY = 'vui_hoc_toan_portal_state_v1';
 
-// Default Global State
 const defaultState = {
   playerName: 'Bé Giỏi Giang',
   avatar: '👦',
   stars: 0,
   isMuted: false,
-  unlockedStickers: ['🐰'],
   completedModules: []
 };
 
@@ -116,16 +114,4 @@ window.PortalCore = {
   }
 };
 
-// Multilingual Sticker Database
-window.GLOBAL_STICKERS = [
-  { id: 1, emoji: '🐰', name: { vi: 'Thỏ Thông Thái', en: 'Wise Rabbit', zh: '聪明的兔子' }, reqStars: 0 },
-  { id: 2, emoji: '🐱', name: { vi: 'Mèo Vui Vẻ', en: 'Happy Cat', zh: '快乐的猫' }, reqStars: 2 },
-  { id: 3, emoji: '🐶', name: { vi: 'Chó Dũng Cảm', en: 'Brave Puppy', zh: '勇敢的小狗' }, reqStars: 4 },
-  { id: 4, emoji: '🐻', name: { vi: 'Gấu Ngọt Ngào', en: 'Sweet Bear', zh: '甜蜜的熊' }, reqStars: 6 },
-  { id: 5, emoji: '🦆', name: { vi: 'Vịt Cười', en: 'Smiling Duck', zh: '微笑的鸭子' }, reqStars: 8 },
-  { id: 6, emoji: '🐼', name: { vi: 'Gấu Trúc', en: 'Cute Panda', zh: '可爱的大熊猫' }, reqStars: 10 },
-  { id: 7, emoji: '🐊', name: { vi: 'Cá Sấu Toán Học', en: 'Math Crocodile', zh: '数学鳄鱼' }, reqStars: 12 },
-  { id: 8, emoji: '🦁', name: { vi: 'Sư Tử Oai Hùng', en: 'Mighty Lion', zh: '威武的狮子' }, reqStars: 15 },
-  { id: 9, emoji: '🚂', name: { vi: 'Đoàn Tàu Thần Kỳ', en: 'Magic Train', zh: '神奇的小火车' }, reqStars: 18 },
-  { id: 10, emoji: '🦄', name: { vi: 'Kỳ Lân Phép Thuật', en: 'Magic Unicorn', zh: '魔法独角兽' }, reqStars: 25 }
-];
+

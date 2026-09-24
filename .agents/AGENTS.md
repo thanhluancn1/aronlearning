@@ -100,13 +100,12 @@
   - Quản lý điểm Ngôi Sao ⭐ toàn cục (`localStorage`).
   - Quản lý trạng thái âm thanh Bật/Tắt (`isMuted`).
   - Hồ sơ người chơi (Tên & Avatar đại diện) thay đổi qua Modal.
-  - Bộ sưu tập 10 Nhãn dán thú cưng mở khóa theo mốc số sao (🐰, 🐱, 🐶, 🐻, 🦆, 🐼, 🐊, 🦁, 🚂, 🦄).
+  - (Đã loại bỏ tính năng Nhãn dán Sticker theo yêu cầu của người dùng).
 
 - [x] **4. Trang Chủ / Bản Đồ Luyện Thi (`index.html`)**
-  - Header Topbar (Điểm Sao, Avatar, Nút âm thanh, Dropdown ngôn ngữ).
+  - Header Topbar (Avatar, Dropdown ngôn ngữ).
   - Thẻ người chơi cho phép chỉnh sửa tên & avatar.
-  - Danh sách bài luyện thi TIMO (`assets/js/data-modules.js`).
-  - Grid Nhãn dán thưởng hiển thị trạng thái đã mở khóa / chưa đủ sao.
+  - (Đã loại bỏ hiển thị Điểm sao ⭐ và Nút âm thanh trên Navbar Header theo yêu cầu của người dùng).
 
 - [x] **5. Phân Hệ Đấu Trường Luyện Thi Trắc Nghiệm Toán TIMO (`modules/luyen-thi-trac-nghiem.html`)**
   - **Topbar**: Breadcrumb lộ trình, Đồng hồ đếm ngược `🕐`, Nút `⏸ Tạm dừng`, Nút `🚩 Báo lỗi`, Nút `Nộp bài`.
@@ -133,14 +132,13 @@
 - [x] **6. Nâng Cấp Giao Diện Chương Trình Học Octokids Curriculum trên Trang Chủ (`index.html`)**
   - **Phân Khu 1: Tư duy nền tảng (`ok-curriculum-section` Foundational Path)**:
     - Thẻ Panel Card với icon "🌱 Tư duy nền tảng".
-    - Thanh tổng quát tiến độ "✓ Đã hoàn thành nền tảng (0/4)" có nút thu gọn / xem lại.
-    - Lộ trình Stepper cuộn ngang mượt mà với nút `‹` và `›`.
+    - Lộ trình Stepper cuộn ngang mượt mà với nút `‹` và `›` hiển thị trực quan không bị che khuất.
     - Các bước học: *1. Số & Chữ số*, *2. Phép cộng & Phép trừ*, *3. So sánh & Thay thế*, *4. Đo lường & Thời gian*. Có nút `Khám phá` và `Luyện tập`.
   - **Phân Khu 2: Tư duy nâng cao (`ok-curriculum-section` Enrichment Grid)**:
     - Lưới 6 thẻ bài học nhiều màu sắc: 🟩 *Bài toán Quy luật*, 🟧 *Biểu đồ & Phân loại*, 🟦 *Hình học & Đếm hình*, 🟪 *Toán cân bằng*, 🌸 *Logic thực tế*, 🪸 *Tư duy thay thế*. Mỗi thẻ có nút `Khám phá` & `Luyện tập`.
   - **Phân Khu 3: Luyện tập nhanh (`ok-quick-mini-grid` Quick Practice)**:
     - 4 ô luyện nhanh phương pháp Spiral Practice: 🟣 **Daily Quiz**, 🔵 **Try Hard**, 🟢 **10 câu**, 🟠 **20 câu**.
-  - **Bảo tồn toàn bộ tính năng gốc**: Header Topbar, Nút Âm thanh, Điểm Sao ⭐, Modal Sticker Album & Modal Đổi tên/Avatar.
+  - **Bảo tồn toàn bộ tính năng gốc**: Header Topbar, Nút Âm thanh, Điểm Sao ⭐, Modal Đổi tên/Avatar.
 
 - [x] **7. Module Thông Báo & Báo Lỗi Dùng Chung (`assets/js/notification.js`)**
   - Màn hình báo lỗi Error State Card chuẩn thiết kế Octokids (icon ⚠️ pulse, chi tiết lỗi, hướng dẫn CORS/đường dẫn, nút Tải lại & Về bản đồ).

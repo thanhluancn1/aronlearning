@@ -19,15 +19,12 @@ window.OctoI18n = {
         home: 'Trang chủ',
         olympic: 'Toán Olympic',
         engMath: 'Toán tiếng Anh',
-        iqMath: 'Toán IQ',
-        stickers: 'Bộ sưu tập Sticker'
+        iqMath: 'Toán IQ'
       },
       home: {
         heroTitle: 'CỔNG NỀN TẢNG LUYỆN THI TOÁN TIMO & GAME TƯ DUY',
         heroSubtitle: 'Luyện thi trắc nghiệm toán quốc tế dành cho mầm non & tiểu học với giao diện hiện đại, sắc nét.',
         startExamBtn: 'Vào Luyện Thi Ngay 🚀',
-        stickersTitle: 'BỘ SƯU TẬP STICKER ĐẢO BẠCH TUỘC',
-        closeAlbum: 'Đóng Album',
         editProfileTitle: 'ĐỔI TÊN & NHÂN VẬT',
         playerNameLabel: 'Tên của bé:',
         chooseAvatarLabel: 'Chọn nhân vật đại diện:',
@@ -141,15 +138,12 @@ window.OctoI18n = {
         home: 'Home',
         olympic: 'Olympic Math',
         engMath: 'English Math',
-        iqMath: 'IQ Math',
-        stickers: 'Sticker Album'
+        iqMath: 'IQ Math'
       },
       home: {
         heroTitle: 'TIMO MATH & REASONING CONTEST PRACTICE PORTAL',
         heroSubtitle: 'International math competition prep for kindergarten & primary students with crisp modern UI.',
         startExamBtn: 'Start Practice Now 🚀',
-        stickersTitle: 'OCTOPUS ISLAND STICKER ALBUM',
-        closeAlbum: 'Close Album',
         editProfileTitle: 'EDIT NAME & AVATAR',
         playerNameLabel: 'Student Name:',
         chooseAvatarLabel: 'Choose Avatar:',
@@ -263,15 +257,12 @@ window.OctoI18n = {
         home: '首页',
         olympic: '奥林匹克数学',
         engMath: '英语数学',
-        iqMath: '智力数学',
-        stickers: '贴纸相册'
+        iqMath: '智力数学'
       },
       home: {
         heroTitle: 'TIMO 奥数与逻辑思维模拟考试平台',
         heroSubtitle: '面向学前及小学阶段国际奥数模拟备考系统，具备高清画质与现代界面。',
         startExamBtn: '立即开始练习 🚀',
-        stickersTitle: '章鱼岛贴纸相册',
-        closeAlbum: '关闭相册',
         editProfileTitle: '修改姓名与头像',
         playerNameLabel: '宝贝姓名：',
         chooseAvatarLabel: '选择代表头像：',

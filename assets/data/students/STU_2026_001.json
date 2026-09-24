@@ -1,0 +1,180 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-09-24T23:15:00Z",
+  "identity": {
+    "studentId": "STU_2026_001",
+    "fullName": "Nguyễn Minh Khang",
+    "nickname": "Aron",
+    "avatar": "👦",
+    "gender": "male",
+    "dob": "2020-05-15",
+    "grade": "Lớp 1 / Grade 1",
+    "targetContest": "Toán Quốc Tế TIMO 2026",
+    "school": "Trường Tiểu Học Quốc Tế Á Châu",
+    "city": "Hồ Chí Minh",
+    "parent": {
+      "name": "Bố Luân",
+      "phone": "0901234567",
+      "email": "thanhluancn1@gmail.com"
+    },
+    "createdAt": "2026-09-01T08:00:00Z",
+    "lastActiveAt": "2026-09-24T23:10:00Z"
+  },
+  "preferences": {
+    "lang": "vi",
+    "soundEffects": true,
+    "voiceAutoPlay": false,
+    "voiceSpeed": 1.0,
+    "textZoom": 120,
+    "theme": "octo-purple"
+  },
+  "rewards": {
+    "totalStars": 128,
+    "currentLevel": 4,
+    "currentExp": 450,
+    "nextLevelExp": 600,
+    "streakDays": 5,
+    "lastStreakDate": "2026-09-24",
+    "medalsSummary": {
+      "gold": 3,
+      "silver": 2,
+      "bronze": 1,
+      "participation": 0
+    },
+    "badges": [
+      {
+        "id": "first-win",
+        "title": "Bắt Đầu Chinh Phục",
+        "icon": "🚀",
+        "unlockedAt": "2026-09-02"
+      },
+      {
+        "id": "streak-5",
+        "title": "Chiến Binh Chăm Chỉ 5 Ngày",
+        "icon": "🔥",
+        "unlockedAt": "2026-09-24"
+      },
+      {
+        "id": "geometry-master",
+        "title": "Chuyên Gia Đếm Hình",
+        "icon": "📐",
+        "unlockedAt": "2026-09-20"
+      }
+    ]
+  },
+  "curriculumProgress": {
+    "foundational": {
+      "completedCount": 2,
+      "totalSteps": 4,
+      "steps": {
+        "timo-chu-so-g1": {
+          "status": "completed",
+          "bestScore": 100,
+          "bestMedal": "gold",
+          "attemptsCount": 2,
+          "lastAttemptAt": "2026-09-23T14:20:00Z"
+        },
+        "timo-phep-cong-tru-g1": {
+          "status": "completed",
+          "bestScore": 95,
+          "bestMedal": "gold",
+          "attemptsCount": 1,
+          "lastAttemptAt": "2026-09-24T19:40:00Z"
+        },
+        "timo-so-sanh-thay-the-g1": {
+          "status": "in_progress",
+          "bestScore": 60,
+          "bestMedal": "bronze",
+          "attemptsCount": 1,
+          "lastAttemptAt": "2026-09-24T21:10:00Z"
+        },
+        "timo-do-luong-thoi-gian-g1": {
+          "status": "not_started",
+          "bestScore": 0,
+          "bestMedal": null,
+          "attemptsCount": 0,
+          "lastAttemptAt": null
+        }
+      }
+    },
+    "enrichment": {
+      "timo-quy-luat-g1": {
+        "status": "completed",
+        "bestScore": 90,
+        "bestMedal": "gold",
+        "attemptsCount": 2
+      },
+      "timo-hinh-hoc-dem-hinh-g1": {
+        "status": "completed",
+        "bestScore": 100,
+        "bestMedal": "gold",
+        "attemptsCount": 1
+      },
+      "timo-bieu-do-phan-loai-g1": {
+        "status": "not_started",
+        "bestScore": 0,
+        "bestMedal": null,
+        "attemptsCount": 0
+      }
+    }
+  },
+  "examHistory": [
+    {
+      "attemptId": "ATT_20260923_001",
+      "examId": "timo-chu-so-g1",
+      "examTitle": "Hệ thống Số và Chữ số",
+      "mode": "practice",
+      "date": "2026-09-23T14:20:00Z",
+      "score": 100,
+      "correctCount": 20,
+      "totalQuestions": 20,
+      "timeSpentSeconds": 480,
+      "earnedMedal": "🥇 Huy Chương Vàng",
+      "starsEarned": 40
+    },
+    {
+      "attemptId": "ATT_20260924_002",
+      "examId": "timo-phep-cong-tru-g1",
+      "examTitle": "Phép cộng và Phép trừ",
+      "mode": "practice",
+      "date": "2026-09-24T19:40:00Z",
+      "score": 95,
+      "correctCount": 19,
+      "totalQuestions": 20,
+      "timeSpentSeconds": 530,
+      "earnedMedal": "🥇 Huy Chương Vàng",
+      "starsEarned": 38
+    }
+  ],
+  "mistakeBank": [
+    {
+      "questionId": "PCT_014",
+      "examId": "timo-phep-cong-tru-g1",
+      "topic": "PHÉP TRỪ CÓ NHỚ",
+      "missedCount": 1,
+      "lastWrongAnswer": "B",
+      "correctAnswer": "C",
+      "flagged": true,
+      "addedAt": "2026-09-24T19:40:00Z",
+      "isResolved": false
+    },
+    {
+      "questionId": "SS_008",
+      "examId": "timo-so-sanh-thay-the-g1",
+      "topic": "TOÁN THAY THẾ CON VẬT",
+      "missedCount": 2,
+      "lastWrongAnswer": "A",
+      "correctAnswer": "D",
+      "flagged": true,
+      "addedAt": "2026-09-24T21:10:00Z",
+      "isResolved": false
+    }
+  ],
+  "skillRadar": {
+    "logicalThinking": 85,
+    "arithmetic": 95,
+    "geometry": 100,
+    "combinatorics": 70,
+    "realWorldMath": 80
+  }
+}
