@@ -49,6 +49,43 @@ window.PortalCore = {
     }
   },
 
+  // Available classes metadata
+  availableClasses: [
+    { id: 'class-math', name: { vi: 'Toán Quốc Tế TIMO', en: 'TIMO International Math', zh: 'TIMO 国际奥数' }, icon: '📐' },
+    { id: 'class-english', name: { vi: 'Toán Tiếng Anh HKIMO', en: 'HKIMO English Math', zh: 'HKIMO 英语奥数' }, icon: '🇬🇧' },
+    { id: 'class-default', name: { vi: 'Lớp Cơ Bản Mặc Định', en: 'Default Foundation Class', zh: '基础默认班级' }, icon: '🌱' }
+  ],
+
+  /**
+   * Lấy ID lớp đang kích hoạt (activeClassId)
+   */
+  getActiveClassId() {
+    const saved = localStorage.getItem('octo_active_class');
+    const student = this.getStudent();
+    if (student && student.studentId) {
+      const profile = this.getFullProfile(student.studentId);
+      const studentClasses = (profile && profile.identity && Array.isArray(profile.identity.classes)) 
+        ? profile.identity.classes 
+        : (student.classes || []);
+      if (studentClasses.length > 0) {
+        if (saved && studentClasses.includes(saved)) {
+          return saved;
+        }
+        return studentClasses[0];
+      }
+    }
+    return saved || 'class-math';
+  },
+
+  /**
+   * Đổi lớp đang kích hoạt và phát sự kiện toàn cục octo-class-changed
+   */
+  setActiveClassId(classId) {
+    if (!classId) return;
+    localStorage.setItem('octo_active_class', classId);
+    window.dispatchEvent(new CustomEvent('octo-class-changed', { detail: { classId } }));
+  },
+
   // Student Auth Helpers (Phone-based ID)
   isLoggedIn() {
     const s = this.getStudent();
@@ -75,8 +112,19 @@ window.PortalCore = {
     try {
       const cached = localStorage.getItem(`octo_profile_${phone}`);
       if (cached) {
-        const student = JSON.parse(cached);
-        return { exists: true, data: student, source: 'cache' };
+        const profile = JSON.parse(cached);
+        const student = {
+          studentId: profile.identity.studentId || phone,
+          fullName: profile.identity.fullName || '',
+          age: profile.identity.age || (profile.identity.dob ? new Date().getFullYear() - new Date(profile.identity.dob).getFullYear() : 6),
+          parentName: profile.identity.parent_name || '',
+          parentPhone: profile.identity.parent_phone || phone,
+          parentEmail: profile.identity.parent_email || '',
+          avatar: profile.identity.avatar || '👦',
+          classes: profile.identity.classes || ['class-math'],
+          rawProfile: profile
+        };
+        return { exists: true, data: student, profile: profile, source: 'cache' };
       }
     } catch (e) {}
 
@@ -92,14 +140,15 @@ window.PortalCore = {
         if (res.ok) {
           const profile = await res.json();
           if (profile && profile.identity) {
-            // Chuẩn hóa format để tương thích
             const student = {
               studentId: profile.identity.studentId || phone,
               fullName: profile.identity.fullName || '',
               age: profile.identity.age || (profile.identity.dob ? new Date().getFullYear() - new Date(profile.identity.dob).getFullYear() : 6),
-              parentName: profile.identity.parent ? profile.identity.parent.name : '',
-              parentPhone: profile.identity.parent ? profile.identity.parent.phone : phone,
+              parentName: profile.identity.parent_name || '',
+              parentPhone: profile.identity.parent_phone || phone,
+              parentEmail: profile.identity.parent_email || '',
               avatar: profile.identity.avatar || '👦',
+              classes: profile.identity.classes || ['class-math'],
               rawProfile: profile
             };
             // Lưu cache lại vào localStorage
@@ -120,18 +169,32 @@ window.PortalCore = {
    */
   login(studentData) {
     try {
-      const phone = (studentData.parentPhone || studentData.studentId || '').toString().trim().replace(/\D/g, '');
+      const phone = (studentData.parentPhone || studentData.parent_phone || studentData.studentId || '').toString().trim().replace(/\D/g, '');
+      const rawClasses = studentData.classes || 
+        (studentData.rawProfile && studentData.rawProfile.identity && studentData.rawProfile.identity.classes) || 
+        ['class-math'];
+
       const student = {
         studentId: phone, // Số điện thoại chính là ID học sinh
         fullName: (studentData.fullName || '').trim(),
         age: studentData.age || '',
-        parentName: (studentData.parentName || '').trim(),
+        parentName: (studentData.parentName || studentData.parent_name || '').trim(),
         parentPhone: phone,
+        parentEmail: (studentData.parentEmail || studentData.parent_email || '').trim(),
         avatar: studentData.avatar || '👦',
+        classes: rawClasses,
         loginAt: new Date().toISOString()
       };
       
       localStorage.setItem(STUDENT_STORAGE_KEY, JSON.stringify(student));
+
+      // Đảm bảo activeClass nằm trong danh sách lớp của học sinh
+      const curActive = localStorage.getItem('octo_active_class');
+      if (!curActive || !rawClasses.includes(curActive)) {
+        if (rawClasses.length > 0) {
+          localStorage.setItem('octo_active_class', rawClasses[0]);
+        }
+      }
 
       const state = this.getState();
       state.isLoggedIn = true;
@@ -141,6 +204,7 @@ window.PortalCore = {
       this.saveState(state);
 
       window.dispatchEvent(new CustomEvent('octo-student-changed', { detail: student }));
+      window.dispatchEvent(new CustomEvent('octo-class-changed', { detail: { classId: this.getActiveClassId() } }));
       return student;
     } catch (e) {
       console.error('Login failed', e);
@@ -152,25 +216,29 @@ window.PortalCore = {
    * Đăng ký mới học sinh với ID và tên file là số điện thoại
    */
   registerNewStudent(studentData) {
-    const phone = (studentData.parentPhone || '').toString().trim().replace(/\D/g, '');
+    const phone = (studentData.parentPhone || studentData.parent_phone || '').toString().trim().replace(/\D/g, '');
+    let enrolledClasses = studentData.classes;
+    if (!Array.isArray(enrolledClasses) || enrolledClasses.length === 0) {
+      enrolledClasses = ['class-default'];
+    }
+
+    const nowIso = new Date().toISOString();
     const newProfile = {
-      version: "2.0.0",
-      updatedAt: new Date().toISOString(),
+      version: "2.2.0",
+      updatedAt: nowIso,
       identity: {
         studentId: phone, // Số điện thoại là ID
         fullName: (studentData.fullName || '').trim(),
         avatar: studentData.avatar || '👦',
         age: studentData.age || 6,
-        parent: {
-          name: (studentData.parentName || '').trim(),
-          phone: phone
-        },
-        createdAt: new Date().toISOString(),
-        lastActiveAt: new Date().toISOString()
-      },
-      preferences: {
+        parent_name: (studentData.parentName || studentData.parent_name || '').trim(),
+        parent_phone: phone,
+        parent_email: (studentData.parentEmail || studentData.parent_email || '').trim(),
         lang: window.OctoI18n ? window.OctoI18n.currentLang : "vi",
-        textZoom: 120
+        textZoom: 120,
+        classes: enrolledClasses,
+        createdAt: nowIso,
+        lastActiveAt: nowIso
       },
       summaryStats: {
         totalExamsTaken: 0,
@@ -178,14 +246,62 @@ window.PortalCore = {
         correctAnswers: 0,
         overallAccuracy: 0,
         totalTimeSpentMinutes: 0,
-        streakDays: 1,
-        medals: { gold: 0, silver: 0, bronze: 0 }
+        medal_gold: 0,
+        medal_silver: 0,
+        medal_bronze: 0,
+        date: nowIso
       },
-      lastSession: null,
-      progress: {},
-      examHistory: [],
-      mistakeBank: []
+      skillRadar: {
+        logicalThinking: 70,
+        arithmetic: 75,
+        geometry: 70,
+        combinatorics: 60,
+        realWorldMath: 70,
+        date: nowIso
+      }
     };
+
+    // Khởi tạo từng mảng lớp học trong profile
+    enrolledClasses.forEach(clsId => {
+      const tryHardId = `${phone}-${clsId}-quick-tryhard`;
+      newProfile[clsId] = [
+        {
+          examId: tryHardId,
+          status: "processing",
+          explored: false,
+          practiced: false,
+          score: null,
+          medal: null,
+          attempts: 0,
+          totalQuestions: 0,
+          correctCount: 0,
+          timeSpentSeconds: 0,
+          date: nowIso
+        }
+      ];
+
+      // Khởi tạo Try-Hard rỗng trong cache nếu chưa có
+      const defaultTryHardObj = {
+        examConfig: {
+          id: tryHardId,
+          title: {
+            vi: `Toán - Ôn Tập Câu Đã Sai`,
+            en: `Missed Questions Review`,
+            zh: `错题攻坚`
+          },
+          grade: 1,
+          totalQuestions: 0,
+          timeLimitMinutes: 15,
+          passingScore: 80
+        },
+        questions: []
+      };
+      try {
+        if (!localStorage.getItem(`octo_tryhard_${phone}_${clsId}`)) {
+          localStorage.setItem(`octo_tryhard_${phone}_${clsId}`, JSON.stringify(defaultTryHardObj));
+        }
+      } catch (e) {}
+    });
 
     // Lưu vào hồ sơ cá nhân
     try {
@@ -197,9 +313,11 @@ window.PortalCore = {
       studentId: phone,
       fullName: newProfile.identity.fullName,
       age: newProfile.identity.age,
-      parentName: newProfile.identity.parent.name,
+      parentName: newProfile.identity.parent_name,
       parentPhone: phone,
-      avatar: newProfile.identity.avatar
+      parentEmail: newProfile.identity.parent_email,
+      avatar: newProfile.identity.avatar,
+      classes: enrolledClasses
     });
   },
 
@@ -213,29 +331,38 @@ window.PortalCore = {
     try {
       const cached = localStorage.getItem(`octo_profile_${sId}`);
       if (cached) {
-        return JSON.parse(cached);
+        const parsed = JSON.parse(cached);
+        // Tương thích ngược: nếu profile cũ có examList dạng object thì chuyển đổi
+        if (parsed.identity && !parsed.identity.classes) {
+          parsed.identity.classes = ['class-math'];
+        }
+        if (parsed.examList && !parsed['class-math']) {
+          const list = Array.isArray(parsed.examList) ? parsed.examList : Object.values(parsed.examList);
+          parsed['class-math'] = list;
+        }
+        return parsed;
       }
     } catch (e) {}
 
     const cur = this.getStudent();
-    return {
-      version: "2.0.0",
-      updatedAt: new Date().toISOString(),
+    const defaultClasses = (cur && cur.classes && Array.isArray(cur.classes)) ? cur.classes : ['class-math'];
+    const nowIso = new Date().toISOString();
+    const defaultProfile = {
+      version: "2.2.0",
+      updatedAt: nowIso,
       identity: {
         studentId: sId,
         fullName: cur ? cur.fullName : "Học sinh Octokids",
         avatar: cur ? cur.avatar : "👦",
         age: cur ? cur.age : 6,
-        parent: {
-          name: cur ? cur.parentName : "",
-          phone: sId
-        },
-        createdAt: new Date().toISOString(),
-        lastActiveAt: new Date().toISOString()
-      },
-      preferences: {
+        parent_name: cur ? (cur.parentName || cur.parent_name || "") : "",
+        parent_phone: sId,
+        parent_email: cur ? (cur.parentEmail || cur.parent_email || "") : "",
         lang: window.OctoI18n ? window.OctoI18n.currentLang : "vi",
-        textZoom: 120
+        textZoom: 120,
+        classes: defaultClasses,
+        createdAt: nowIso,
+        lastActiveAt: nowIso
       },
       summaryStats: {
         totalExamsTaken: 0,
@@ -243,29 +370,140 @@ window.PortalCore = {
         correctAnswers: 0,
         overallAccuracy: 0,
         totalTimeSpentMinutes: 0,
-        streakDays: 1,
-        medals: { gold: 0, silver: 0, bronze: 0 }
+        medal_gold: 0,
+        medal_silver: 0,
+        medal_bronze: 0,
+        date: nowIso
       },
-      lastSession: null,
-      progress: {},
-      examHistory: [],
-      mistakeBank: [],
       skillRadar: {
         logicalThinking: 80,
         arithmetic: 85,
         geometry: 80,
         combinatorics: 75,
-        realWorldMath: 80
+        realWorldMath: 80,
+        date: nowIso
       }
     };
+
+    defaultClasses.forEach(clsId => {
+      defaultProfile[clsId] = [
+        {
+          examId: `${sId}-${clsId}-quick-tryhard`,
+          status: "processing",
+          explored: false,
+          practiced: false,
+          score: null,
+          medal: null,
+          attempts: 0,
+          totalQuestions: 0,
+          correctCount: 0,
+          timeSpentSeconds: 0,
+          date: nowIso
+        }
+      ];
+    });
+
+    return defaultProfile;
   },
 
   /**
-   * Nạp và cập nhật kết quả thi vào Student Profile
-   * @param {Object} resultData 
-   *  - examId, examTitle, score, correctCount, totalQuestions, timeSpentSeconds, earnedMedal, wrongQuestions
+   * Ghi nhận khi học sinh bấm Khám phá hoặc Luyện tập 1 bài thi
+   * Mặc định nếu practiced = false thì status luôn là 'processing'
    */
-  recordExamResult(resultData) {
+  recordExamStart(examId, mode = 'practice', classId = null) {
+    const student = this.getStudent();
+    if (!student || !student.studentId || !examId) return null;
+    const sId = student.studentId;
+    let profile = this.getFullProfile(sId);
+    if (!profile) return null;
+
+    const targetClassId = classId || this.getActiveClassId() || 'class-math';
+    if (!profile[targetClassId] || !Array.isArray(profile[targetClassId])) {
+      profile[targetClassId] = [];
+    }
+
+    const tryHardId = `${sId}-${targetClassId}-quick-tryhard`;
+    let thItem = profile[targetClassId].find(item => item.examId === tryHardId || item.examId.includes('quick-tryhard'));
+    if (!thItem) {
+      profile[targetClassId].unshift({
+        examId: tryHardId,
+        status: 'processing',
+        explored: false,
+        practiced: false,
+        score: null,
+        medal: null,
+        attempts: 0,
+        totalQuestions: 0,
+        correctCount: 0,
+        timeSpentSeconds: 0,
+        date: new Date().toISOString()
+      });
+    }
+
+    const nowIso = new Date().toISOString();
+    let examItem = profile[targetClassId].find(item => item.examId === examId);
+
+    if (!examItem) {
+      examItem = {
+        examId: examId,
+        status: 'processing', // practiced = false nên luôn là processing
+        explored: true,
+        practiced: false,
+        score: null,
+        medal: null,
+        attempts: 0,
+        totalQuestions: 0,
+        correctCount: null,
+        timeSpentSeconds: 0,
+        date: nowIso
+      };
+      profile[targetClassId].push(examItem);
+    } else {
+      examItem.explored = true;
+      examItem.date = nowIso;
+      // Quy tắc bắt buộc: Nếu practiced = false thì luôn có status là processing
+      if (!examItem.practiced) {
+        examItem.status = 'processing';
+      }
+    }
+
+    profile.updatedAt = nowIso;
+    if (profile.identity) profile.identity.lastActiveAt = nowIso;
+
+    try {
+      localStorage.setItem(`octo_profile_${sId}`, JSON.stringify(profile));
+    } catch (e) {
+      console.error("Lỗi lưu hồ sơ:", e);
+    }
+
+    window.dispatchEvent(new CustomEvent('octo-profile-updated', { detail: profile }));
+    return examItem;
+  },
+
+  /**
+   * Lấy trạng thái của một examId trong lớp hiện tại hoặc lớp chỉ định
+   */
+  getExamStatus(examId, classId = null) {
+    const student = this.getStudent();
+    if (!student || !student.studentId || !examId) return null;
+    const profile = this.getFullProfile(student.studentId);
+    if (!profile) return null;
+
+    const targetClassId = classId || this.getActiveClassId() || 'class-math';
+    const classList = profile[targetClassId];
+    if (Array.isArray(classList)) {
+      return classList.find(item => item.examId === examId) || null;
+    }
+    if (profile.examList && profile.examList[examId]) {
+      return profile.examList[examId];
+    }
+    return null;
+  },
+
+  /**
+   * Nạp và cập nhật kết quả thi vào Student Profile theo lớp
+   */
+  async recordExamResult(resultData, classId = null) {
     const student = this.getStudent();
     if (!student || !student.studentId) {
       console.warn("Chưa đăng nhập, không thể nạp kết quả vào profile!");
@@ -281,14 +519,67 @@ window.PortalCore = {
       profile.identity.lastActiveAt = nowIso;
     }
 
-    // 1. Cập nhật lastSession
-    profile.lastSession = {
-      examId: resultData.examId || "timo-to-hop-g1",
-      examTitle: resultData.examTitle || "Luyện tập TIMO",
-      mode: "practice",
-      score: resultData.score,
-      date: nowIso
-    };
+    const targetClassId = classId || resultData.classId || this.getActiveClassId() || 'class-math';
+    if (!profile[targetClassId] || !Array.isArray(profile[targetClassId])) {
+      profile[targetClassId] = [];
+    }
+
+    const tryHardId = `${sId}-${targetClassId}-quick-tryhard`;
+    let thItem = profile[targetClassId].find(item => item.examId === tryHardId || item.examId.includes('quick-tryhard'));
+    if (!thItem) {
+      profile[targetClassId].unshift({
+        examId: tryHardId,
+        status: 'processing',
+        explored: false,
+        practiced: false,
+        score: null,
+        medal: null,
+        attempts: 0,
+        totalQuestions: 0,
+        correctCount: 0,
+        timeSpentSeconds: 0,
+        date: nowIso
+      });
+    }
+
+    const eId = resultData.examId || "unknown_exam";
+    let examItem = profile[targetClassId].find(item => item.examId === eId);
+
+    let medalKey = null;
+    if (resultData.score >= 90) medalKey = 'gold';
+    else if (resultData.score >= 75) medalKey = 'silver';
+    else if (resultData.score >= 50) medalKey = 'bronze';
+
+    if (!examItem) {
+      examItem = {
+        examId: eId,
+        status: 'completed',
+        explored: true,
+        practiced: true,
+        score: resultData.score,
+        medal: medalKey,
+        attempts: 1,
+        totalQuestions: resultData.totalQuestions || 0,
+        correctCount: resultData.correctCount || 0,
+        timeSpentSeconds: resultData.timeSpentSeconds || 0,
+        date: nowIso
+      };
+      profile[targetClassId].push(examItem);
+    } else {
+      const bestScore = (examItem.score !== null && examItem.score !== undefined)
+        ? Math.max(examItem.score, resultData.score)
+        : resultData.score;
+      examItem.status = 'completed';
+      examItem.explored = true;
+      examItem.practiced = true;
+      examItem.score = bestScore;
+      if (medalKey) examItem.medal = medalKey;
+      examItem.attempts = (examItem.attempts || 0) + 1;
+      examItem.totalQuestions = resultData.totalQuestions || examItem.totalQuestions || 0;
+      if (resultData.correctCount !== undefined) examItem.correctCount = resultData.correctCount;
+      examItem.timeSpentSeconds = (examItem.timeSpentSeconds || 0) + (resultData.timeSpentSeconds || 0);
+      examItem.date = nowIso;
+    }
 
     // 2. Cập nhật summaryStats
     if (!profile.summaryStats) {
@@ -298,8 +589,10 @@ window.PortalCore = {
         correctAnswers: 0,
         overallAccuracy: 0,
         totalTimeSpentMinutes: 0,
-        streakDays: 1,
-        medals: { gold: 0, silver: 0, bronze: 0 }
+        medal_gold: 0,
+        medal_silver: 0,
+        medal_bronze: 0,
+        date: nowIso
       };
     }
     const stats = profile.summaryStats;
@@ -310,67 +603,30 @@ window.PortalCore = {
       ? Math.round((stats.correctAnswers / stats.totalQuestionsDone) * 1000) / 10 
       : 0;
     stats.totalTimeSpentMinutes = (stats.totalTimeSpentMinutes || 0) + Math.max(1, Math.round((resultData.timeSpentSeconds || 0) / 60));
+    stats.date = nowIso;
 
-    if (!stats.medals) stats.medals = { gold: 0, silver: 0, bronze: 0 };
-    let medalKey = null;
-    if (resultData.score >= 90) { stats.medals.gold = (stats.medals.gold || 0) + 1; medalKey = 'gold'; }
-    else if (resultData.score >= 75) { stats.medals.silver = (stats.medals.silver || 0) + 1; medalKey = 'silver'; }
-    else if (resultData.score >= 50) { stats.medals.bronze = (stats.medals.bronze || 0) + 1; medalKey = 'bronze'; }
+    if (medalKey === 'gold') stats.medal_gold = (stats.medal_gold || 0) + 1;
+    else if (medalKey === 'silver') stats.medal_silver = (stats.medal_silver || 0) + 1;
+    else if (medalKey === 'bronze') stats.medal_bronze = (stats.medal_bronze || 0) + 1;
 
-    // 3. Cập nhật progress theo examId
-    if (!profile.progress) profile.progress = {};
-    const eId = resultData.examId || "unknown_exam";
-    const prevProg = profile.progress[eId] || { explored: true, practiced: false, bestScore: 0, medal: null, attempts: 0 };
-    profile.progress[eId] = {
-      explored: true,
-      practiced: true,
-      bestScore: Math.max(prevProg.bestScore || 0, resultData.score),
-      medal: medalKey || prevProg.medal,
-      attempts: (prevProg.attempts || 0) + 1,
-      lastAttemptAt: nowIso
-    };
-
-    // 4. Cập nhật examHistory (Lịch sử làm bài)
-    if (!Array.isArray(profile.examHistory)) profile.examHistory = [];
-    profile.examHistory.unshift({
-      attemptId: `ATT_${Date.now()}`,
-      examId: eId,
-      examTitle: resultData.examTitle || eId,
-      mode: "practice",
-      date: nowIso,
-      score: resultData.score,
-      correctCount: resultData.correctCount,
-      totalQuestions: resultData.totalQuestions,
-      timeSpentSeconds: resultData.timeSpentSeconds,
-      earnedMedal: resultData.earnedMedal
-    });
-
-    // 5. Cập nhật mistakeBank (Ngân hàng câu hỏi sai)
-    if (!Array.isArray(profile.mistakeBank)) profile.mistakeBank = [];
-    if (Array.isArray(resultData.wrongQuestions)) {
-      resultData.wrongQuestions.forEach(wq => {
-        const existing = profile.mistakeBank.find(m => m.questionId === wq.id);
-        if (existing) {
-          existing.missedCount = (existing.missedCount || 1) + 1;
-          existing.lastWrongAnswer = wq.userAnswer;
-          existing.addedAt = nowIso;
-          existing.isResolved = false;
-        } else {
-          profile.mistakeBank.unshift({
-            questionId: wq.id,
-            examId: eId,
-            topic: wq.topic || "Toán Tư Duy",
-            missedCount: 1,
-            lastWrongAnswer: wq.userAnswer,
-            correctAnswer: wq.correctAnswer,
-            addedAt: nowIso,
-            isResolved: false
-          });
-        }
-      });
+    // 3. Xử lý câu sai Try-Hard
+    const isTryHardExam = eId.includes('quick-tryhard');
+    if (!isTryHardExam) {
+      // Nếu bài bình thường có câu sai ➔ Nạp vào Try-Hard của lớp này
+      if (resultData.wrongQuestions && resultData.wrongQuestions.length > 0) {
+        await this.addWrongQuestionsToTryHard(sId, targetClassId, resultData.wrongQuestions, {
+          examId: eId,
+          examTitle: resultData.examTitle
+        });
+      }
+    } else {
+      // Nếu đang làm bài Try-Hard ➔ Loại bỏ những câu đã làm đúng ra khỏi danh sách
+      if (resultData.correctQuestionIds && resultData.correctQuestionIds.length > 0) {
+        await this.removeResolvedTryHardQuestions(sId, targetClassId, resultData.correctQuestionIds);
+      }
     }
 
-    // Lưu lại vào localStorage
+    // 4. Lưu lại vào localStorage
     try {
       localStorage.setItem(`octo_profile_${sId}`, JSON.stringify(profile));
     } catch (e) {
@@ -380,6 +636,141 @@ window.PortalCore = {
     // Phát sự kiện toàn cục
     window.dispatchEvent(new CustomEvent('octo-profile-updated', { detail: profile }));
     return profile;
+  },
+
+  /**
+   * Lấy dữ liệu Try-Hard của học sinh cho một lớp
+   */
+  async getStudentTryHardData(studentId, classId) {
+    const sId = (studentId || '').toString().trim().replace(/\D/g, '');
+    const cId = classId || this.getActiveClassId() || 'class-math';
+    const storageKey = `octo_tryhard_${sId}_${cId}`;
+
+    // 1. Thử đọc từ localStorage
+    try {
+      const cached = localStorage.getItem(storageKey);
+      if (cached) return JSON.parse(cached);
+    } catch (e) {}
+
+    // 2. Thử fetch file JSON cá nhân hóa
+    const personalPaths = [
+      `assets/data/${sId}-${cId}-quick-tryhard.json`,
+      `../assets/data/${sId}-${cId}-quick-tryhard.json`
+    ];
+    for (const p of personalPaths) {
+      try {
+        const res = await fetch(p);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.examConfig) {
+            localStorage.setItem(storageKey, JSON.stringify(data));
+            return data;
+          }
+        }
+      } catch (e) {}
+    }
+
+    // 3. Fallback mặc định rỗng
+    const fallbackObj = {
+      examConfig: {
+        id: `${sId}-${cId}-quick-tryhard`,
+        title: {
+          vi: "Toán - Ôn Tập Câu Đã Sai",
+          en: "Missed Questions Review",
+          zh: "错题攻坚"
+        },
+        grade: 1,
+        totalQuestions: 0,
+        timeLimitMinutes: 15,
+        passingScore: 80
+      },
+      questions: []
+    };
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(fallbackObj));
+    } catch (e) {}
+    return fallbackObj;
+  },
+
+  /**
+   * Lưu dữ liệu Try-Hard của học sinh cho một lớp
+   */
+  saveStudentTryHardData(studentId, classId, tryHardData) {
+    const sId = (studentId || '').toString().trim().replace(/\D/g, '');
+    const cId = classId || this.getActiveClassId() || 'class-math';
+    const storageKey = `octo_tryhard_${sId}_${cId}`;
+
+    if (tryHardData && tryHardData.examConfig) {
+      tryHardData.examConfig.totalQuestions = (tryHardData.questions || []).length;
+    }
+
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(tryHardData));
+    } catch (e) {
+      console.error("Lỗi lưu dữ liệu TryHard:", e);
+    }
+
+    // Cập nhật số câu trong profile[classId]
+    const profile = this.getFullProfile(sId);
+    if (profile && Array.isArray(profile[cId])) {
+      const tryHardId = `${sId}-${cId}-quick-tryhard`;
+      const thItem = profile[cId].find(item => item.examId === tryHardId || item.examId.includes('quick-tryhard'));
+      if (thItem) {
+        thItem.totalQuestions = (tryHardData.questions || []).length;
+        localStorage.setItem(`octo_profile_${sId}`, JSON.stringify(profile));
+        window.dispatchEvent(new CustomEvent('octo-profile-updated', { detail: profile }));
+      }
+    }
+  },
+
+  /**
+   * Thêm câu hỏi làm sai vào file/dữ liệu Try-Hard của học sinh trong lớp
+   */
+  async addWrongQuestionsToTryHard(studentId, classId, wrongQuestions, examMeta = {}) {
+    if (!studentId || !wrongQuestions || wrongQuestions.length === 0) return;
+    const sId = studentId.toString().trim().replace(/\D/g, '');
+    const cId = classId || this.getActiveClassId() || 'class-math';
+
+    const tryHardData = await this.getStudentTryHardData(sId, cId);
+    if (!tryHardData.questions) tryHardData.questions = [];
+
+    wrongQuestions.forEach(wq => {
+      const qObj = wq.question || wq;
+      const qKey = qObj.uniqueKey || `${examMeta.examId || 'ex'}_${qObj.id}`;
+      const existingIdx = tryHardData.questions.findIndex(q => (q.uniqueKey && q.uniqueKey === qKey) || q.id === qObj.id);
+
+      if (existingIdx === -1) {
+        const cloned = JSON.parse(JSON.stringify(qObj));
+        cloned.uniqueKey = qKey;
+        cloned.sourceExamId = examMeta.examId || '';
+        cloned.addedAt = new Date().toISOString();
+        tryHardData.questions.push(cloned);
+      }
+    });
+
+    this.saveStudentTryHardData(sId, cId, tryHardData);
+  },
+
+  /**
+   * Xóa các câu đã làm đúng khỏi dữ liệu Try-Hard của học sinh
+   */
+  async removeResolvedTryHardQuestions(studentId, classId, correctQuestionIds) {
+    if (!studentId || !correctQuestionIds || correctQuestionIds.length === 0) return;
+    const sId = studentId.toString().trim().replace(/\D/g, '');
+    const cId = classId || this.getActiveClassId() || 'class-math';
+
+    const tryHardData = await this.getStudentTryHardData(sId, cId);
+    if (!tryHardData.questions || tryHardData.questions.length === 0) return;
+
+    const initialLen = tryHardData.questions.length;
+    tryHardData.questions = tryHardData.questions.filter(q => {
+      const match = correctQuestionIds.includes(q.id) || (q.uniqueKey && correctQuestionIds.includes(q.uniqueKey));
+      return !match;
+    });
+
+    if (tryHardData.questions.length !== initialLen) {
+      this.saveStudentTryHardData(sId, cId, tryHardData);
+    }
   },
 
   /**

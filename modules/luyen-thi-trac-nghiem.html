@@ -193,7 +193,9 @@
       
       <!-- Breadcrumb Navigation -->
       <div class="flex items-center gap-2 text-sm sm:text-base font-extrabold text-slate-700">
-        <a href="../index.html" class="hover:text-purple-700">← Toán TIMO</a>
+        <a href="../index.html" class="hover:text-purple-700 flex items-center gap-1">
+          <span>←</span> <span x-text="getClassName()"></span>
+        </a>
         <span class="text-slate-400">›</span>
         <span>Luyện Tập</span>
         <span class="text-slate-400">›</span>
@@ -595,10 +597,10 @@
                     x-show="studentProfile?.summaryStats"
                     x-text="`✓ Đã tích lũy ${studentProfile?.summaryStats?.totalExamsTaken || 1} bài (${studentProfile?.summaryStats?.overallAccuracy || calculatedScore}%)`"></span>
             </div>
-            <div x-show="globalState.student?.parentName" class="text-[11px] text-slate-600 font-bold mt-0.5">
+            <div x-show="globalState.student?.parentName || globalState.student?.parent_name" class="text-[11px] text-slate-600 font-bold mt-0.5">
               <span x-text="t('auth.parentInfo', 'Phụ huynh:')"></span>
-              <span class="text-slate-900 font-black" x-text="globalState.student?.parentName"></span>
-              <span class="text-slate-500" x-show="globalState.student?.parentPhone" x-text="`(${globalState.student?.parentPhone})`"></span>
+              <span class="text-slate-900 font-black" x-text="globalState.student?.parentName || globalState.student?.parent_name"></span>
+              <span class="text-slate-500" x-show="globalState.student?.parentPhone || globalState.student?.parent_phone" x-text="`(${globalState.student?.parentPhone || globalState.student?.parent_phone})`"></span>
             </div>
           </div>
         </div>
@@ -781,6 +783,14 @@
         timeSpentSeconds: 0,
         earnedMedal: '🥇 Huy Chương Vàng',
         studentProfile: null,
+        activeClassId: 'class-math',
+
+        getClassName() {
+          const cls = (window.PortalCore && PortalCore.availableClasses) 
+            ? PortalCore.availableClasses.find(c => c.id === this.activeClassId) 
+            : null;
+          return cls ? this.getLocalized(cls.name) : 'Toán Học';
+        },
 
         async initApp() {
           this.isLoading = true;
@@ -798,21 +808,46 @@
           try {
             const urlParams = new URLSearchParams(window.location.search);
             const dataParam = urlParams.get('data') || urlParams.get('dataset');
-            const examParam = urlParams.get('exam');
-            let dataPath = '../assets/data/timo-to-hop-g1.json';
-            if (dataParam) {
-              dataPath = (dataParam.startsWith('http') || dataParam.startsWith('/')) ? dataParam : (dataParam.startsWith('../') ? dataParam : `../${dataParam}`);
-            } else if (examParam) {
-              dataPath = `../assets/data/${examParam}.json`;
+            const examParam = urlParams.get('exam') || 'timo-to-hop-g1';
+            const modeParam = urlParams.get('mode') || 'practice';
+            const classParam = urlParams.get('class') || (window.PortalCore ? PortalCore.getActiveClassId() : 'class-math');
+            this.activeClassId = classParam;
+
+            if (window.PortalCore && PortalCore.isLoggedIn()) {
+              PortalCore.recordExamStart(examParam, modeParam, this.activeClassId);
             }
 
-            const res = await fetch(dataPath);
-            if (!res.ok) {
-              throw new Error(`Không thể nạp tệp "${dataPath}" (HTTP ${res.status}: ${res.statusText || 'Lỗi mạng / Không tìm thấy tệp'})`);
+            let data = null;
+
+            // Xử lý nạp đề bài Try-Hard cá nhân hóa
+            if (examParam.includes('quick-tryhard') || examParam === 'quick-tryhard') {
+              const student = PortalCore.getStudent();
+              const sId = student?.studentId;
+              if (sId && window.PortalCore) {
+                data = await PortalCore.getStudentTryHardData(sId, this.activeClassId);
+              }
             }
-            const data = await res.json();
+
+            if (!data) {
+              let dataPath = '../assets/data/timo-to-hop-g1.json';
+              if (dataParam) {
+                dataPath = (dataParam.startsWith('http') || dataParam.startsWith('/')) ? dataParam : (dataParam.startsWith('../') ? dataParam : `../${dataParam}`);
+              } else if (examParam) {
+                dataPath = `../assets/data/${examParam}.json`;
+              }
+
+              const res = await fetch(dataPath);
+              if (!res.ok) {
+                throw new Error(`Không thể nạp tệp "${dataPath}" (HTTP ${res.status}: ${res.statusText || 'Lỗi mạng / Không tìm thấy tệp'})`);
+              }
+              data = await res.json();
+            }
+
             if (!data || !data.questions || !Array.isArray(data.questions) || data.questions.length === 0) {
-              throw new Error(`Tệp dữ liệu "${dataPath}" không có danh sách câu hỏi hợp lệ!`);
+              if (examParam.includes('quick-tryhard') || examParam === 'quick-tryhard') {
+                throw new Error('🎉 Tuyệt vời! Bé hiện không có câu hỏi nào bị sai cần ôn tập trong lớp này. Hãy quay lại trang chủ để luyện tập các chủ đề mới nhé!');
+              }
+              throw new Error(`Tệp dữ liệu không có danh sách câu hỏi hợp lệ!`);
             }
 
             if (data.examConfig) {
@@ -1024,7 +1059,7 @@
           this.showWarningModal = true;
         },
 
-        submitExamNow(bypassLoginCheck = false) {
+        async submitExamNow(bypassLoginCheck = false) {
           if (this.loadError || !this.questions.length) return;
           this.showWarningModal = false;
 
@@ -1034,24 +1069,29 @@
             return;
           }
 
-          this.processExamSubmission();
+          await this.processExamSubmission();
         },
 
-        processExamSubmission() {
+        async processExamSubmission() {
           clearInterval(this.timerInterval);
 
           let correct = 0;
           const wrongQuestions = [];
+          const correctQuestionIds = [];
           this.filteredQuestions.forEach(q => {
             const userAns = this.userAnswers[q.id];
             if (userAns === q.correctAnswer) {
               correct++;
+              correctQuestionIds.push(q.id);
+              if (q.uniqueKey) correctQuestionIds.push(q.uniqueKey);
             } else {
               wrongQuestions.push({
                 id: q.id,
+                uniqueKey: q.uniqueKey,
                 topic: this.getLocalized(q.topic) || "Toán Tư Duy",
                 userAnswer: userAns || "Chưa làm",
-                correctAnswer: q.correctAnswer
+                correctAnswer: q.correctAnswer,
+                question: q
               });
             }
           });
@@ -1073,7 +1113,7 @@
           const currentExamTitle = this.getLocalized(this.examConfig.title) || 'Luyện tập TIMO';
 
           if (PortalCore.isLoggedIn()) {
-            this.studentProfile = PortalCore.recordExamResult({
+            this.studentProfile = await PortalCore.recordExamResult({
               examId: currentExamId,
               examTitle: currentExamTitle,
               score: this.calculatedScore,
@@ -1081,8 +1121,10 @@
               totalQuestions: total,
               timeSpentSeconds: this.timeSpentSeconds,
               earnedMedal: this.earnedMedal,
-              wrongQuestions: wrongQuestions
-            });
+              wrongQuestions: wrongQuestions,
+              correctQuestionIds: correctQuestionIds,
+              classId: this.activeClassId
+            }, this.activeClassId);
           }
 
           this.showResultModal = true;

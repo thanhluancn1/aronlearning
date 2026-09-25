@@ -101,6 +101,38 @@
       <!-- User Controls & Global Stats -->
       <div class="flex items-center gap-3">
         
+        <!-- Class Switcher Dropdown -->
+        <div class="relative" x-data="{ openClass: false }">
+          <button @click="openClass = !openClass" 
+                  class="bg-indigo-50 hover:bg-indigo-100 border border-indigo-300 text-indigo-900 px-3.5 py-1.5 rounded-2xl font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-sm active:scale-95 transition-all cursor-pointer"
+                  title="Chuyển lớp học">
+            <span class="text-base" x-text="getActiveClassIcon()"></span>
+            <span class="max-w-[110px] sm:max-w-[150px] truncate font-black" x-text="getActiveClassName()"></span>
+            <span class="text-[10px] ml-0.5">▼</span>
+          </button>
+          
+          <div x-show="openClass" 
+               @click.outside="openClass = false" 
+               x-transition
+               class="absolute right-0 mt-2 w-60 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 py-1.5 overflow-hidden">
+            <div class="px-3.5 py-1.5 text-[10px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100">
+              Lớp học của bé 🏫
+            </div>
+            <template x-for="cls in getAvailableClassesForStudent()" :key="cls.id">
+              <button @click="switchClass(cls.id); openClass = false;" 
+                      class="w-full text-left px-3.5 py-2 hover:bg-indigo-50 flex items-center gap-2.5 font-extrabold text-xs sm:text-sm transition-colors cursor-pointer"
+                      :class="activeClassId === cls.id ? 'text-indigo-700 bg-indigo-50/80 font-black' : 'text-slate-700'">
+                <span class="text-lg" x-text="cls.icon"></span>
+                <div class="flex-1 min-w-0">
+                  <div class="truncate leading-tight font-black" x-text="getLocalized(cls.name)"></div>
+                  <div class="text-[10px] font-bold text-slate-400" x-text="cls.id"></div>
+                </div>
+                <span x-show="activeClassId === cls.id" class="text-indigo-600 font-black text-base">✓</span>
+              </button>
+            </template>
+          </div>
+        </div>
+
         <!-- Language Switcher Dropdown -->
         <div class="relative" x-data="{ open: false }">
           <button @click="open = !open" 
@@ -181,20 +213,34 @@
 
           <!-- Horizontal Scroll Track -->
           <div x-ref="pathScroll" class="flex items-stretch gap-5 overflow-x-auto py-3 px-2 scroll-smooth no-scrollbar">
-            <template x-for="item in curriculum.foundational" :key="item.id">
+            <template x-for="(item, index) in sortedFoundational" :key="item.id">
               <div class="min-w-[250px] sm:min-w-[270px] rounded-3xl p-5 flex flex-col justify-between items-center text-center relative group transition-all"
-                   :class="item.isActive ? 'bg-gradient-to-b from-purple-50 via-white to-purple-50/40 border-4 border-purple-500 shadow-lg hover:scale-[1.02]' : 'bg-white border-2 border-slate-200 shadow-sm hover:border-purple-300 hover:scale-[1.01]'">
+                   :class="(getExamStatus(item.id)?.status === 'completed') ? 'bg-gradient-to-b from-emerald-50 via-white to-emerald-50/30 border-4 border-emerald-400 shadow-md hover:scale-[1.02]' : ((index === 0) ? 'bg-gradient-to-b from-purple-50 via-white to-purple-50/40 border-4 border-purple-500 shadow-lg hover:scale-[1.02]' : 'bg-white border-2 border-slate-200 shadow-sm hover:border-purple-300 hover:scale-[1.01]')">
+                
+                <!-- Status Badge (Top Right) -->
+                <template x-if="getExamStatus(item.id)?.status === 'completed'">
+                  <span class="absolute top-3.5 right-3.5 bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-0.5 rounded-full text-[11px] font-black shadow-sm flex items-center gap-1">
+                    <span x-text="getExamStatus(item.id)?.medal === 'gold' ? '🥇' : (getExamStatus(item.id)?.medal === 'silver' ? '🥈' : '🥉')"></span>
+                    <span x-text="`${getExamStatus(item.id)?.score}đ`"></span>
+                  </span>
+                </template>
+                <template x-if="getExamStatus(item.id)?.status === 'processing'">
+                  <span class="absolute top-3.5 right-3.5 bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full text-[10px] font-black shadow-sm flex items-center gap-1">
+                    <span>⏳</span> <span>Đang làm</span>
+                  </span>
+                </template>
+
                 <div class="w-9 h-9 rounded-full font-black text-sm flex items-center justify-center shadow-md mb-2"
-                     :class="item.isActive ? 'bg-purple-600 text-white' : 'bg-slate-200 text-slate-700'"
-                     x-text="item.step"></div>
+                     :class="(getExamStatus(item.id)?.status === 'completed') ? 'bg-emerald-600 text-white' : ((index === 0) ? 'bg-purple-600 text-white' : 'bg-slate-200 text-slate-700')"
+                     x-text="index + 1"></div>
                 <div class="text-5xl my-2 group-hover:scale-110 transition-transform" x-text="item.icon"></div>
                 <h4 class="font-black text-slate-950 text-base sm:text-lg my-1 leading-snug" x-text="getLocalized(item.title)"></h4>
                 <span class="text-xs font-black px-3.5 py-1 rounded-full my-2"
-                      :class="item.isActive ? 'text-purple-800 bg-purple-100 border border-purple-300' : 'text-slate-600 bg-slate-100 border border-slate-200'"
+                      :class="(getExamStatus(item.id)?.status === 'completed') ? 'text-emerald-800 bg-emerald-100 border border-emerald-300' : ((index === 0) ? 'text-purple-800 bg-purple-100 border border-purple-300' : 'text-slate-600 bg-slate-100 border border-slate-200')"
                       x-text="t('curriculum.questionsCount').replace('{count}', item.questionCount)"></span>
                 <div class="grid grid-cols-2 gap-2 w-full mt-4">
-                  <a :href="getExamUrl(item)" @click="PortalCore.playPop()" class="bg-white hover:bg-purple-50 text-purple-800 border-2 border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
-                  <a :href="getExamUrl(item)" @click="PortalCore.playPop()" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
+                  <a :href="getExamUrl(item, 'explore')" @click="startExam(item, 'explore')" class="bg-white hover:bg-purple-50 text-purple-800 border-2 border-purple-300 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all" x-text="t('curriculum.exploreBtn')"></a>
+                  <a :href="getExamUrl(item, 'practice')" @click="startExam(item, 'practice')" class="bg-purple-600 hover:bg-purple-700 text-white font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all" x-text="t('curriculum.practiceBtn')"></a>
                 </div>
               </div>
             </template>
@@ -228,18 +274,32 @@
         <!-- Lesson Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <template x-for="item in curriculum.enrichment" :key="item.id">
-            <div class="border-2 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+            <div class="border-2 rounded-3xl p-6 flex flex-col justify-between items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
                  :class="getThemeClasses(item.colorTheme).card">
+              
+              <!-- Status Badge (Top Right) -->
+              <template x-if="getExamStatus(item.id)?.status === 'completed'">
+                <span class="absolute top-3.5 right-3.5 bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-0.5 rounded-full text-[11px] font-black shadow-sm flex items-center gap-1">
+                  <span x-text="getExamStatus(item.id)?.medal === 'gold' ? '🥇' : (getExamStatus(item.id)?.medal === 'silver' ? '🥈' : '🥉')"></span>
+                  <span x-text="`${getExamStatus(item.id)?.score}đ`"></span>
+                </span>
+              </template>
+              <template x-if="getExamStatus(item.id)?.status === 'processing'">
+                <span class="absolute top-3.5 right-3.5 bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full text-[10px] font-black shadow-sm flex items-center gap-1">
+                  <span>⏳</span> <span>Đang làm</span>
+                </span>
+              </template>
+
               <h4 class="font-black text-slate-950 text-xl mb-2" x-text="getLocalized(item.title)"></h4>
               <div class="text-6xl my-3 group-hover:scale-110 transition-transform" x-text="item.icon"></div>
               <span class="text-xs font-black border px-3.5 py-1 rounded-full mb-5"
                     :class="getThemeClasses(item.colorTheme).badge"
                     x-text="t('curriculum.questionsCount').replace('{count}', item.questionCount)"></span>
               <div class="grid grid-cols-2 gap-2.5 w-full">
-                <a :href="getExamUrl(item)" @click="PortalCore.playPop()" class="border-2 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all"
+                <a :href="getExamUrl(item, 'explore')" @click="startExam(item, 'explore')" class="border-2 font-black text-xs py-2.5 rounded-2xl text-center shadow-sm active:scale-95 transition-all"
                    :class="getThemeClasses(item.colorTheme).exploreBtn"
                    x-text="t('curriculum.exploreBtn')"></a>
-                <a :href="getExamUrl(item)" @click="PortalCore.playPop()" class="font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all text-white"
+                <a :href="getExamUrl(item, 'practice')" @click="startExam(item, 'practice')" class="font-black text-xs py-2.5 rounded-2xl text-center shadow-md active:scale-95 transition-all text-white"
                    :class="getThemeClasses(item.colorTheme).practiceBtn"
                    x-text="t('curriculum.practiceBtn')"></a>
               </div>
@@ -260,15 +320,14 @@
           </div>
           <div>
             <h3 class="text-xl sm:text-2xl font-black text-slate-950" x-text="t('curriculum.quickPracticeTitle')"></h3>
-            <p class="text-xs font-extrabold text-slate-600 mt-0.5" x-text="t('curriculum.quickPracticeSub')"></p>
           </div>
         </div>
 
         <!-- 4 Quick Mini Grid Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <template x-for="item in curriculum.quickPractice" :key="item.id">
-            <a :href="getExamUrl(item)" 
-               @click="PortalCore.playPop()" 
+            <a :href="getExamUrl(item, 'practice')" 
+               @click="startExam(item, 'practice')" 
                class="border-2 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
                :class="getQuickThemeClasses(item.colorTheme).card">
               <div class="flex items-center gap-3">
@@ -279,11 +338,24 @@
                   <b class="font-black text-slate-950 text-base transition-colors"
                      :class="getQuickThemeClasses(item.colorTheme).title"
                      x-text="getLocalized(item.title)"></b>
-                  <span class="text-xs font-bold text-slate-600" x-text="getLocalized(item.subtitle)"></span>
+                  <span class="text-xs font-bold text-slate-600" x-text="getQuickSubtitle(item)"></span>
                 </div>
               </div>
-              <span class="text-2xl font-black group-hover:translate-x-1 transition-transform"
-                    :class="getQuickThemeClasses(item.colorTheme).arrow">›</span>
+              <div class="flex items-center gap-1.5 flex-shrink-0">
+                <template x-if="getExamStatus(item.id)?.status === 'completed'">
+                  <span class="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-[10px] font-black shadow-sm flex items-center gap-0.5">
+                    <span x-text="getExamStatus(item.id)?.medal === 'gold' ? '🥇' : (getExamStatus(item.id)?.medal === 'silver' ? '🥈' : '🥉')"></span>
+                    <span x-text="`${getExamStatus(item.id)?.score}đ`"></span>
+                  </span>
+                </template>
+                <template x-if="getExamStatus(item.id)?.status === 'processing'">
+                  <span class="bg-amber-100 text-amber-900 border border-amber-300 px-1.5 py-0.5 rounded-full text-[10px] font-black">
+                    ⏳
+                  </span>
+                </template>
+                <span class="text-2xl font-black group-hover:translate-x-1 transition-transform"
+                      :class="getQuickThemeClasses(item.colorTheme).arrow">›</span>
+              </div>
             </a>
           </template>
         </div>
@@ -338,11 +410,103 @@
           return OctoI18n.getLangText(obj, this.currentLang);
         },
 
-        getExamUrl(item) {
+        get sortedFoundational() {
+          if (!this.curriculum || !this.curriculum.foundational) return [];
+          return [...this.curriculum.foundational].sort((a, b) => ((a.difficulty || 1) - (b.difficulty || 1)));
+        },
+
+        getQuickSubtitle(item) {
+          if (item && item.subtitle) return this.getLocalized(item.subtitle);
+          const subMap = {
+            'quick-daily': this.t('curriculum.quickDailySub'),
+            'quick-tryhard': this.t('curriculum.quickTryhardSub'),
+            'quick-10': this.t('curriculum.quick10Sub'),
+            'quick-20': this.t('curriculum.quick20Sub')
+          };
+          return subMap[item.id] || (item.questionCount ? this.t('curriculum.questionsCount').replace('{count}', item.questionCount) : '');
+        },
+
+        studentProfile: null,
+        activeClassId: (window.PortalCore && PortalCore.getActiveClassId) ? PortalCore.getActiveClassId() : 'class-math',
+
+        switchClass(classId) {
+          if (!classId || classId === this.activeClassId) return;
+          this.activeClassId = classId;
+          if (window.PortalCore && PortalCore.setActiveClassId) {
+            PortalCore.setActiveClassId(classId);
+          }
+          this.loadCurriculum();
+          if (window.PortalCore) PortalCore.playPop();
+        },
+
+        getActiveClassObj() {
+          const list = (window.PortalCore && PortalCore.availableClasses) ? PortalCore.availableClasses : [];
+          return list.find(c => c.id === this.activeClassId) || list[0] || { id: 'class-math', name: { vi: 'Toán TIMO' }, icon: '📐' };
+        },
+
+        getActiveClassIcon() {
+          return this.getActiveClassObj().icon;
+        },
+
+        getActiveClassName() {
+          const c = this.getActiveClassObj();
+          return this.getLocalized(c.name);
+        },
+
+        getAvailableClassesForStudent() {
+          const all = (window.PortalCore && PortalCore.availableClasses) ? PortalCore.availableClasses : [];
+          if (this.studentProfile && this.studentProfile.identity && Array.isArray(this.studentProfile.identity.classes) && this.studentProfile.identity.classes.length > 0) {
+            const studentClasses = this.studentProfile.identity.classes;
+            return all.filter(c => studentClasses.includes(c.id));
+          }
+          return all;
+        },
+
+        updateProfile() {
+          const student = PortalCore.getStudent();
+          this.studentProfile = (student && student.studentId) ? PortalCore.getFullProfile(student.studentId) : null;
+          if (window.PortalCore && PortalCore.getActiveClassId) {
+            const validActive = PortalCore.getActiveClassId();
+            if (this.activeClassId !== validActive) {
+              this.activeClassId = validActive;
+              this.loadCurriculum();
+            }
+          }
+        },
+
+        getExamStatus(examId) {
+          if (!this.studentProfile) return null;
+          const currentList = this.studentProfile[this.activeClassId];
+          if (Array.isArray(currentList)) {
+            if (examId === 'quick-tryhard') {
+              return currentList.find(item => item.examId && item.examId.includes('quick-tryhard')) || null;
+            }
+            return currentList.find(item => item.examId === examId) || null;
+          }
+          if (this.studentProfile.examList) {
+            return this.studentProfile.examList[examId] || null;
+          }
+          return null;
+        },
+
+        getExamUrl(item, mode = 'practice') {
           if (!item) return 'modules/luyen-thi-trac-nghiem.html';
           const examId = item.id || 'timo-to-hop-g1';
-          const dataFile = item.dataFile || 'assets/data/timo-to-hop-g1.json';
-          return `modules/luyen-thi-trac-nghiem.html?exam=${encodeURIComponent(examId)}&data=${encodeURIComponent(dataFile)}`;
+          let dataFile = item.dataFile || 'assets/data/timo-to-hop-g1.json';
+          if (examId === 'quick-tryhard') {
+            const student = PortalCore.getStudent();
+            if (student && student.studentId) {
+              dataFile = `assets/data/${student.studentId}-${this.activeClassId}-quick-tryhard.json`;
+            }
+          }
+          return `modules/luyen-thi-trac-nghiem.html?exam=${encodeURIComponent(examId)}&data=${encodeURIComponent(dataFile)}&mode=${encodeURIComponent(mode)}&class=${encodeURIComponent(this.activeClassId)}`;
+        },
+
+        startExam(item, mode = 'practice') {
+          if (item && item.id && window.PortalCore && PortalCore.isLoggedIn()) {
+            PortalCore.recordExamStart(item.id, mode, this.activeClassId);
+          }
+          PortalCore.playPop();
         },
 
         getThemeClasses(colorTheme) {
@@ -421,23 +585,37 @@
           this.isLoadingCurriculum = true;
           this.loadError = false;
           this.loadErrorMessage = '';
-          try {
-            const res = await fetch('assets/data/exams-index.json');
-            if (!res.ok) {
-              throw new Error(`Không thể nạp tệp "assets/data/exams-index.json" (HTTP ${res.status}: ${res.statusText || 'Lỗi mạng / Không tìm thấy tệp'}).`);
+          const targetClass = this.activeClassId || 'class-math';
+          const paths = [
+            `assets/data/${targetClass}.json`,
+            `assets/data/class-default.json`
+          ];
+
+          let loaded = false;
+          let lastErr = null;
+
+          for (const path of paths) {
+            try {
+              const res = await fetch(path);
+              if (res.ok) {
+                const data = await res.json();
+                if (data && data.curriculum) {
+                  this.curriculum = data.curriculum;
+                  loaded = true;
+                  break;
+                }
+              }
+            } catch (e) {
+              lastErr = e;
             }
-            const data = await res.json();
-            if (!data || !data.curriculum) {
-              throw new Error('Tệp "assets/data/exams-index.json" không đúng định dạng dữ liệu danh mục đề thi!');
-            }
-            this.curriculum = data.curriculum;
-          } catch (e) {
-            console.error('Lỗi nạp danh mục exams-index.json:', e);
-            this.loadError = true;
-            this.loadErrorMessage = e.message || 'Không thể kết nối hoặc nạp tệp danh mục đề thi.';
-          } finally {
-            this.isLoadingCurriculum = false;
           }
+
+          if (!loaded) {
+            console.error('Lỗi nạp danh mục đề thi:', lastErr);
+            this.loadError = true;
+            this.loadErrorMessage = `Không thể nạp tệp bài tập lớp "assets/data/${targetClass}.json". Vui lòng kiểm tra lại!`;
+          }
+          this.isLoadingCurriculum = false;
         },
 
         setLang(code) {
@@ -462,7 +640,16 @@
           });
           window.addEventListener('octo-student-changed', (e) => {
             this.state = PortalCore.getState();
+            this.updateProfile();
           });
+          window.addEventListener('octo-class-changed', (e) => {
+            this.activeClassId = (e.detail && e.detail.classId) || PortalCore.getActiveClassId();
+            this.loadCurriculum();
+          });
+          window.addEventListener('octo-profile-updated', (e) => {
+            this.studentProfile = e.detail;
+          });
+          this.updateProfile();
           this.loadCurriculum();
         },
 
@@ -474,9 +661,11 @@
               showLogout: true,
               onSuccess: (student) => {
                 this.state = PortalCore.getState();
+                this.updateProfile();
               },
               onLogout: () => {
                 this.state = PortalCore.getState();
+                this.updateProfile();
               }
             });
           }

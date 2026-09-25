@@ -60,9 +60,11 @@
       const initialData = {
         fullName: student ? (student.fullName || '') : '',
         age: student ? (student.age || 6) : 6,
-        parentName: student ? (student.parentName || '') : '',
-        parentPhone: student ? (student.parentPhone || student.studentId || '') : '',
-        avatar: student ? (student.avatar || '👦') : '👦'
+        parentName: student ? (student.parentName || student.parent_name || '') : '',
+        parentPhone: student ? (student.parentPhone || student.parent_phone || student.studentId || '') : '',
+        parentEmail: student ? (student.parentEmail || student.parent_email || '') : '',
+        avatar: student ? (student.avatar || '👦') : '👦',
+        classes: student ? (student.classes || ['class-math']) : ['class-math']
       };
 
       this.render(initialData);
@@ -274,6 +276,41 @@
                 <input type="hidden" id="octo-register-avatar-val" value="${data.avatar}" />
               </div>
 
+              <!-- 6. Chọn Lớp học tham gia -->
+              <div>
+                <label class="block text-xs font-black text-slate-800 mb-1.5 flex items-center justify-between">
+                  <span class="flex items-center gap-1.5">
+                    <span>🏫</span> <span>${this.t('auth.classesLabel', 'Chọn lớp học tham gia:')}</span>
+                  </span>
+                  <span class="text-[10px] font-bold text-slate-400">Chọn 1 hoặc nhiều lớp</span>
+                </label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="octo-register-classes-group">
+                  <label class="octo-class-choice flex items-center gap-2.5 p-2 rounded-2xl border-2 ${(data.classes || ['class-math']).includes('class-math') ? 'border-purple-500 bg-purple-50' : 'border-slate-200 bg-white'} cursor-pointer select-none transition-all">
+                    <input type="checkbox" name="octo_class" value="class-math" ${(data.classes || ['class-math']).includes('class-math') ? 'checked' : ''} class="w-4 h-4 text-purple-600 rounded focus:ring-purple-500 accent-purple-600 cursor-pointer" />
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-base">📐</span>
+                      <div>
+                        <div class="text-xs font-black text-slate-900 leading-tight">Toán TIMO</div>
+                        <div class="text-[10px] font-bold text-purple-700">Toán Quốc Tế Lớp 1</div>
+                      </div>
+                    </div>
+                  </label>
+                  <label class="octo-class-choice flex items-center gap-2.5 p-2 rounded-2xl border-2 ${(data.classes || []).includes('class-english') ? 'border-purple-500 bg-purple-50' : 'border-slate-200 bg-white'} hover:border-slate-300 cursor-pointer select-none transition-all">
+                    <input type="checkbox" name="octo_class" value="class-english" ${(data.classes || []).includes('class-english') ? 'checked' : ''} class="w-4 h-4 text-purple-600 rounded focus:ring-purple-500 accent-purple-600 cursor-pointer" />
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-base">🇬🇧</span>
+                      <div>
+                        <div class="text-xs font-black text-slate-900 leading-tight">Toán HKIMO</div>
+                        <div class="text-[10px] font-bold text-slate-500">Toán Tiếng Anh HKIMO</div>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                <p class="text-[10px] font-bold text-slate-400 mt-1">
+                  💡 Mặc định vào <b>Lớp cơ bản</b> nếu không chọn lớp nào.
+                </p>
+              </div>
+
               <!-- Nút Đăng Ký -->
               <div class="pt-2">
                 <button type="button" 
@@ -367,6 +404,20 @@
             b.className = 'octo-avatar-btn w-10 h-10 rounded-2xl text-xl flex items-center justify-center border-2 transition-transform border-slate-200 bg-white hover:border-slate-300';
           });
           btn.className = 'octo-avatar-btn w-10 h-10 rounded-2xl text-xl flex items-center justify-center border-2 transition-transform border-purple-600 bg-purple-100 scale-110 shadow-sm';
+        });
+      });
+
+      // Xử lý đổi style checkbox lớp học
+      modal.querySelectorAll('input[name="octo_class"]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          const parentLabel = cb.closest('label');
+          if (cb.checked) {
+            parentLabel?.classList.add('border-purple-500', 'bg-purple-50');
+            parentLabel?.classList.remove('border-slate-200', 'bg-white');
+          } else {
+            parentLabel?.classList.remove('border-purple-500', 'bg-purple-50');
+            parentLabel?.classList.add('border-slate-200', 'bg-white');
+          }
         });
       });
 
@@ -488,9 +539,11 @@
             studentId: phone,
             fullName: student.fullName,
             age: student.age,
-            parentName: student.parentName,
+            parentName: student.parentName || student.parent_name,
             parentPhone: phone,
-            avatar: student.avatar || '👦'
+            parentEmail: student.parentEmail || student.parent_email || '',
+            avatar: student.avatar || '👦',
+            classes: student.classes || (student.rawProfile && student.rawProfile.identity && student.rawProfile.identity.classes) || ['class-math']
           });
 
           this.close();
@@ -525,6 +578,7 @@
      */
     async processRegister() {
       this.hideError();
+      const modal = document.getElementById(this.modalId);
       const nameInput = document.getElementById('octo-register-name');
       const ageValInput = document.getElementById('octo-register-age-val');
       const parentInput = document.getElementById('octo-register-parent-name');
@@ -537,6 +591,13 @@
       const rawPhone = (phoneInput ? phoneInput.value : '').trim();
       const phone = rawPhone.replace(/\D/g, '');
       const avatar = (avatarValInput ? avatarValInput.value : '👦') || '👦';
+
+      // Thu thập danh sách lớp đã chọn
+      const classCheckboxes = modal ? modal.querySelectorAll('input[name="octo_class"]:checked') : [];
+      let selectedClasses = Array.from(classCheckboxes).map(cb => cb.value);
+      if (selectedClasses.length === 0) {
+        selectedClasses = ['class-default'];
+      }
 
       // Validate 4 trường bắt buộc
       if (!fullName) {
@@ -587,7 +648,8 @@
           age: Number(age),
           parentName,
           parentPhone: phone,
-          avatar
+          avatar,
+          classes: selectedClasses
         });
 
         this.close();

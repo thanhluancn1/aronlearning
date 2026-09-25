@@ -171,6 +171,40 @@
   - **Hiển thị tiến độ tích lũy**: Trên Modal Kết Quả, hiển thị ngay số bài đã tích lũy và tỷ lệ đúng tổng thể của bé.
   - **Xuất / Tải tệp hồ sơ cá nhân (`{phone}.json`)**: Cung cấp nút tải tệp JSON hồ sơ học sinh (`📥 Tải Hồ Sơ`) cả trên Modal Kết Quả và Cửa Sổ Tài Khoản để phụ huynh có thể tải về lưu trữ hoặc gửi cho giáo viên.
 
+- [x] **11. Chuẩn Hóa Cấu Trúc Hồ Sơ Học Sinh Phẳng (Flat Profile Schema Dành Cho Google Sheet / Excel)**
+  - Phẳng hóa thông tin phụ huynh vào `identity`: `parent_name`, `parent_phone`, `parent_email` (loại bỏ object `parent` lồng).
+  - Gộp tùy chọn cài đặt vào `identity`: `lang`, `textZoom` (loại bỏ object `preferences`).
+  - Phẳng hóa thống kê thành tích trong `summaryStats`: `medal_gold`, `medal_silver`, `medal_bronze` (loại bỏ object `medals` lồng và loại bỏ `streakDays`).
+  - Toàn bộ hồ sơ 1 học sinh tương ứng hoàn hảo với 1 hàng trên Google Sheet / Excel giúp xuất/nạp dữ liệu siêu tốc và đơn giản.
+
+- [x] **12. Đồng Nhất Mọi Dữ Liệu Về Một Danh Sách `examList` & Hiển Thị Trạng Thái Tiến Độ Lên Trang Chủ**
+  - **Tất cả quy về `examList`**: Loại bỏ sự phân mảnh giữa `progress`, `examHistory` và `mistakeBank`. Toàn bộ quá trình học tập được quản lý tập trung trong một object `examList` map theo `examId`.
+  - **Mặc định bài thi câu sai (`quick-tryhard`)**: Luôn luôn có sẵn 1 exam mặc định trong `examList` cho tính năng ôn câu sai (`assets/data/quick-tryhard.json`).
+  - **Quy tắc trạng thái chuẩn**:
+    - Khi bắt đầu khám phá hoặc luyện tập (`recordExamStart`): bài thi tự động được thêm vào `examList` với `explored = true`.
+    - Mặc định nếu `practiced = false` thì `status` luôn là `"processing"` (chưa có điểm và chưa có huy chương).
+    - Khi nộp bài hoàn thành (`recordExamResult`): cập nhật `practiced = true`, `status = "completed"`, ghi nhận điểm cao nhất và huy chương tương ứng.
+  - **Phản hồi trực quan lên Trang Chủ (`index.html`)**:
+    - Hiển thị huy hiệu trực quan trên từng thẻ bài học (`foundational`, `enrichment`, `quickPractice`):
+      - Đã hoàn thành (`status === 'completed'`): Viền xanh/nền sáng, badge huy chương kèm điểm số (vd: `🥇 100đ`, `✓ 95đ`).
+      - Đang làm (`status === 'processing'`): Badge cam `⏳ Đang làm`.
+- [x] **13. Kiến Trúc Hệ Thống Đa Lớp Học (Multi-Class Architecture) & Tự Động Đồng Bộ Câu Sai Try-Hard**
+  - **Tách tệp bài tập độc lập theo từng lớp**:
+    - Mỗi lớp sở hữu một file JSON danh mục bài tập riêng: `assets/data/class-math.json`, `assets/data/class-english.json`, `assets/data/class-default.json`. Đã loại bỏ hoàn toàn tệp cũ `exams-index.json`.
+  - **Hồ sơ học sinh lưu theo từng lớp**:
+    - Khai báo danh sách lớp bé tham gia trong `identity.classes: ["class-math", "class-english", ...]`.
+    - Hồ sơ học sinh lưu bài tập theo các mảng mang ID của lớp: `"class-math": [ ... ]`, `"class-english": [ ... ]`.
+  - **Cơ chế Try-Hard cá nhân hóa tự động ({studentId}-{classId}-quick-tryhard)**:
+    - Mỗi học sinh trong mỗi lớp sở hữu một file/dữ liệu Try-Hard riêng: `{studentId}-{classId}-quick-tryhard.json`.
+    - Khi làm bài thường mà có câu sai ➔ Tự động nạp các câu sai đó vào bài thi Try-Hard của lớp đó.
+    - Khi bé ôn tập lại bài Try-Hard và giải đúng ➔ Tự động loại bỏ câu đó khỏi danh sách Try-Hard.
+  - **Đăng ký học sinh chọn lớp linh hoạt (`auth-modal.js`)**:
+    - Giao diện đăng ký mới có lựa chọn lớp tham gia. Nếu không chọn lớp nào thì tự động gán `["class-default"]`.
+  - **Nút chuyển lớp (Class Switcher) trên Trang Chủ (`index.html`)**:
+    - Header Topbar có dropdown chuyển lớp với icon sinh động, tự động nạp danh mục và kiểm tra tiến độ theo lớp đang chọn.
+  - **Phân hệ thi trắc nghiệm (`luyen-thi-trac-nghiem.html`)**:
+    - Tự động nhận `class` từ URL, nạp Try-Hard tương ứng của học sinh và đồng bộ kết quả vào đúng lớp học.
+
 ---
 
 ## 📊 Định Hướng Kiến Trúc Mở Rộng: Google Sheet CMS & Jamstack Sync (Dành Cho 1.000+ Người Dùng)

@@ -1,6 +1,6 @@
 {
-  "version": "2.0.0",
-  "updatedAt": "2026-09-25T00:15:00Z",
+  "version": "2.2.0",
+  "updatedAt": "2026-09-25T23:30:00Z",
   "identity": {
     "studentId": "0901234567",
     "fullName": "Nguyễn Minh Khang",
@@ -12,17 +12,16 @@
     "targetContest": "Toán Quốc Tế TIMO 2026",
     "school": "Trường Tiểu Học Quốc Tế Á Châu",
     "city": "Hồ Chí Minh",
-    "parent": {
-      "name": "Bố Luân",
-      "phone": "0901234567",
-      "email": "thanhluancn1@gmail.com"
-    },
+    "parent_name": "Bố Luân",
+    "parent_phone": "0901234567",
+    "parent_email": "thanhluancn1@gmail.com",
+    "lang": "vi",
+    "textZoom": 120,
+    "classes": [
+      "class-math"
+    ],
     "createdAt": "2026-09-01T08:00:00Z",
     "lastActiveAt": "2026-09-24T23:10:00Z"
-  },
-  "preferences": {
-    "lang": "vi",
-    "textZoom": 120
   },
   "summaryStats": {
     "totalExamsTaken": 5,
@@ -30,103 +29,84 @@
     "correctAnswers": 92,
     "overallAccuracy": 92.0,
     "totalTimeSpentMinutes": 45,
-    "streakDays": 5,
-    "medals": {
-      "gold": 3,
-      "silver": 2,
-      "bronze": 0
-    }
-  },
-  "lastSession": {
-    "examId": "timo-phep-cong-tru-g1",
-    "examTitle": "Phép cộng và Phép trừ",
-    "mode": "practice",
-    "score": 95,
+    "medal_gold": 3,
+    "medal_silver": 2,
+    "medal_bronze": 0,
     "date": "2026-09-24T19:40:00Z"
   },
-  "progress": {
-    "timo-chu-so-g1": {
-      "explored": true,
-      "practiced": true,
-      "bestScore": 100,
-      "medal": "gold",
-      "attempts": 2
-    },
-    "timo-phep-cong-tru-g1": {
-      "explored": true,
-      "practiced": true,
-      "bestScore": 95,
-      "medal": "gold",
-      "attempts": 1
-    },
-    "timo-quy-luat-g1": {
-      "explored": false,
-      "practiced": true,
-      "bestScore": 90,
-      "medal": "gold",
-      "attempts": 2
-    },
-    "timo-so-sanh-thay-the-g1": {
-      "explored": true,
-      "practiced": false,
-      "bestScore": 0,
-      "medal": null,
-      "attempts": 0
-    }
-  },
-  "examHistory": [
-    {
-      "attemptId": "ATT_20260923_001",
-      "examId": "timo-chu-so-g1",
-      "examTitle": "Hệ thống Số và Chữ số",
-      "mode": "practice",
-      "date": "2026-09-23T14:20:00Z",
-      "score": 100,
-      "correctCount": 20,
-      "totalQuestions": 20,
-      "timeSpentSeconds": 480,
-      "earnedMedal": "🥇 Huy Chương Vàng"
-    },
-    {
-      "attemptId": "ATT_20260924_002",
-      "examId": "timo-phep-cong-tru-g1",
-      "examTitle": "Phép cộng và Phép trừ",
-      "mode": "practice",
-      "date": "2026-09-24T19:40:00Z",
-      "score": 95,
-      "correctCount": 19,
-      "totalQuestions": 20,
-      "timeSpentSeconds": 530,
-      "earnedMedal": "🥇 Huy Chương Vàng"
-    }
-  ],
-  "mistakeBank": [
-    {
-      "questionId": "PCT_014",
-      "examId": "timo-phep-cong-tru-g1",
-      "topic": "PHÉP TRỪ CÓ NHỚ",
-      "missedCount": 1,
-      "lastWrongAnswer": "B",
-      "correctAnswer": "C",
-      "addedAt": "2026-09-24T19:40:00Z",
-      "isResolved": false
-    },
-    {
-      "questionId": "SS_008",
-      "examId": "timo-so-sanh-thay-the-g1",
-      "topic": "TOÁN THAY THẾ CON VẬT",
-      "missedCount": 2,
-      "lastWrongAnswer": "A",
-      "correctAnswer": "D",
-      "addedAt": "2026-09-24T21:10:00Z",
-      "isResolved": false
-    }
-  ],
   "skillRadar": {
     "logicalThinking": 85,
     "arithmetic": 95,
     "geometry": 100,
     "combinatorics": 70,
-    "realWorldMath": 80
-  }
+    "realWorldMath": 80,
+    "date": "2026-09-24T19:40:00Z"
+  },
+  "class-math": [
+    {
+      "examId": "0901234567-class-math-quick-tryhard",
+      "status": "processing",
+      "explored": false,
+      "practiced": false,
+      "score": null,
+      "medal": null,
+      "attempts": 0,
+      "totalQuestions": 0,
+      "correctCount": 0,
+      "timeSpentSeconds": 0,
+      "date": "2026-09-24T19:40:00Z"
+    },
+    {
+      "examId": "timo-chu-so-g1",
+      "status": "completed",
+      "explored": true,
+      "practiced": true,
+      "score": 100,
+      "medal": "gold",
+      "attempts": 2,
+      "totalQuestions": 20,
+      "correctCount": 20,
+      "timeSpentSeconds": 480,
+      "date": "2026-09-23T14:20:00Z"
+    },
+    {
+      "examId": "timo-phep-cong-tru-g1",
+      "status": "completed",
+      "explored": true,
+      "practiced": true,
+      "score": 95,
+      "medal": "gold",
+      "attempts": 1,
+      "totalQuestions": 20,
+      "correctCount": 19,
+      "timeSpentSeconds": 530,
+      "date": "2026-09-24T19:40:00Z"
+    },
+    {
+      "examId": "timo-quy-luat-g1",
+      "status": "completed",
+      "explored": true,
+      "practiced": true,
+      "score": 90,
+      "medal": "gold",
+      "attempts": 2,
+      "totalQuestions": 20,
+      "correctCount": 18,
+      "timeSpentSeconds": 500,
+      "date": "2026-09-24T20:10:00Z"
+    },
+    {
+      "examId": "timo-so-sanh-thay-the-g1",
+      "status": "processing",
+      "explored": true,
+      "practiced": false,
+      "score": null,
+      "medal": null,
+      "attempts": 0,
+      "totalQuestions": 20,
+      "correctCount": null,
+      "timeSpentSeconds": 0,
+      "date": "2026-09-24T21:10:00Z"
+    }
+  ]
 }
