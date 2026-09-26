@@ -1,0 +1,196 @@
+{
+  "examConfig": {
+    "id": "timo-logic-thuc-te-g1",
+    "title": {
+      "vi": "Toán TIMO Lớp 1 - Toán Đố Logic Thực Tế",
+      "en": "TIMO Math Grade 1 - Real-world Logic Puzzles",
+      "zh": "TIMO 奥数一年级 - 生活趣味逻辑题"
+    },
+    "grade": 1,
+    "totalQuestions": 5,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": [
+    {
+      "id": 1,
+      "topic": {
+        "vi": "XẾP HÀNG",
+        "en": "QUEUE ORDER",
+        "zh": "排队问题"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Một hàng có 7 bạn học sinh. Bạn Nam đứng ở vị trí thứ 3 tính từ đầu hàng. Hỏi có bao nhiêu bạn đứng sau Nam?",
+        "en": "There are 7 students in a queue. Nam is the 3rd from the front. How many students are behind Nam?",
+        "zh": "有 7 名学生在排队。小南从前往后数排在第 3 位。请问小南后面有多少名学生？"
+      },
+      "speechText": {
+        "vi": "Một hàng có 7 bạn học sinh. Nam đứng thứ 3 từ đầu hàng. Hỏi có bao nhiêu bạn đứng sau Nam?",
+        "en": "7 students in a queue. Nam is 3rd from the front. How many students behind Nam?",
+        "zh": "一队有7个同学，小南排在第3位。请问他后面有几位同学？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🚶", "🚶", "👦", "🚶", "🚶", "🚶", "🚶"],
+        "columns": 7
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "3 bạn", "en": "3 students", "zh": "3人" } },
+        { "id": "B", "text": { "vi": "4 bạn", "en": "4 students", "zh": "4人" } },
+        { "id": "C", "text": { "vi": "5 bạn", "en": "5 students", "zh": "5人" } },
+        { "id": "D", "text": { "vi": "6 bạn", "en": "6 students", "zh": "6人" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Số bạn đứng sau Nam = Tổng số học sinh - Vị trí của Nam = 7 - 3 = 4 bạn.",
+        "en": "Students behind Nam = Total students - Nam's position = 7 - 3 = 4 students.",
+        "zh": "小南后面的人数 = 总人数 - 小南的位置 = 7 - 3 = 4 人。"
+      }
+    },
+    {
+      "id": 2,
+      "topic": {
+        "vi": "LOGIC TUỔI",
+        "en": "AGE LOGIC",
+        "zh": "年龄逻辑"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Năm nay bé Mai 6 tuổi, anh Tùng 9 tuổi. Hỏi khi bé Mai 8 tuổi thì anh Tùng bao nhiêu tuổi?",
+        "en": "This year Mai is 6 years old and Tung is 9. When Mai is 8 years old, how old will Tung be?",
+        "zh": "今年小梅 6 岁，小松 9 岁。请问当小梅 8 岁时，小松几岁？"
+      },
+      "speechText": {
+        "vi": "Năm nay Mai 6 tuổi, anh Tùng 9 tuổi. Khi Mai 8 tuổi thì anh Tùng bao nhiêu tuổi?",
+        "en": "Mai is 6, Tung is 9. When Mai is 8, how old is Tung?",
+        "zh": "今年小梅6岁，哥哥9岁。当小梅8岁时，哥哥几岁？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["👧", "🎂", "6️⃣", "👦", "🎂", "9️⃣"],
+        "columns": 6
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "10 tuổi", "en": "10 years old", "zh": "10岁" } },
+        { "id": "B", "text": { "vi": "11 tuổi", "en": "11 years old", "zh": "11岁" } },
+        { "id": "C", "text": { "vi": "12 tuổi", "en": "12 years old", "zh": "12岁" } },
+        { "id": "D", "text": { "vi": "13 tuổi", "en": "13 years old", "zh": "13岁" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Hiệu số tuổi giữa hai anh em không đổi theo thời gian: Anh Tùng luôn hơn bé Mai: 9 - 6 = 3 tuổi. Khi Mai 8 tuổi, anh Tùng là: 8 + 3 = 11 tuổi.",
+        "en": "The age difference is constant: 9 - 6 = 3 years. When Mai is 8, Tung is: 8 + 3 = 11 years old.",
+        "zh": "两人的年龄差永远不变：9 - 6 = 3 岁。小梅 8 岁时，哥哥是：8 + 3 = 11 岁。"
+      }
+    },
+    {
+      "id": 3,
+      "topic": {
+        "vi": "SUY LUẬN LOGIC",
+        "en": "LOGICAL REASONING",
+        "zh": "身高比较"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Hươu cao cổ 🦒 cao hơn Ngựa vằn 🦓. Voi 🐘 cao hơn Hươu cao cổ 🦒. Hỏi trong ba con vật, con nào cao nhất?",
+        "en": "The giraffe 🦒 is taller than the zebra 🦓. The elephant 🐘 is taller than the giraffe 🦒. Which animal is the tallest?",
+        "zh": "长颈鹿 🦒 比斑马 🦓 高，大象 🐘 比长颈鹿 🦒 还要高。这三种动物中哪一只最高？"
+      },
+      "speechText": {
+        "vi": "Hươu cao cổ cao hơn Ngựa vằn. Voi cao hơn Hươu cao cổ. Con nào cao nhất?",
+        "en": "Giraffe is taller than zebra. Elephant is taller than giraffe. Which is tallest?",
+        "zh": "长颈鹿比斑马高，大象比长颈鹿高。哪一只最高？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🐘", ">", "🦒", ">", "🦓"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "Voi 🐘", "en": "Elephant 🐘", "zh": "大象 🐘" } },
+        { "id": "B", "text": { "vi": "Hươu cao cổ 🦒", "en": "Giraffe 🦒", "zh": "长颈鹿 🦒" } },
+        { "id": "C", "text": { "vi": "Ngựa vằn 🦓", "en": "Zebra 🦓", "zh": "斑马 🦓" } },
+        { "id": "D", "text": { "vi": "Cao bằng nhau", "en": "All equal height", "zh": "一样高" } }
+      ],
+      "correctAnswer": "A",
+      "explanation": {
+        "vi": "Thứ tự chiều cao từ cao nhất đến thấp nhất là: Voi 🐘 > Hươu cao cổ 🦒 > Ngựa vằn 🦓. Vậy con Voi 🐘 là con cao nhất.",
+        "en": "Order from tallest to shortest: Elephant 🐘 > Giraffe 🦒 > Zebra 🦓. The elephant 🐘 is the tallest.",
+        "zh": "按身高从高到矮排序：大象 🐘 > 长颈鹿 🦒 > 斑马 🦓。所以大象 🐘 最高。"
+      }
+    },
+    {
+      "id": 4,
+      "topic": {
+        "vi": "LOGIC CHIA QUÀ",
+        "en": "SHARING PUZZLE",
+        "zh": "均分问题"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Có 8 chiếc kẹo 🍬 chia đều cho 2 bạn Lan và Huệ. Hỏi mỗi bạn nhận được bao nhiêu chiếc kẹo?",
+        "en": "There are 8 candies 🍬 shared equally between Lan and Hue (2 friends). How many candies does each friend get?",
+        "zh": "有 8 颗糖果 🍬 平均分给兰兰和惠惠两个人。请问每个人分到多少颗糖果？"
+      },
+      "speechText": {
+        "vi": "Có 8 chiếc kẹo chia đều cho 2 bạn. Hỏi mỗi bạn nhận được bao nhiêu chiếc kẹo?",
+        "en": "8 candies shared equally between 2 friends. How many for each?",
+        "zh": "8颗糖平均分给2个人，每人分到几颗？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🍬", "🍬", "🍬", "🍬", "🍬", "🍬", "🍬", "🍬"],
+        "columns": 4
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "3 chiếc", "en": "3 candies", "zh": "3颗" } },
+        { "id": "B", "text": { "vi": "4 chiếc", "en": "4 candies", "zh": "4颗" } },
+        { "id": "C", "text": { "vi": "5 chiếc", "en": "5 candies", "zh": "5颗" } },
+        { "id": "D", "text": { "vi": "6 chiếc", "en": "6 candies", "zh": "6颗" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Chia đều 8 chiếc kẹo cho 2 bạn: 8 chia 2 = 4 chiếc kẹo cho mỗi bạn (vì 4 + 4 = 8).",
+        "en": "8 candies divided equally by 2: 8 / 2 = 4 candies each (since 4 + 4 = 8).",
+        "zh": "8 颗糖平分给 2 个人：8 ÷ 2 = 4 颗糖（因为 4 + 4 = 8）。"
+      }
+    },
+    {
+      "id": 5,
+      "topic": {
+        "vi": "ĐỒNG HỒ & THỜI ĐIỂM",
+        "en": "SCHEDULE LOGIC",
+        "zh": "时间判断"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Buổi sáng, bác nông dân ra đồng lúc 6 giờ và trở về nhà sau 4 giờ. Hỏi bác nông dân về nhà lúc mấy giờ?",
+        "en": "In the morning, the farmer goes to the field at 6 o'clock and returns home after 4 hours. What time does he return?",
+        "zh": "早上农民伯伯 6 点去田里干活，4 小时后回家。请问他几点到家？"
+      },
+      "speechText": {
+        "vi": "Buổi sáng, bác nông dân ra đồng lúc 6 giờ và trở về sau 4 giờ. Bác về nhà lúc mấy giờ?",
+        "en": "The farmer goes at 6 o'clock and returns after 4 hours. What time does he return?",
+        "zh": "早上6点出门，4小时后回家。请问几点到家？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["👨‍🌾", "🌾", "🕕", "➕", "4️⃣"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "9 giờ", "en": "9 o'clock", "zh": "9点" } },
+        { "id": "B", "text": { "vi": "10 giờ", "en": "10 o'clock", "zh": "10点" } },
+        { "id": "C", "text": { "vi": "11 giờ", "en": "11 o'clock", "zh": "11点" } },
+        { "id": "D", "text": { "vi": "12 giờ", "en": "12 o'clock", "zh": "12点" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Thời điểm về nhà = 6 + 4 = 10 giờ sáng.",
+        "en": "Return time = 6 + 4 = 10 o'clock.",
+        "zh": "到家时间 = 6 + 4 = 10 点。"
+      }
+    }
+  ]
+}

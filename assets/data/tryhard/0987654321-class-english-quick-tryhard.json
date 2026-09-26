@@ -1,0 +1,15 @@
+{
+  "examConfig": {
+    "id": "0987654321-class-english-quick-tryhard",
+    "title": {
+      "vi": "Toán Tiếng Anh HKIMO - Ôn Tập Câu Đã Sai",
+      "en": "HKIMO English Math - Missed Questions Review",
+      "zh": "HKIMO 英语奥数 - 错题攻坚"
+    },
+    "grade": 1,
+    "totalQuestions": 0,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": []
+}

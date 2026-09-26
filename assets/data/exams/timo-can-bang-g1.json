@@ -1,0 +1,196 @@
+{
+  "examConfig": {
+    "id": "timo-can-bang-g1",
+    "title": {
+      "vi": "Toán TIMO Lớp 1 - Toán Cân Bằng Cơ Bản",
+      "en": "TIMO Math Grade 1 - Basic Balance Math",
+      "zh": "TIMO 奥数一年级 - 天平平衡与等式"
+    },
+    "grade": 1,
+    "totalQuestions": 5,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": [
+    {
+      "id": 1,
+      "topic": {
+        "vi": "CÂN THĂNG BẰNG",
+        "en": "BALANCE SCALE",
+        "zh": "天平平衡"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Cân đĩa đang thăng bằng. Đĩa bên trái có 1 quả dưa 🍈. Đĩa bên phải có 3 quả táo 🍎🍎🍎. Hỏi 2 quả dưa 🍈🍈 nặng bằng bao nhiêu quả táo?",
+        "en": "The scale is balanced. The left pan has 1 melon 🍈. The right pan has 3 apples 🍎🍎🍎. How many apples balance 2 melons 🍈🍈?",
+        "zh": "天平保持平衡。左边托盘有 1 个甜瓜 🍈，右边托盘有 3 个苹果 🍎🍎🍎。请问 2 个甜瓜 🍈🍈 等于多少个苹果的重量？"
+      },
+      "speechText": {
+        "vi": "Một quả dưa nặng bằng 3 quả táo. Hỏi 2 quả dưa nặng bằng bao nhiêu quả táo?",
+        "en": "1 melon balances 3 apples. How many apples balance 2 melons?",
+        "zh": "1个甜瓜等于3个苹果。请问2个甜瓜等于几个苹果？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🍈", "⚖️", "🍎", "🍎", "🍎"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "4 quả táo", "en": "4 apples", "zh": "4个" } },
+        { "id": "B", "text": { "vi": "5 quả táo", "en": "5 apples", "zh": "5个" } },
+        { "id": "C", "text": { "vi": "6 quả táo", "en": "6 apples", "zh": "6个" } },
+        { "id": "D", "text": { "vi": "7 quả táo", "en": "7 apples", "zh": "7个" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "1 quả dưa = 3 quả táo. Do đó 2 quả dưa = 3 + 3 = 6 quả táo.",
+        "en": "1 melon = 3 apples. Therefore, 2 melons = 3 + 3 = 6 apples.",
+        "zh": "1 个甜瓜 = 3 个苹果。因此 2 个甜瓜 = 3 + 3 = 6 个苹果。"
+      }
+    },
+    {
+      "id": 2,
+      "topic": {
+        "vi": "CÂN THĂNG BẰNG",
+        "en": "BALANCE SCALE",
+        "zh": "天平运算"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Đĩa cân bên trái có hộp quà 🎁 và quả cân 2kg. Đĩa bên phải có quả cân 7kg. Cân đang thăng bằng. Hỏi hộp quà 🎁 nặng bao nhiêu ki-lô-gam?",
+        "en": "The left pan has a gift box 🎁 and a 2kg weight. The right pan has a 7kg weight. The scale is balanced. How heavy is the gift box 🎁?",
+        "zh": "天平左边有礼盒 🎁 和一个 2kg 的砝码，右边是一个 7kg 的砝码。天平平衡。请问礼盒 🎁 重多少千克？"
+      },
+      "speechText": {
+        "vi": "Bên trái có hộp quà và quả cân 2 ki-lô-gam, bên phải có quả cân 7 ki-lô-gam. Hỏi hộp quà nặng bao nhiêu?",
+        "en": "Left pan has gift box and 2kg weight. Right pan has 7kg. How heavy is the gift box?",
+        "zh": "左边有礼盒和2千克砝码，右边有7千克砝码。请问礼盒重多少？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🎁", "➕", "2️⃣", "⚖️", "7️⃣"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "4 kg", "en": "4 kg", "zh": "4 kg" } },
+        { "id": "B", "text": { "vi": "5 kg", "en": "5 kg", "zh": "5 kg" } },
+        { "id": "C", "text": { "vi": "6 kg", "en": "6 kg", "zh": "6 kg" } },
+        { "id": "D", "text": { "vi": "9 kg", "en": "9 kg", "zh": "9 kg" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Vì cân thăng bằng: Hộp quà + 2 = 7. Khối lượng hộp quà là: 7 - 2 = 5 kg.",
+        "en": "Since balanced: Gift box + 2 = 7. Gift box weight = 7 - 2 = 5 kg.",
+        "zh": "因为天平平衡：礼盒 + 2 = 7。礼盒重量为：7 - 2 = 5 kg。"
+      }
+    },
+    {
+      "id": 3,
+      "topic": {
+        "vi": "CÂN THĂNG BẰNG",
+        "en": "BALANCE SCALE",
+        "zh": "等量替换"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Cân 1: 1 chú thỏ 🐰 = 2 chú sóc 🐿️🐿️. Cân 2: 1 chú sóc 🐿️ = 2 chú chuột túi 🐁🐁. Hỏi 1 chú thỏ 🐰 nặng bằng bao nhiêu chú chuột túi 🐁?",
+        "en": "Scale 1: 1 rabbit 🐰 = 2 squirrels 🐿️🐿️. Scale 2: 1 squirrel 🐿️ = 2 mice 🐁🐁. How many mice balance 1 rabbit 🐰?",
+        "zh": "天平1：1 只兔子 🐰 = 2 只松鼠 🐿️🐿️。天平2：1 只松鼠 🐿️ = 2 只小老鼠 🐁🐁。请问 1 只兔子 🐰 等于多少只小老鼠的重量？"
+      },
+      "speechText": {
+        "vi": "Một chú thỏ bằng 2 chú sóc, 1 chú sóc bằng 2 chú chuột. Hỏi 1 chú thỏ bằng bao nhiêu chú chuột?",
+        "en": "1 rabbit equals 2 squirrels, 1 squirrel equals 2 mice. How many mice equal 1 rabbit?",
+        "zh": "1只兔子等于2只松鼠，1只松鼠等于2只老鼠。请问1只兔子等于几只老鼠？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🐰", "=", "🐿️", "🐿️", "🐿️", "=", "🐁", "🐁"],
+        "columns": 4
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "3 chú", "en": "3 mice", "zh": "3只" } },
+        { "id": "B", "text": { "vi": "4 chú", "en": "4 mice", "zh": "4只" } },
+        { "id": "C", "text": { "vi": "5 chú", "en": "5 mice", "zh": "5只" } },
+        { "id": "D", "text": { "vi": "6 chú", "en": "6 mice", "zh": "6只" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "1 thỏ = 2 sóc. Mà mỗi sóc = 2 chuột. Vậy 1 thỏ = 2 + 2 = 4 chú chuột.",
+        "en": "1 rabbit = 2 squirrels. Each squirrel = 2 mice. 1 rabbit = 2 + 2 = 4 mice.",
+        "zh": "1 只兔子 = 2 只松鼠。每只松鼠 = 2 只老鼠。所以 1 只兔子 = 2 + 2 = 4 只小老鼠。"
+      }
+    },
+    {
+      "id": 4,
+      "topic": {
+        "vi": "CÂN THĂNG BẰNG",
+        "en": "BALANCE SCALE",
+        "zh": "天平比较"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Khi đặt quả bí ngô 🎃 lên đĩa trái và quả dưa hấu 🍉 lên đĩa phải, đĩa bên quả bí ngô 🎃 bị chìm xuống thấp hơn. Hỏi quả nào nặng hơn?",
+        "en": "When a pumpkin 🎃 is placed on the left and a watermelon 🍉 on the right, the pumpkin side goes down. Which fruit is heavier?",
+        "zh": "将南瓜 🎃 放在左盘，西瓜 🍉 放在右盘，南瓜 🎃 所在的一边向下沉。请问哪种水果更重？"
+      },
+      "speechText": {
+        "vi": "Khi đặt quả bí ngô và dưa hấu lên cân, đĩa quả bí ngô bị chìm xuống thấp hơn. Hỏi quả nào nặng hơn?",
+        "en": "When placing pumpkin and watermelon, pumpkin side sinks. Which is heavier?",
+        "zh": "南瓜下沉，西瓜上翘。请问哪种水果更重？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🎃", "⬇️", "⚖️", "🍉", "⬆️"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "Quả bí ngô 🎃", "en": "Pumpkin 🎃", "zh": "南瓜 🎃" } },
+        { "id": "B", "text": { "vi": "Quả dưa hấu 🍉", "en": "Watermelon 🍉", "zh": "西瓜 🍉" } },
+        { "id": "C", "text": { "vi": "Hai quả nặng bằng nhau", "en": "Both equal", "zh": "一样重" } },
+        { "id": "D", "text": { "vi": "Không xác định được", "en": "Cannot determine", "zh": "无法判断" } }
+      ],
+      "correctAnswer": "A",
+      "explanation": {
+        "vi": "Trên cân đĩa, vật nào nặng hơn sẽ làm đĩa cân chìm xuống thấp hơn. Vì quả bí ngô làm đĩa chìm xuống nên quả bí ngô nặng hơn.",
+        "en": "On a balance scale, the heavier object causes that side to sink. Thus the pumpkin 🎃 is heavier.",
+        "zh": "在天平上，较重的一端会向下沉。南瓜下沉说明南瓜 🎃 更重。"
+      }
+    },
+    {
+      "id": 5,
+      "topic": {
+        "vi": "CÂN THĂNG BẰNG",
+        "en": "BALANCE SCALE",
+        "zh": "算式平衡"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Để cân đĩa thăng bằng: Đĩa trái có phép tính 6 + 7. Đĩa phải có số 5 và số nào dưới đây?",
+        "en": "To balance the scale: Left pan has 6 + 7. Right pan has 5 and which number below?",
+        "zh": "为了让天平平衡：左盘算式为 6 + 7，右盘有数字 5 和以下哪一个数字？"
+      },
+      "speechText": {
+        "vi": "Đĩa trái có 6 cộng 7 bằng 13. Đĩa phải có số 5 và số nào để cân thăng bằng?",
+        "en": "Left has 6 plus 7. Right has 5 and which number to balance?",
+        "zh": "左边是6加7，右边是5加多少能保持平衡？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["6️⃣", "➕", "7️⃣", "⚖️", "5️⃣", "➕", "❓"],
+        "columns": 7
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "7", "en": "7", "zh": "7" } },
+        { "id": "B", "text": { "vi": "8", "en": "8", "zh": "8" } },
+        { "id": "C", "text": { "vi": "9", "en": "9", "zh": "9" } },
+        { "id": "D", "text": { "vi": "10", "en": "10", "zh": "10" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Vế trái: 6 + 7 = 13. Để cân thăng bằng, vế phải cũng phải bằng 13: 5 + ? = 13 ➔ ? = 13 - 5 = 8.",
+        "en": "Left side: 6 + 7 = 13. To balance, right side must be 13: 5 + ? = 13 ➔ ? = 13 - 5 = 8.",
+        "zh": "左边：6 + 7 = 13。右边也必须等于 13：5 + ? = 13 ➔ ? = 13 - 5 = 8。"
+      }
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "examConfig": {
+    "id": "timo-so-sanh-thay-the-g1",
+    "title": {
+      "vi": "Toán TIMO Lớp 1 - So sánh và Thay thế",
+      "en": "TIMO Math Grade 1 - Comparison & Substitution",
+      "zh": "TIMO 奥数一年级 - 比较大小与代换"
+    },
+    "grade": 1,
+    "totalQuestions": 5,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": [
+    {
+      "id": 1,
+      "topic": {
+        "vi": "SO SÁNH",
+        "en": "COMPARISON",
+        "zh": "比较大小"
+      },
+      "difficultyLevel": 1,
+      "questionText": {
+        "vi": "Nhóm nào dưới đây có số lượng ngôi sao nhiều nhất?",
+        "en": "Which group below has the most stars?",
+        "zh": "下面哪一组星星的数量最多？"
+      },
+      "speechText": {
+        "vi": "Hỏi nhóm nào dưới đây có số lượng ngôi sao nhiều nhất?",
+        "en": "Which group below has the most stars?",
+        "zh": "请问下面哪一组星星的数量最多？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["⭐", "⭐", "⭐", "⭐", "⭐", "⭐", "⭐", "⭐"],
+        "columns": 4
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "Nhóm A (6 ngôi sao)", "en": "Group A (6 stars)", "zh": "A组（6颗星星）" } },
+        { "id": "B", "text": { "vi": "Nhóm B (8 ngôi sao)", "en": "Group B (8 stars)", "zh": "B组（8颗星星）" } },
+        { "id": "C", "text": { "vi": "Nhóm C (5 ngôi sao)", "en": "Group C (5 stars)", "zh": "C组（5颗星星）" } },
+        { "id": "D", "text": { "vi": "Nhóm D (7 ngôi sao)", "en": "Group D (7 stars)", "zh": "D组（7颗星星）" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Đếm số ngôi sao trong hình ta thấy có tất cả 8 ngôi sao. Do 8 > 7 > 6 > 5 nên nhóm B có số lượng nhiều nhất.",
+        "en": "Counting the stars in the picture gives 8 stars. Since 8 > 7 > 6 > 5, Group B has the most stars.",
+        "zh": "数图中的星星一共有8颗。因为 8 > 7 > 6 > 5，所以B组数量最多。"
+      }
+    },
+    {
+      "id": 2,
+      "topic": {
+        "vi": "THAY THẾ",
+        "en": "SUBSTITUTION",
+        "zh": "等量代换"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Biết 1 quả táo 🍎 nặng bằng 2 quả dâu tây 🍓. Hỏi 3 quả táo 🍎 nặng bằng bao nhiêu quả dâu tây 🍓?",
+        "en": "If 1 apple 🍎 weighs the same as 2 strawberries 🍓, how many strawberries weigh the same as 3 apples 🍎?",
+        "zh": "已知 1 个苹果 🍎 的重量等于 2 颗草莓 🍓。请问 3 个苹果 🍎 的重量等于多少颗草莓 🍓？"
+      },
+      "speechText": {
+        "vi": "Biết 1 quả táo nặng bằng 2 quả dâu tây. Hỏi 3 quả táo nặng bằng bao nhiêu quả dâu tây?",
+        "en": "If 1 apple weighs the same as 2 strawberries, how many strawberries weigh the same as 3 apples?",
+        "zh": "已知1个苹果等于2颗草莓。请问3个苹果等于多少颗草莓？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🍎", "=", "🍓", "🍓"],
+        "columns": 4
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "4 quả dâu", "en": "4 strawberries", "zh": "4颗草莓" } },
+        { "id": "B", "text": { "vi": "5 quả dâu", "en": "5 strawberries", "zh": "5颗草莓" } },
+        { "id": "C", "text": { "vi": "6 quả dâu", "en": "6 strawberries", "zh": "6颗草莓" } },
+        { "id": "D", "text": { "vi": "7 quả dâu", "en": "7 strawberries", "zh": "7颗草莓" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "1 quả táo = 2 quả dâu tây. Do đó 3 quả táo = 2 + 2 + 2 = 6 quả dâu tây.",
+        "en": "1 apple = 2 strawberries. Therefore, 3 apples = 2 + 2 + 2 = 6 strawberries.",
+        "zh": "1个苹果 = 2颗草莓。因此 3个苹果 = 2 + 2 + 2 = 6颗草莓。"
+      }
+    },
+    {
+      "id": 3,
+      "topic": {
+        "vi": "SO SÁNH",
+        "en": "COMPARISON",
+        "zh": "比较大小"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Điền dấu thích hợp vào chỗ trống: 9 + 4 ___ 8 + 6",
+        "en": "Fill in the appropriate sign: 9 + 4 ___ 8 + 6",
+        "zh": "在横线上填入合适的符号：9 + 4 ___ 8 + 6"
+      },
+      "speechText": {
+        "vi": "Điền dấu lớn hơn, bé hơn hay bằng vào phép so sánh 9 cộng 4 và 8 cộng 6",
+        "en": "Fill in the sign for 9 plus 4 compared to 8 plus 6",
+        "zh": "请比较 9 加 4 与 8 加 6 的大小"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["9️⃣", "➕", "4️⃣", "❓", "8️⃣", "➕", "6️⃣"],
+        "columns": 7
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "<", "en": "<", "zh": "<" } },
+        { "id": "B", "text": { "vi": ">", "en": ">", "zh": ">" } },
+        { "id": "C", "text": { "vi": "=", "en": "=", "zh": "=" } },
+        { "id": "D", "text": { "vi": "Không so sánh được", "en": "Cannot compare", "zh": "无法比较" } }
+      ],
+      "correctAnswer": "A",
+      "explanation": {
+        "vi": "Ta có: Vế trái 9 + 4 = 13. Vế phải 8 + 6 = 14. Vì 13 < 14 nên dấu thích hợp là dấu <.",
+        "en": "Left side: 9 + 4 = 13. Right side: 8 + 6 = 14. Since 13 < 14, the correct sign is <.",
+        "zh": "左边：9 + 4 = 13。右边：8 + 6 = 14。因为 13 < 14，所以应填 <。"
+      }
+    },
+    {
+      "id": 4,
+      "topic": {
+        "vi": "THAY THẾ",
+        "en": "SUBSTITUTION",
+        "zh": "等量代换"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Biết: 🔵 + 🔵 = 10 và 🔵 + 🔺 = 8. Hỏi hình tam giác 🔺 có giá trị là bao nhiêu?",
+        "en": "Given: 🔵 + 🔵 = 10 and 🔵 + 🔺 = 8. What is the value of triangle 🔺?",
+        "zh": "已知：🔵 + 🔵 = 10，🔵 + 🔺 = 8。请问三角形 🔺 的数值是多少？"
+      },
+      "speechText": {
+        "vi": "Biết 2 hình tròn bằng 10 và 1 hình tròn cộng 1 hình tam giác bằng 8. Hỏi hình tam giác bằng bao nhiêu?",
+        "en": "Given two circles equal 10 and circle plus triangle equals 8. What is the triangle?",
+        "zh": "已知两个圆形等于10，一个圆形加一个三角形等于8。请问三角形是多少？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🔵", "➕", "🔵", "=", "🔟", "🔵", "➕", "🔺", "=", "8️⃣"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "2", "en": "2", "zh": "2" } },
+        { "id": "B", "text": { "vi": "3", "en": "3", "zh": "3" } },
+        { "id": "C", "text": { "vi": "4", "en": "4", "zh": "4" } },
+        { "id": "D", "text": { "vi": "5", "en": "5", "zh": "5" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Từ 🔵 + 🔵 = 10 suy ra 🔵 = 5. Thay vào 🔵 + 🔺 = 8 ta có 5 + 🔺 = 8 ➔ 🔺 = 8 - 5 = 3.",
+        "en": "From 🔵 + 🔵 = 10, we get 🔵 = 5. Substituting into 🔵 + 🔺 = 8 gives 5 + 🔺 = 8 ➔ 🔺 = 8 - 5 = 3.",
+        "zh": "由 🔵 + 🔵 = 10 可得 🔵 = 5。代入 🔵 + 🔺 = 8 得 5 + 🔺 = 8 ➔ 🔺 = 8 - 5 = 3。"
+      }
+    },
+    {
+      "id": 5,
+      "topic": {
+        "vi": "SO SÁNH",
+        "en": "COMPARISON",
+        "zh": "比较大小"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Cho các số: 12, 19, 15, 8, 20. Hỏi hiệu giữa số lớn nhất và số bé nhất là bao nhiêu?",
+        "en": "Given the numbers: 12, 19, 15, 8, 20. What is the difference between the greatest and smallest numbers?",
+        "zh": "给定数字：12, 19, 15, 8, 20。最大数与最小数的差是多少？"
+      },
+      "speechText": {
+        "vi": "Trong các số 12, 19, 15, 8, 20, hỏi hiệu giữa số lớn nhất và số bé nhất bằng bao nhiêu?",
+        "en": "In the numbers 12, 19, 15, 8, 20, what is the difference between the greatest and smallest?",
+        "zh": "在数字12, 19, 15, 8, 20中，最大数与最小数的差是多少？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["1️⃣2️⃣", "1️⃣9️⃣", "1️⃣5️⃣", "8️⃣", "2️⃣0️⃣"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "11", "en": "11", "zh": "11" } },
+        { "id": "B", "text": { "vi": "12", "en": "12", "zh": "12" } },
+        { "id": "C", "text": { "vi": "13", "en": "13", "zh": "13" } },
+        { "id": "D", "text": { "vi": "14", "en": "14", "zh": "14" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Số lớn nhất trong dãy là 20. Số bé nhất trong dãy là 8. Hiệu giữa số lớn nhất và bé nhất là: 20 - 8 = 12.",
+        "en": "The greatest number is 20. The smallest number is 8. The difference is: 20 - 8 = 12.",
+        "zh": "数列中最大数是 20，最小数是 8。最大数与最小数的差为：20 - 8 = 12。"
+      }
+    }
+  ]
+}

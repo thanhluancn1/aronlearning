@@ -1,0 +1,196 @@
+{
+  "examConfig": {
+    "id": "timo-do-luong-thoi-gian-g1",
+    "title": {
+      "vi": "Toán TIMO Lớp 1 - Đo lường và Thời gian",
+      "en": "TIMO Math Grade 1 - Measurement & Time",
+      "zh": "TIMO 奥数一年级 - 时间与度量衡"
+    },
+    "grade": 1,
+    "totalQuestions": 5,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": [
+    {
+      "id": 1,
+      "topic": {
+        "vi": "THỜI GIAN",
+        "en": "TIME",
+        "zh": "时间认知"
+      },
+      "difficultyLevel": 1,
+      "questionText": {
+        "vi": "Đồng hồ chỉ kim ngắn vào số 3, kim dài vào số 12. Hỏi lúc đó là mấy giờ?",
+        "en": "The short hand points to 3 and the long hand points to 12. What time is it?",
+        "zh": "时针指向 3，分针指向 12。请问此时是几点钟？"
+      },
+      "speechText": {
+        "vi": "Đồng hồ chỉ kim ngắn vào số 3, kim dài vào số 12. Hỏi lúc đó là mấy giờ?",
+        "en": "The short hand points to 3 and long hand points to 12. What time is it?",
+        "zh": "时针指向3，分针指向12。请问此时是几点钟？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🕒"],
+        "columns": 1
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "12 giờ đúng", "en": "12 o'clock", "zh": "12点整" } },
+        { "id": "B", "text": { "vi": "3 giờ đúng", "en": "3 o'clock", "zh": "3点整" } },
+        { "id": "C", "text": { "vi": "6 giờ đúng", "en": "6 o'clock", "zh": "6点整" } },
+        { "id": "D", "text": { "vi": "9 giờ đúng", "en": "9 o'clock", "zh": "9点整" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Kim ngắn chỉ giờ (số 3), kim dài chỉ phút (số 12). Lúc đó là 3 giờ đúng.",
+        "en": "The hour hand points to 3, and the minute hand points to 12. It is 3 o'clock.",
+        "zh": "短针（时针）指向 3，长针（分针）指向 12。此时是 3 点整。"
+      }
+    },
+    {
+      "id": 2,
+      "topic": {
+        "vi": "THỜI GIAN",
+        "en": "TIME",
+        "zh": "星期与日历"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Hôm nay là Thứ Ba. Hỏi 3 ngày sau sẽ là Thứ mấy?",
+        "en": "Today is Tuesday. What day of the week will it be in 3 days?",
+        "zh": "今天是星期二。请问 3 天后是星期几？"
+      },
+      "speechText": {
+        "vi": "Hôm nay là Thứ Ba. Hỏi ba ngày sau sẽ là Thứ mấy trong tuần?",
+        "en": "Today is Tuesday. What day of the week will it be in 3 days?",
+        "zh": "今天是星期二。请问三天后是星期几？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["📅", "👉", "➕", "3️⃣", "📅"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "Thứ Tư", "en": "Wednesday", "zh": "星期三" } },
+        { "id": "B", "text": { "vi": "Thứ Năm", "en": "Thursday", "zh": "星期四" } },
+        { "id": "C", "text": { "vi": "Thứ Sáu", "en": "Friday", "zh": "星期五" } },
+        { "id": "D", "text": { "vi": "Thứ Bảy", "en": "Saturday", "zh": "星期六" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "Đếm tiếp 3 ngày kể từ Thứ Ba: 1 ngày sau là Thứ Tư, 2 ngày sau là Thứ Năm, 3 ngày sau là Thứ Sáu.",
+        "en": "Counting 3 days forward from Tuesday: 1 day later is Wednesday, 2 days later is Thursday, 3 days later is Friday.",
+        "zh": "从星期二往后数 3 天：第 1 天是星期三，第 2 天是星期四，第 3 天是星期五。"
+      }
+    },
+    {
+      "id": 3,
+      "topic": {
+        "vi": "ĐO LƯỜNG",
+        "en": "MEASUREMENT",
+        "zh": "长度测量"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Một cây bút chì dài bằng 5 chiếc kẹp giấy 📎. Chiếc thước kẻ dài bằng 2 cây bút chì. Hỏi chiếc thước kẻ dài bằng bao nhiêu chiếc kẹp giấy?",
+        "en": "A pencil is as long as 5 paper clips 📎. A ruler is as long as 2 pencils. How many paper clips long is the ruler?",
+        "zh": "一支铅笔的长度等于 5 个回形针 📎。一把尺子的长度等于 2 支铅笔。请问这把尺子等于多少个回形针的长度？"
+      },
+      "speechText": {
+        "vi": "Một cây bút chì dài bằng 5 chiếc kẹp giấy. Chiếc thước kẻ dài bằng 2 cây bút chì. Hỏi chiếc thước kẻ dài bằng bao nhiêu chiếc kẹp giấy?",
+        "en": "A pencil equals 5 clips. A ruler equals 2 pencils. How many clips does the ruler equal?",
+        "zh": "一支铅笔等于5个回形针，一把尺子等于2支铅笔。请问尺子等于几个回形针？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["✏️", "=", "📎", "📎", "📎", "📎", "📎"],
+        "columns": 7
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "7 chiếc", "en": "7 clips", "zh": "7个" } },
+        { "id": "B", "text": { "vi": "8 chiếc", "en": "8 clips", "zh": "8个" } },
+        { "id": "C", "text": { "vi": "10 chiếc", "en": "10 clips", "zh": "10个" } },
+        { "id": "D", "text": { "vi": "12 chiếc", "en": "12 clips", "zh": "12个" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "1 cây bút chì = 5 chiếc kẹp giấy. Thước kẻ dài bằng 2 cây bút chì nên bằng: 5 + 5 = 10 chiếc kẹp giấy.",
+        "en": "1 pencil = 5 paper clips. The ruler is 2 pencils long: 5 + 5 = 10 paper clips.",
+        "zh": "1 支铅笔 = 5 个回形针。尺子等于 2 支铅笔：5 + 5 = 10 个回形针。"
+      }
+    },
+    {
+      "id": 4,
+      "topic": {
+        "vi": "ĐO LƯỜNG",
+        "en": "MEASUREMENT",
+        "zh": "重量与轻重"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Quả dưa hấu 🍉 nặng hơn quả dứa 🍍. Quả dứa 🍍 nặng hơn quả táo 🍎. Hỏi quả nào nhẹ nhất?",
+        "en": "A watermelon 🍉 is heavier than a pineapple 🍍. A pineapple 🍍 is heavier than an apple 🍎. Which fruit is the lightest?",
+        "zh": "西瓜 🍉 比菠萝 🍍 重，菠萝 🍍 比苹果 🍎 重。请问哪种水果最轻？"
+      },
+      "speechText": {
+        "vi": "Quả dưa hấu nặng hơn quả dứa. Quả dứa nặng hơn quả táo. Hỏi quả nào nhẹ nhất?",
+        "en": "Watermelon is heavier than pineapple. Pineapple is heavier than apple. Which fruit is the lightest?",
+        "zh": "西瓜比菠萝重，菠萝比苹果重。请问哪种水果最轻？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🍉", ">", "🍍", ">", "🍎"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "Quả dưa hấu 🍉", "en": "Watermelon 🍉", "zh": "西瓜 🍉" } },
+        { "id": "B", "text": { "vi": "Quả dứa 🍍", "en": "Pineapple 🍍", "zh": "菠萝 🍍" } },
+        { "id": "C", "text": { "vi": "Quả táo 🍎", "en": "Apple 🍎", "zh": "苹果 🍎" } },
+        { "id": "D", "text": { "vi": "Nặng bằng nhau", "en": "All equal weight", "zh": "一样重" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "Ta có thứ tự từ nặng nhất đến nhẹ nhất là: Dưa hấu > Dứa > Táo. Vậy quả táo 🍎 là quả nhẹ nhất.",
+        "en": "From heaviest to lightest: Watermelon > Pineapple > Apple. Therefore, the apple 🍎 is the lightest.",
+        "zh": "按从重到轻排序：西瓜 > 菠萝 > 苹果。所以苹果 🍎 最轻。"
+      }
+    },
+    {
+      "id": 5,
+      "topic": {
+        "vi": "THỜI GIAN",
+        "en": "TIME",
+        "zh": "时间计算"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Bộ phim hoạt hình bắt đầu lúc 8 giờ và kéo dài trong 2 giờ. Hỏi bộ phim kết thúc lúc mấy giờ?",
+        "en": "The cartoon movie starts at 8 o'clock and lasts for 2 hours. What time does the movie end?",
+        "zh": "动画电影在 8 点开始，时长 2 小时。请问电影在几点结束？"
+      },
+      "speechText": {
+        "vi": "Bộ phim hoạt hình bắt đầu lúc 8 giờ và chiếu trong 2 giờ. Hỏi phim kết thúc lúc mấy giờ?",
+        "en": "A cartoon starts at 8 o'clock and lasts for 2 hours. What time does it end?",
+        "zh": "动画电影在8点开始，时长2小时。请问电影在几点结束？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🎬", "🕗", "➕", "2️⃣", "⏳"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "9 giờ", "en": "9 o'clock", "zh": "9点" } },
+        { "id": "B", "text": { "vi": "10 giờ", "en": "10 o'clock", "zh": "10点" } },
+        { "id": "C", "text": { "vi": "11 giờ", "en": "11 o'clock", "zh": "11点" } },
+        { "id": "D", "text": { "vi": "12 giờ", "en": "12 o'clock", "zh": "12点" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Thời gian kết thúc = Giờ bắt đầu + Thời lượng = 8 + 2 = 10 giờ.",
+        "en": "End time = Start time + Duration = 8 + 2 = 10 o'clock.",
+        "zh": "结束时间 = 开始时间 + 时长 = 8 + 2 = 10 点。"
+      }
+    }
+  ]
+}

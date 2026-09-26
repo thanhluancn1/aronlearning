@@ -1,0 +1,15 @@
+{
+  "examConfig": {
+    "id": "0987654321-class-math-quick-tryhard",
+    "title": {
+      "vi": "Toán TIMO Lớp 1 - Ôn Tập Câu Đã Sai",
+      "en": "TIMO Math Grade 1 - Missed Questions Review",
+      "zh": "TIMO 奥数一年级 - 错题攻坚"
+    },
+    "grade": 1,
+    "totalQuestions": 0,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": []
+}

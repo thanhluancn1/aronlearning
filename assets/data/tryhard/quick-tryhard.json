@@ -1,0 +1,15 @@
+{
+  "examConfig": {
+    "id": "quick-tryhard",
+    "title": {
+      "vi": "Ôn Tập Câu Đã Sai",
+      "en": "Missed Questions Review",
+      "zh": "错题攻坚"
+    },
+    "grade": 1,
+    "totalQuestions": 0,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": []
+}

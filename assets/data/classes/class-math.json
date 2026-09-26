@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updatedAt": "2026-09-25",
+  "updatedAt": "2026-09-26",
   "curriculum": {
     "foundational": [
       {
@@ -12,10 +12,10 @@
         },
         "icon": "🔢",
         "colorTheme": null,
-        "questionCount": 40,
+        "questionCount": 5,
         "durationMinutes": 15,
         "difficulty": 1,
-        "dataFile": "assets/data/timo-chu-so-g1.json"
+        "dataFile": "assets/data/exams/timo-chu-so-g1.json"
       },
       {
         "id": "timo-phep-cong-tru-g1",
@@ -26,10 +26,10 @@
         },
         "icon": "➕",
         "colorTheme": null,
-        "questionCount": 44,
+        "questionCount": 5,
         "durationMinutes": 15,
         "difficulty": 1,
-        "dataFile": "assets/data/timo-phep-cong-tru-g1.json"
+        "dataFile": "assets/data/exams/timo-phep-cong-tru-g1.json"
       },
       {
         "id": "timo-so-sanh-thay-the-g1",
@@ -40,10 +40,10 @@
         },
         "icon": "⚖️",
         "colorTheme": null,
-        "questionCount": 50,
+        "questionCount": 5,
         "durationMinutes": 15,
         "difficulty": 2,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
+        "dataFile": "assets/data/exams/timo-so-sanh-thay-the-g1.json"
       },
       {
         "id": "timo-do-luong-thoi-gian-g1",
@@ -54,52 +54,10 @@
         },
         "icon": "⏰",
         "colorTheme": null,
-        "questionCount": 50,
+        "questionCount": 5,
         "durationMinutes": 15,
         "difficulty": 2,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
-      },
-      {
-        "id": "timo-do-luong-thoi-gian-g1-5",
-        "title": {
-          "vi": "Đo lường và Thời gian",
-          "en": "Measurement & Time",
-          "zh": "时间与度量衡"
-        },
-        "icon": "⏰",
-        "colorTheme": null,
-        "questionCount": 50,
-        "durationMinutes": 15,
-        "difficulty": 2,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
-      },
-      {
-        "id": "timo-do-luong-thoi-gian-g1-6",
-        "title": {
-          "vi": "Đo lường và Thời gian",
-          "en": "Measurement & Time",
-          "zh": "时间与度量衡"
-        },
-        "icon": "⏰",
-        "colorTheme": null,
-        "questionCount": 50,
-        "durationMinutes": 15,
-        "difficulty": 2,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
-      },
-      {
-        "id": "timo-do-luong-thoi-gian-g1-7",
-        "title": {
-          "vi": "Đo lường và Thời gian",
-          "en": "Measurement & Time",
-          "zh": "时间与度量衡"
-        },
-        "icon": "⏰",
-        "colorTheme": null,
-        "questionCount": 50,
-        "durationMinutes": 15,
-        "difficulty": 2,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
+        "dataFile": "assets/data/exams/timo-do-luong-thoi-gian-g1.json"
       }
     ],
     "enrichment": [
@@ -112,10 +70,10 @@
         },
         "icon": "🧩",
         "colorTheme": "emerald",
-        "questionCount": 50,
+        "questionCount": 5,
         "durationMinutes": 15,
         "difficulty": 2,
-        "dataFile": "assets/data/timo-quy-luat-g1.json"
+        "dataFile": "assets/data/exams/timo-quy-luat-g1.json"
       },
       {
         "id": "timo-bieu-do-phan-loai-g1",
@@ -126,10 +84,10 @@
         },
         "icon": "📊",
         "colorTheme": "amber",
-        "questionCount": 30,
+        "questionCount": 5,
         "durationMinutes": 15,
         "difficulty": 2,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
+        "dataFile": "assets/data/exams/timo-bieu-do-phan-loai-g1.json"
       },
       {
         "id": "timo-hinh-hoc-dem-hinh-g1",
@@ -140,10 +98,10 @@
         },
         "icon": "📐",
         "colorTheme": "sky",
-        "questionCount": 58,
+        "questionCount": 5,
         "durationMinutes": 15,
         "difficulty": 2,
-        "dataFile": "assets/data/timo-hinh-hoc-g1.json"
+        "dataFile": "assets/data/exams/timo-hinh-hoc-g1.json"
       },
       {
         "id": "timo-can-bang-co-ban-g1",
@@ -154,10 +112,10 @@
         },
         "icon": "⚖️",
         "colorTheme": "purple",
-        "questionCount": 50,
+        "questionCount": 5,
         "durationMinutes": 15,
         "difficulty": 3,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
+        "dataFile": "assets/data/exams/timo-can-bang-g1.json"
       },
       {
         "id": "timo-logic-thuc-te-g1",
@@ -168,24 +126,24 @@
         },
         "icon": "💡",
         "colorTheme": "rose",
-        "questionCount": 30,
+        "questionCount": 5,
         "durationMinutes": 15,
         "difficulty": 3,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
+        "dataFile": "assets/data/exams/timo-logic-thuc-te-g1.json"
       },
       {
         "id": "timo-tu-duy-thay-the-g1",
         "title": {
-          "vi": "Toán tư duy thay thế",
-          "en": "Substitution Reasoning",
-          "zh": "等量代换思维"
+          "vi": "Toán tư duy tổ hợp",
+          "en": "Combinatorics Thinking",
+          "zh": "组合与思维拓展"
         },
         "icon": "🔄",
         "colorTheme": "teal",
-        "questionCount": 40,
+        "questionCount": 5,
         "durationMinutes": 15,
         "difficulty": 3,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
+        "dataFile": "assets/data/exams/timo-to-hop-g1.json"
       }
     ],
     "quickPractice": [
@@ -198,10 +156,10 @@
         },
         "icon": "🏆",
         "colorTheme": "purple",
-        "questionCount": 10,
+        "questionCount": 5,
         "durationMinutes": 10,
         "difficulty": 1,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
+        "dataFile": "assets/data/exams/timo-to-hop-g1.json"
       },
       {
         "id": "quick-tryhard",
@@ -212,38 +170,38 @@
         },
         "icon": "🎯",
         "colorTheme": "sky",
-        "questionCount": 10,
+        "questionCount": 0,
         "durationMinutes": 10,
         "difficulty": 2,
-        "dataFile": "assets/data/quick-tryhard.json"
+        "dataFile": "assets/data/tryhard/quick-tryhard.json"
       },
       {
         "id": "quick-10",
         "title": {
-          "vi": "10 câu",
-          "en": "10 Questions",
-          "zh": "10道速练"
+          "vi": "5 câu nhanh",
+          "en": "5 Questions",
+          "zh": "5道速练"
         },
         "icon": "🎲",
         "colorTheme": "emerald",
-        "questionCount": 10,
+        "questionCount": 5,
         "durationMinutes": 10,
         "difficulty": 1,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
+        "dataFile": "assets/data/exams/timo-chu-so-g1.json"
       },
       {
         "id": "quick-20",
         "title": {
-          "vi": "20 câu",
-          "en": "20 Questions",
-          "zh": "20道速练"
+          "vi": "Luyện tổng hợp",
+          "en": "Mixed Quiz",
+          "zh": "综合练习"
         },
         "icon": "⚡",
         "colorTheme": "amber",
-        "questionCount": 20,
+        "questionCount": 5,
         "durationMinutes": 15,
         "difficulty": 2,
-        "dataFile": "assets/data/timo-to-hop-g1.json"
+        "dataFile": "assets/data/exams/timo-phep-cong-tru-g1.json"
       }
     ]
   }

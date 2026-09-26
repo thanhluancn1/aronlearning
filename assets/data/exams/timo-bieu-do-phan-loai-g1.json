@@ -1,0 +1,196 @@
+{
+  "examConfig": {
+    "id": "timo-bieu-do-phan-loai-g1",
+    "title": {
+      "vi": "Toán TIMO Lớp 1 - Biểu đồ và Phân loại",
+      "en": "TIMO Math Grade 1 - Charts & Classification",
+      "zh": "TIMO 奥数一年级 - 图表与集合分类"
+    },
+    "grade": 1,
+    "totalQuestions": 5,
+    "timeLimitMinutes": 15,
+    "passingScore": 80
+  },
+  "questions": [
+    {
+      "id": 1,
+      "topic": {
+        "vi": "PHÂN LOẠI",
+        "en": "CLASSIFICATION",
+        "zh": "分类认知"
+      },
+      "difficultyLevel": 1,
+      "questionText": {
+        "vi": "Trong các con vật sau: 🐶, 🐱, 🚗, 🐰, 🐻, đồ vật nào KHÔNG thuộc cùng nhóm với các con vật còn lại?",
+        "en": "Among the following: 🐶, 🐱, 🚗, 🐰, 🐻, which item does NOT belong to the group?",
+        "zh": "在下列物品中：🐶, 🐱, 🚗, 🐰, 🐻，哪个物品不属于同一类？"
+      },
+      "speechText": {
+        "vi": "Trong các hình chú cún, mèo, ô tô, thỏ và gấu, vật nào không cùng nhóm với các con vật còn lại?",
+        "en": "Among the dog, cat, car, rabbit and bear, which does not belong to the animals group?",
+        "zh": "在小狗、小猫、汽车、兔子和小熊中，哪一个不属于同一类？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🐶", "🐱", "🚗", "🐰", "🐻"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "🐶 Chú cún", "en": "🐶 Dog", "zh": "🐶 小狗" } },
+        { "id": "B", "text": { "vi": "🚗 Chiếc ô tô", "en": "🚗 Car", "zh": "🚗 汽车" } },
+        { "id": "C", "text": { "vi": "🐰 Chú thỏ", "en": "🐰 Rabbit", "zh": "🐰 小兔" } },
+        { "id": "D", "text": { "vi": "🐻 Chú gấu", "en": "🐻 Bear", "zh": "🐻 小熊" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Cún, mèo, thỏ và gấu đều là các con vật (động vật). Chiếc ô tô 🚗 là phương tiện giao thông, không cùng nhóm.",
+        "en": "Dog, cat, rabbit, and bear are animals. The car 🚗 is a vehicle, so it does not belong.",
+        "zh": "狗、猫、兔子、小熊都是动物。汽车 🚗 是交通工具，不属于同一类。"
+      }
+    },
+    {
+      "id": 2,
+      "topic": {
+        "vi": "BIỂU ĐỒ TRANH",
+        "en": "PICTOGRAPH",
+        "zh": "象形统计图"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Biểu đồ bên dưới thể hiện số lượng bóng bay: Đỏ: 🎈🎈🎈🎈, Xanh: 🎈🎈🎈. Hỏi số bóng bay đỏ nhiều hơn số bóng bay xanh bao nhiêu quả?",
+        "en": "The chart shows balloons: Red: 🎈🎈🎈🎈, Blue: 🎈🎈🎈. How many more red balloons are there than blue balloons?",
+        "zh": "统计图显示气球数量：红气球 🎈🎈🎈🎈，蓝气球 🎈🎈🎈。红气球比蓝气球多几个？"
+      },
+      "speechText": {
+        "vi": "Có 4 quả bóng bay đỏ và 3 quả bóng bay xanh. Hỏi bóng đỏ nhiều hơn bóng xanh bao nhiêu quả?",
+        "en": "There are 4 red balloons and 3 blue balloons. How many more red than blue?",
+        "zh": "有4个红气球和3个蓝气球。红气球比蓝气球多几个？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🔴", "🎈", "🎈", "🎈", "🎈", "🔵", "🎈", "🎈", "🎈"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "1 quả", "en": "1 balloon", "zh": "1个" } },
+        { "id": "B", "text": { "vi": "2 quả", "en": "2 balloons", "zh": "2个" } },
+        { "id": "C", "text": { "vi": "3 quả", "en": "3 balloons", "zh": "3个" } },
+        { "id": "D", "text": { "vi": "7 quả", "en": "7 balloons", "zh": "7个" } }
+      ],
+      "correctAnswer": "A",
+      "explanation": {
+        "vi": "Bóng đỏ có 4 quả, bóng xanh có 3 quả. Số bóng đỏ nhiều hơn số bóng xanh là: 4 - 3 = 1 quả.",
+        "en": "Red balloons: 4, blue balloons: 3. Difference: 4 - 3 = 1 balloon.",
+        "zh": "红气球有 4 个，蓝气球有 3 个。红气球比蓝气球多：4 - 3 = 1 个。"
+      }
+    },
+    {
+      "id": 3,
+      "topic": {
+        "vi": "PHÂN LOẠI",
+        "en": "CLASSIFICATION",
+        "zh": "颜色与形状分类"
+      },
+      "difficultyLevel": 2,
+      "questionText": {
+        "vi": "Có bao nhiêu hình tròn màu xanh biển 🔵 trong nhóm hình sau: 🔵, 🔴, 🔵, 🟩, 🔵, 🟡, 🔵?",
+        "en": "How many blue circles 🔵 are there in the following set: 🔵, 🔴, 🔵, 🟩, 🔵, 🟡, 🔵?",
+        "zh": "在下列图形中一共有多少个蓝色圆圈 🔵：🔵, 🔴, 🔵, 🟩, 🔵, 🟡, 🔵？"
+      },
+      "speechText": {
+        "vi": "Hỏi có bao nhiêu hình tròn màu xanh biển trong nhóm hình dưới đây?",
+        "en": "How many blue circles are in the set below?",
+        "zh": "请问下图中一共有多少个蓝色圆圈？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🔵", "🔴", "🔵", "🟩", "🔵", "🟡", "🔵"],
+        "columns": 7
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "3 hình", "en": "3 circles", "zh": "3个" } },
+        { "id": "B", "text": { "vi": "4 hình", "en": "4 circles", "zh": "4个" } },
+        { "id": "C", "text": { "vi": "5 hình", "en": "5 circles", "zh": "5个" } },
+        { "id": "D", "text": { "vi": "7 hình", "en": "7 circles", "zh": "7个" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Đếm các hình tròn màu xanh 🔵: có tất cả 4 hình tròn xanh.",
+        "en": "Counting the blue circles 🔵: there are 4 blue circles in total.",
+        "zh": "数蓝色圆圈 🔵：一共有 4 个蓝色圆圈。"
+      }
+    },
+    {
+      "id": 4,
+      "topic": {
+        "vi": "BIỂU ĐỒ TRANH",
+        "en": "PICTOGRAPH",
+        "zh": "统计汇总"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Trong giỏ có 3 quả chuối 🍌, 4 quả cam 🍊 và 2 quả táo 🍎. Hỏi trong giỏ có tất cả bao nhiêu quả hoa quả?",
+        "en": "In a basket there are 3 bananas 🍌, 4 oranges 🍊 and 2 apples 🍎. How many fruits are there in total?",
+        "zh": "篮子里有 3 根香蕉 🍌，4 个橙子 🍊 和 2 个苹果 🍎。请问篮子里一共有多少个水果？"
+      },
+      "speechText": {
+        "vi": "Trong giỏ có 3 quả chuối, 4 quả cam và 2 quả táo. Hỏi có tất cả bao nhiêu quả?",
+        "en": "There are 3 bananas, 4 oranges and 2 apples in a basket. How many fruits in total?",
+        "zh": "篮子里有3根香蕉，4个橙子和2个苹果。请问一共有多少个水果？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["🍌", "🍌", "🍌", "🍊", "🍊", "🍊", "🍊", "🍎", "🍎"],
+        "columns": 5
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "8 quả", "en": "8 fruits", "zh": "8个" } },
+        { "id": "B", "text": { "vi": "9 quả", "en": "9 fruits", "zh": "9个" } },
+        { "id": "C", "text": { "vi": "10 quả", "en": "10 fruits", "zh": "10个" } },
+        { "id": "D", "text": { "vi": "11 quả", "en": "11 fruits", "zh": "11个" } }
+      ],
+      "correctAnswer": "B",
+      "explanation": {
+        "vi": "Tổng số hoa quả = Số chuối + Số cam + Số táo = 3 + 4 + 2 = 9 quả.",
+        "en": "Total fruits = Bananas + Oranges + Apples = 3 + 4 + 2 = 9 fruits.",
+        "zh": "水果总数 = 香蕉 + 橙子 + 苹果 = 3 + 4 + 2 = 9 个。"
+      }
+    },
+    {
+      "id": 5,
+      "topic": {
+        "vi": "BIỂU ĐỒ TRANH",
+        "en": "PICTOGRAPH",
+        "zh": "符号图表"
+      },
+      "difficultyLevel": 3,
+      "questionText": {
+        "vi": "Trong một biểu đồ, mỗi biểu tượng ⭐ đại diện cho 2 bông hoa. Nếu lớp 1A có 3 biểu tượng ⭐⭐⭐, hỏi lớp 1A trồng được bao nhiêu bông hoa?",
+        "en": "In a chart, each symbol ⭐ represents 2 flowers. If Class 1A has 3 symbols ⭐⭐⭐, how many flowers did they plant?",
+        "zh": "在统计图中，每个符号 ⭐ 代表 2 朵花。如果一年级A班有 3 个符号 ⭐⭐⭐，请问该班一共种了多少朵花？"
+      },
+      "speechText": {
+        "vi": "Trong biểu đồ, mỗi ngôi sao đại diện cho 2 bông hoa. Nếu có 3 ngôi sao thì có tất cả bao nhiêu bông hoa?",
+        "en": "Each star represents 2 flowers. If there are 3 stars, how many flowers are there?",
+        "zh": "每个星号代表2朵花，如果有3个星号，一共有多少朵花？"
+      },
+      "media": {
+        "type": "emojiGrid",
+        "emojis": ["⭐", "=", "🌸", "🌸"],
+        "columns": 4
+      },
+      "options": [
+        { "id": "A", "text": { "vi": "3 bông", "en": "3 flowers", "zh": "3朵" } },
+        { "id": "B", "text": { "vi": "5 bông", "en": "5 flowers", "zh": "5朵" } },
+        { "id": "C", "text": { "vi": "6 bông", "en": "6 flowers", "zh": "6朵" } },
+        { "id": "D", "text": { "vi": "8 bông", "en": "8 flowers", "zh": "8朵" } }
+      ],
+      "correctAnswer": "C",
+      "explanation": {
+        "vi": "Mỗi ⭐ đại diện cho 2 bông hoa. Vậy 3 ngôi sao ⭐⭐⭐ tương ứng với: 2 + 2 + 2 = 6 bông hoa.",
+        "en": "Each ⭐ represents 2 flowers. 3 stars ⭐⭐⭐ equal: 2 + 2 + 2 = 6 flowers.",
+        "zh": "每个 ⭐ 代表 2 朵花。3 个星号 ⭐⭐⭐ 对应：2 + 2 + 2 = 6 朵花。"
+      }
+    }
+  ]
+}

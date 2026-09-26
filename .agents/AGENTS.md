@@ -188,14 +188,17 @@
     - Hiển thị huy hiệu trực quan trên từng thẻ bài học (`foundational`, `enrichment`, `quickPractice`):
       - Đã hoàn thành (`status === 'completed'`): Viền xanh/nền sáng, badge huy chương kèm điểm số (vd: `🥇 100đ`, `✓ 95đ`).
       - Đang làm (`status === 'processing'`): Badge cam `⏳ Đang làm`.
-- [x] **13. Kiến Trúc Hệ Thống Đa Lớp Học (Multi-Class Architecture) & Tự Động Đồng Bộ Câu Sai Try-Hard**
-  - **Tách tệp bài tập độc lập theo từng lớp**:
-    - Mỗi lớp sở hữu một file JSON danh mục bài tập riêng: `assets/data/class-math.json`, `assets/data/class-english.json`, `assets/data/class-default.json`. Đã loại bỏ hoàn toàn tệp cũ `exams-index.json`.
+- [x] **13. Kiến Trúc Hệ Thống Đa Lớp Học & Cấu Trúc Thư Mục Data Module Hóa (Modular Data Hierarchy)**
+  - **Tách thư mục dữ liệu quy chuẩn**:
+    - `assets/data/classes/`: Tệp danh mục bài tập từng lớp (`class-math.json`, `class-english.json`, `class-default.json`).
+    - `assets/data/exams/`: Các bộ đề thi chuẩn hóa (`timo-chu-so-g1.json`, `timo-to-hop-g1.json`, ...).
+    - `assets/data/tryhard/`: Bài thi ôn tập câu sai Try-Hard cá nhân hóa (`{studentId}-{classId}-quick-tryhard.json`, `quick-tryhard.json`).
+    - `assets/data/students/`: Hồ sơ học sinh phẳng theo số điện thoại (`{phone}.json`).
   - **Hồ sơ học sinh lưu theo từng lớp**:
     - Khai báo danh sách lớp bé tham gia trong `identity.classes: ["class-math", "class-english", ...]`.
     - Hồ sơ học sinh lưu bài tập theo các mảng mang ID của lớp: `"class-math": [ ... ]`, `"class-english": [ ... ]`.
   - **Cơ chế Try-Hard cá nhân hóa tự động ({studentId}-{classId}-quick-tryhard)**:
-    - Mỗi học sinh trong mỗi lớp sở hữu một file/dữ liệu Try-Hard riêng: `{studentId}-{classId}-quick-tryhard.json`.
+    - Mỗi học sinh trong mỗi lớp sở hữu một file/dữ liệu Try-Hard riêng trong `assets/data/tryhard/`.
     - Khi làm bài thường mà có câu sai ➔ Tự động nạp các câu sai đó vào bài thi Try-Hard của lớp đó.
     - Khi bé ôn tập lại bài Try-Hard và giải đúng ➔ Tự động loại bỏ câu đó khỏi danh sách Try-Hard.
   - **Đăng ký học sinh chọn lớp linh hoạt (`auth-modal.js`)**:
@@ -204,6 +207,22 @@
     - Header Topbar có dropdown chuyển lớp với icon sinh động, tự động nạp danh mục và kiểm tra tiến độ theo lớp đang chọn.
   - **Phân hệ thi trắc nghiệm (`luyen-thi-trac-nghiem.html`)**:
     - Tự động nhận `class` từ URL, nạp Try-Hard tương ứng của học sinh và đồng bộ kết quả vào đúng lớp học.
+
+- [x] **14. Chuẩn Hóa Cấu Trúc Mã Nguồn JavaScript Module Hóa (Modular JS Architecture - Core / UI / i18n)**
+  - **Tách cấu trúc thư mục `assets/js/` theo đúng chuẩn phân tầng trách nhiệm**:
+    - `assets/js/core/`:
+      - `audio.js`: Quản lý Web Audio API (pop, success) và Web Speech API (đọc đề đa ngôn ngữ).
+      - `class-manager.js`: Quản lý metadata danh mục lớp, lớp đang kích hoạt (`activeClassId`).
+      - `student-auth.js`: Xác thực số điện thoại, đăng nhập, đăng ký và quản lý phiên làm việc.
+      - `student-profile.js`: Hồ sơ học sinh phẳng, lưu điểm thi, cập nhật `summaryStats`, xuất JSON.
+      - `tryhard-engine.js`: Xử lý ngân hàng câu sai Try-Hard cá nhân hóa theo từng lớp.
+    - `assets/js/ui/`:
+      - `auth-modal.js`: Hộp thoại Modal Đăng nhập / Đăng ký tài khoản học sinh.
+      - `notification.js`: Toast thông báo nổi, Alert/Confirm dialog và thẻ báo lỗi Error State.
+    - `assets/js/i18n/`:
+      - `i18n.js`: OctoI18n Engine dịch thuật và từ điển đa ngôn ngữ (vi, en, zh).
+    - `assets/js/core.js`:
+      - File điều phối Facade hợp nhất toàn bộ các module lõi vào `window.PortalCore`, đảm bảo 100% backward compatibility cho mọi trang web và module.
 
 ---
 

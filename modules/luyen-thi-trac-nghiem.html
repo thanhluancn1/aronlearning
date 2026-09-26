@@ -55,11 +55,16 @@
   <!-- Alpine.js v3 CDN -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-  <!-- Core i18n Engine & Sound Engine -->
-  <script src="../assets/js/i18n.js"></script>
+  <!-- Core Modules & UI Components -->
+  <script src="../assets/js/i18n/i18n.js"></script>
+  <script src="../assets/js/core/audio.js"></script>
+  <script src="../assets/js/core/class-manager.js"></script>
+  <script src="../assets/js/core/student-auth.js"></script>
+  <script src="../assets/js/core/student-profile.js"></script>
+  <script src="../assets/js/core/tryhard-engine.js"></script>
   <script src="../assets/js/core.js"></script>
-  <script src="../assets/js/notification.js"></script>
-  <script src="../assets/js/auth-modal.js"></script>
+  <script src="../assets/js/ui/notification.js"></script>
+  <script src="../assets/js/ui/auth-modal.js"></script>
 
   <style>
     * {
@@ -514,7 +519,7 @@
   </main>
 
   <!-- 4. MODALS & OVERLAYS -->
-  <!-- Student Registration / Login Modal được quản lý tự động bởi OctoAuthModal (assets/js/auth-modal.js) -->
+  <!-- Student Registration / Login Modal được quản lý tự động bởi OctoAuthModal (assets/js/ui/auth-modal.js) -->
 
   <!-- Submit Confirmation Modal -->
   <div x-show="showWarningModal" 
@@ -829,11 +834,11 @@
             }
 
             if (!data) {
-              let dataPath = '../assets/data/timo-to-hop-g1.json';
+              let dataPath = '../assets/data/exams/timo-to-hop-g1.json';
               if (dataParam) {
                 dataPath = (dataParam.startsWith('http') || dataParam.startsWith('/')) ? dataParam : (dataParam.startsWith('../') ? dataParam : `../${dataParam}`);
               } else if (examParam) {
-                dataPath = `../assets/data/${examParam}.json`;
+                dataPath = `../assets/data/exams/${examParam}.json`;
               }
 
               const res = await fetch(dataPath);
